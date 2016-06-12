@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="acedsl" nsURI="http://www.example.org/acedsl" nsPrefix="acedsl">
+  <eClassifiers xsi:type="ecore:EClass" name="Aplicativo">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nome" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="secaoEventos" eType="#//SecaoEventos"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="secaoMembros" eType="#//SecaoMembros"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="secaoDisciplinas" eType="#//SecaoDisciplinas"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="secaoNoticias" eType="#//SecaoNoticias"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="estilo" eType="#//Estilo"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SeparacaoDisciplinas"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OrganizacaoCurso"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OrganizacaoDepartamento"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SecaoEventos">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nome" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SecaoMembros">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nome" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SecaoDisciplinas">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nome" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="separacaoDisciplinas" eType="#//SeparacaoDisciplinas"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SecaoNoticias">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nome" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Facebook" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Estilo">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="logo" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fonte" eType="#//Fonte"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="corPrimaria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="corSecundaria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="corTerciaria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListaCursos" eSuperTypes="#//SeparacaoDisciplinas #//OrganizacaoDepartamento">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="curso" upperBound="-1"
+        eType="#//Curso" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListaDisciplinas" eSuperTypes="#//SeparacaoDisciplinas #//OrganizacaoCurso #//OrganizacaoDepartamento"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ListaDepartamentos" eSuperTypes="#//SeparacaoDisciplinas">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="departamento" upperBound="-1"
+        eType="#//Departamento" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListaPeriodos" eSuperTypes="#//SeparacaoDisciplinas #//OrganizacaoCurso #//OrganizacaoDepartamento">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="periodo" upperBound="-1"
+        eType="#//Periodo" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Curso">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nome" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="organizacaoCurso" eType="#//OrganizacaoCurso"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Departamento">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nome" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="organizacaoDepartamento"
+        eType="#//OrganizacaoDepartamento" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Periodo">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nome" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Fonte">
+    <eLiterals name="Normal" literal="Normal"/>
+    <eLiterals name="Sans" value="1" literal="Sans"/>
+    <eLiterals name="Serif" value="2" literal="Serif"/>
+    <eLiterals name="Monospace" value="3" literal="Monospace"/>
+  </eClassifiers>
+</ecore:EPackage>

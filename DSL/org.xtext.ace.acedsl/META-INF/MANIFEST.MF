@@ -1,0 +1,31 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.xtext.ace.acedsl
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.xtext.ace.acedsl; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: Metamodelo,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib,
+ org.antlr.runtime,
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib,
+ org.eclipse.emf.common
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.xtext.ace.acedsl.parser.antlr,
+ org.xtext.ace.acedsl,
+ org.xtext.ace.acedsl.acedsl.util,
+ org.xtext.ace.acedsl.acedsl.impl,
+ org.xtext.ace.acedsl.validation,
+ org.xtext.ace.acedsl.scoping,
+ org.xtext.ace.acedsl.generator,
+ org.xtext.ace.acedsl.acedsl,
+ org.xtext.ace.acedsl.services,
+ org.xtext.ace.acedsl.serializer,
+ org.xtext.ace.acedsl.parser.antlr.internal,
+ org.xtext.ace.acedsl.formatting
+Import-Package: org.apache.log4j
