@@ -1,6 +1,6 @@
 <resources>
     <!-- Main -->
-    <string name="academic_center_name">CEE</string>
+    <string name="academic_center_name_initials">CEE</string>
     <string name="nav_bar_logo">NavBarLogo</string>
 
     <!-- Home -->
@@ -8,8 +8,6 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_settings">Settings</string>
 
     <!--Drawer Menu-->
     <string name="section_1">Gestão</string>
