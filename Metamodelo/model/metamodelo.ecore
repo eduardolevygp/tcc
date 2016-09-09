@@ -34,11 +34,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fonte" ordered="false"
         eType="#//Fonte"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="corPrimaria" ordered="false"
-        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        lowerBound="1" eType="#//Cor"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="corSecundaria" ordered="false"
-        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        lowerBound="1" eType="#//Cor"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="corTerciaria" ordered="false"
-        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        lowerBound="1" eType="#//Cor"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Fonte">
     <eLiterals name="Normal" literal="normal"/>
@@ -78,4 +78,5 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="periodo" lowerBound="1"
         upperBound="-1" eType="#//Periodo"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Cor" instanceTypeName="EString"/>
 </ecore:EPackage>

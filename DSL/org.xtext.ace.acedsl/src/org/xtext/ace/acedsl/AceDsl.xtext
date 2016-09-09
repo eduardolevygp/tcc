@@ -22,7 +22,8 @@ Aplicativo returns Aplicativo:
 SeparacaoDisciplinas returns SeparacaoDisciplinas:
 	ListaCursos | ListaDisciplinas | ListaDepartamentos | ListaPeriodos;
 
-
+Cor returns Cor: 
+	STRING;
 
 
 OrganizacaoCurso returns OrganizacaoCurso:
@@ -58,9 +59,9 @@ Estilo returns Estilo:
 	'{'
 		('logo' logo=EString &
 		('fonte' fonte=Fonte)? &
-		'corPrimaria' corPrimaria=EString &
-		'corSecundaria' corSecundaria=EString &
-		'corTerciaria' corTerciaria=EString)
+		'corPrimaria' corPrimaria=Cor &
+		'corSecundaria' corSecundaria=Cor &
+		'corTerciaria' corTerciaria=Cor)
 	'}';
 
 ListaCursos returns ListaCursos:

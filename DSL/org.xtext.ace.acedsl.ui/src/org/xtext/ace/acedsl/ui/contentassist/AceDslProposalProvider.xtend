@@ -3,10 +3,47 @@
  */
 package org.xtext.ace.acedsl.ui.contentassist
 
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.swt.graphics.RGB
+import org.eclipse.swt.widgets.ColorDialog
+import org.eclipse.swt.widgets.Display
+import org.eclipse.xtext.RuleCall
+import org.eclipse.xtext.ui.editor.contentassist.ConfigurableCompletionProposal
+import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
+import org.eclipse.xtext.ui.editor.contentassist.ReplacementTextApplier
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
  * on how to customize the content assistant.
  */
 class AceDslProposalProvider extends AbstractAceDslProposalProvider {
+	
+	override complete_Cor(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		
+		val ConfigurableCompletionProposal colorProposal =  createCompletionProposal("Escolher cor...", context) as ConfigurableCompletionProposal;
+		colorProposal.textApplier = new ReplacementTextApplier() {
+			
+			override getActualReplacementString(ConfigurableCompletionProposal proposal) {
+				val ColorDialog dialog = new ColorDialog(Display.getDefault().getActiveShell());
+				val RGB color = dialog.open();
+				return "\"#" + toHexTwoDigits(color.red) + toHexTwoDigits(color.green) + toHexTwoDigits(color.blue) + "\"";
+			}
+			
+		}
+		
+		acceptor.accept(colorProposal);
+		
+		super.complete_Cor(model, ruleCall, context, acceptor);
+				
+	}
+	
+	def String toHexTwoDigits(int number) {
+		var String hex = Integer.toHexString(number).toUpperCase();
+		if (hex.length == 1) {
+			hex = "0" + hex;
+		}
+		return hex;
+	}
+	
 }
