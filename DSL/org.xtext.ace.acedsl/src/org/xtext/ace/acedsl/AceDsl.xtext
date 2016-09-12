@@ -25,6 +25,8 @@ SeparacaoDisciplinas returns SeparacaoDisciplinas:
 Cor returns Cor: 
 	STRING;
 
+Logo returns Logo:
+	STRING;
 
 OrganizacaoCurso returns OrganizacaoCurso:
 	ListaDisciplinas | ListaPeriodos;
@@ -57,7 +59,7 @@ SecaoNoticias returns SecaoNoticias:
 Estilo returns Estilo:
 	'estilo'
 	'{'
-		('logo' logo=EString &
+		('logo' logo=Logo &
 		('fonte' fonte=Fonte)? &
 		'corPrimaria' corPrimaria=Cor &
 		'corSecundaria' corSecundaria=Cor &

@@ -30,7 +30,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Estilo">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="logo" ordered="false" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        eType="#//Logo"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fonte" ordered="false"
         eType="#//Fonte"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="corPrimaria" ordered="false"
@@ -79,4 +79,5 @@
         upperBound="-1" eType="#//Periodo"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Cor" instanceTypeName="EString"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Logo" instanceTypeName="EString"/>
 </ecore:EPackage>

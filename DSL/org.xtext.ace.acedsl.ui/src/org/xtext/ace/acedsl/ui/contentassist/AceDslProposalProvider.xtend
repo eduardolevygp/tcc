@@ -3,10 +3,13 @@
  */
 package org.xtext.ace.acedsl.ui.contentassist
 
+import java.util.List
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.swt.SWT
 import org.eclipse.swt.graphics.RGB
 import org.eclipse.swt.widgets.ColorDialog
 import org.eclipse.swt.widgets.Display
+import org.eclipse.swt.widgets.FileDialog
 import org.eclipse.xtext.RuleCall
 import org.eclipse.xtext.ui.editor.contentassist.ConfigurableCompletionProposal
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
@@ -44,6 +47,35 @@ class AceDslProposalProvider extends AbstractAceDslProposalProvider {
 			hex = "0" + hex;
 		}
 		return hex;
+	
+	}	
+	
+	
+	override complete_Logo(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		
+		val ConfigurableCompletionProposal fileProposal = createCompletionProposal("Escolher arquivo...", context) as ConfigurableCompletionProposal;
+		fileProposal.textApplier = new ReplacementTextApplier() {
+			
+			override getActualReplacementString(ConfigurableCompletionProposal proposal) {
+				
+				val FileDialog fileDialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
+				
+				val List<String> extensions = newArrayList("*.gif; *.jpg; *.jpeg; *.png");
+				val List<String> filterNames = newArrayList("Imagem (gif, jpg, jpeg, png)");
+				fileDialog.setFilterExtensions(extensions);
+				fileDialog.setFilterNames(filterNames);
+				
+				var String path = fileDialog.open();
+				if (path == null) {
+					path = "";
+				}
+				return "\"" + path + "\"";
+			}
+			
+		}		
+		
+		acceptor.accept(fileProposal);
+		super.complete_Logo(model, ruleCall, context, acceptor);
 	}
 	
 }
