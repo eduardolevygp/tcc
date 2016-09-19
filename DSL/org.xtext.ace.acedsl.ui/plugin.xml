@@ -240,11 +240,11 @@
 		<super type="org.eclipse.xtext.ui.check.expensive"/>
 		<persistent value="true"/>
 	</extension>
-	<extension point="org.eclipse.xtext.builder.participant">
+	<!-- <extension point="org.eclipse.xtext.builder.participant">
 		<participant
 			class="org.xtext.ace.acedsl.ui.AceDslExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
 			fileExtensions="acedsl"/>
-	</extension>
+	</extension> -->
 	<extension point="org.eclipse.ui.preferencePages">
 		<page
 			category="org.xtext.ace.acedsl.AceDsl"
@@ -407,4 +407,29 @@
 			type="text">
 		</fileTypes>
 	</extension>
+ <extension
+       point="org.eclipse.ui.commands">
+    <command
+    	  defaultHandler="org.xtext.ace.acedsl.ui.AceDslExecutableExtensionFactory:org.xtext.ace.acedsl.ui.handler.GenerationHandler"
+          id="org.xtext.ace.acedsl.ui.generateapp"
+          name="button_generate">
+    </command>
+ </extension>
+ <extension
+       point="org.eclipse.ui.menus">
+    <menuContribution
+          allPopups="false"
+          locationURI="toolbar:org.eclipse.ui.main.toolbar">
+       <toolbar
+             id="org.xtext.ace.acedsl.ui.toolbar1"
+             label="Geração de aplicativo">
+          <command
+                commandId="org.xtext.ace.acedsl.ui.generateapp"
+                label="Gerar Aplicativo"
+                style="push"
+                tooltip="Gerar aplicativo">
+          </command>
+       </toolbar>
+    </menuContribution>
+ </extension>
 </plugin>

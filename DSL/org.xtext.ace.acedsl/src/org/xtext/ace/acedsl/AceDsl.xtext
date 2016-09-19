@@ -23,10 +23,10 @@ SeparacaoDisciplinas returns SeparacaoDisciplinas:
 	ListaCursos | ListaDisciplinas | ListaDepartamentos | ListaPeriodos;
 
 Cor returns Cor: 
-	STRING;
+	valor = STRING;
 
 Logo returns Logo:
-	STRING;
+	caminho = STRING;
 
 OrganizacaoCurso returns OrganizacaoCurso:
 	ListaDisciplinas | ListaPeriodos;

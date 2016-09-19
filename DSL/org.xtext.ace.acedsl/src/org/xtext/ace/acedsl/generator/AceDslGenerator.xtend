@@ -3,10 +3,22 @@
  */
 package org.xtext.ace.acedsl.generator
 
+import java.awt.Graphics2D
+import java.awt.image.BufferedImage
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.IOException
+import java.io.InputStream
+import java.net.URI
+import javax.imageio.ImageIO
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import org.xtext.ace.acedsl.acedsl.Aplicativo
+import org.xtext.ace.acedsl.acedsl.Estilo
+import org.xtext.ace.acedsl.acedsl.Logo
 
 /**
  * Generates code from your model files on save.
@@ -16,10 +28,57 @@ import org.eclipse.xtext.generator.IGeneratorContext
 class AceDslGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
+		var Aplicativo app = resource.contents.findFirst[item | item instanceof Aplicativo] as Aplicativo;
+		fsa.generateFile('app/src/main/res/values/colors.xml', generateColorsTemplate(app.estilo));
+		
+		
+		createLogoFiles(app.estilo.logo, fsa);
+		
+//		var x = app.estilo;
+		
+		//'app/src/main/res/values/colors.xml'
 //		fsa.generateFile('greetings.txt', 'People to greet: ' + 
 //			resource.allContents
 //				.filter(typeof(Greeting))
 //				.map[name]
 //				.join(', '))
 	}
+	
+	def createLogoFiles(Logo logo, IFileSystemAccess2 fsa) {
+		var BufferedImage logoImg = null;
+		try {
+			logoImg = ImageIO.read(new File(logo.caminho));
+		} catch (IOException e) {
+			return;
+		}
+		
+		var BufferedImage redimen = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+		var Graphics2D g = redimen.createGraphics();
+		g.drawImage(logoImg, 0, 0, 200, 200, null);
+		g.dispose();
+		
+		var ByteArrayOutputStream os = new ByteArrayOutputStream();
+		ImageIO.write(redimen, "png", os);
+		var InputStream is = new ByteArrayInputStream(os.toByteArray());
+
+		//TODO: redimensionar do jeito certo, cortando e tal. Fazer os vários tamanhos		
+		
+		fsa.generateFile('app/src/main/res/drawable/ic_logo.png', is);
+	
+		
+
+	}
+	
+	def generateColorsTemplate (Estilo estilo) '''
+		<?xml version="1.0" encoding="utf-8"?>
+		<resources>
+		    <color name="color_primary">«estilo.corPrimaria.valor»</color>
+		    <color name="color_secondary">«estilo.corSecundaria.valor»</color>
+		    <color name="color_tertiary">«estilo.corTerciaria.valor»</color>
+		    <color name="color_white">#FFFFFF</color>
+		    <color name="color_black">#000000</color>
+		</resources>
+	'''
+	
+	
 }
