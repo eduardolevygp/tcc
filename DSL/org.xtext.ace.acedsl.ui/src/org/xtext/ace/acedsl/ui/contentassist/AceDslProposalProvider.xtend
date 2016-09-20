@@ -65,7 +65,7 @@ class AceDslProposalProvider extends AbstractAceDslProposalProvider {
 				fileDialog.setFilterExtensions(extensions);
 				fileDialog.setFilterNames(filterNames);
 				
-				var String path = fileDialog.open();
+				var String path = fileDialog.open().replace('\\', '/');
 				if (path == null) {
 					path = "";
 				}
