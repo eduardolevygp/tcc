@@ -10,7 +10,6 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
-import java.net.URI
 import javax.imageio.ImageIO
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
@@ -19,6 +18,9 @@ import org.eclipse.xtext.generator.IGeneratorContext
 import org.xtext.ace.acedsl.acedsl.Aplicativo
 import org.xtext.ace.acedsl.acedsl.Estilo
 import org.xtext.ace.acedsl.acedsl.Logo
+import java.util.Map
+import java.util.HashMap
+import java.awt.Image
 
 /**
  * Generates code from your model files on save.
@@ -52,21 +54,47 @@ class AceDslGenerator extends AbstractGenerator {
 			return;
 		}
 		
-		var BufferedImage redimen = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+		val String basePath = 'app/src/main/res/drawable-';
+		val String filename = '/ic_logo.png';
+		
+		fsa.generateFile(basePath+'mdpi'+filename, logoResized(logoImg, 100, 100));
+		fsa.generateFile(basePath+'hdpi'+filename, logoResized(logoImg, 150, 150));
+		fsa.generateFile(basePath+'xhdpi'+filename, logoResized(logoImg, 200, 200));
+		fsa.generateFile(basePath+'xxhdpi'+filename, logoResized(logoImg, 300, 300));
+		fsa.generateFile(basePath+'xxxhdpi'+filename, logoResized(logoImg, 400, 400));
+	
+	}
+	
+	def imageSizeFit(int origWidth, int origHeight, int targetWidth, int targetHeight) {
+		var float ratio = Math.min(targetWidth as float/origWidth, targetHeight as float/origHeight);
+		
+		var Map<String, Integer> size = new HashMap<String, Integer>();
+		size.put("width", (origWidth * ratio) as int);
+		size.put("height", (origHeight * ratio) as int);
+		
+		return size; 
+	}
+	
+	def InputStream logoResized(BufferedImage logo, int width, int height) {
+		
+		
+		var Map<String, Integer> size = imageSizeFit(logo.width, logo.height, width, height);
+		
+		var int newWidth = size.get("width");
+		var int newHeight = size.get("height");
+		
+		
+		var BufferedImage redimen = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
 		var Graphics2D g = redimen.createGraphics();
-		g.drawImage(logoImg, 0, 0, 200, 200, null);
+		g.drawImage(logo, 0, 0, newWidth, newHeight, null);
 		g.dispose();
 		
 		var ByteArrayOutputStream os = new ByteArrayOutputStream();
 		ImageIO.write(redimen, "png", os);
 		var InputStream is = new ByteArrayInputStream(os.toByteArray());
-
-		//TODO: redimensionar do jeito certo, cortando e tal. Fazer os vários tamanhos		
 		
-		fsa.generateFile('app/src/main/res/drawable/ic_logo.png', is);
-	
+		return is;
 		
-
 	}
 	
 	def generateColorsTemplate (Estilo estilo) '''
