@@ -1,0 +1,17 @@
+<resources>
+    <!-- Main -->
+    <string name="academic_center_name_initials">CEE</string>
+    <string name="nav_bar_logo">NavBarLogo</string>
+
+    <!-- Home -->
+    <string name="home_welcome">Bem-vindo ao <b>%s</b>!</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--Drawer Menu-->
+    <string name="section_1">Gestão</string>
+    <string name="section_2">Membros</string>
+    <string name="section_3">Eventos</string>
+    <string name="section_4">Notícias</string>
+</resources>
