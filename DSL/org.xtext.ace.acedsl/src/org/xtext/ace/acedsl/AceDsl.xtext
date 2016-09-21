@@ -99,4 +99,4 @@ Periodo returns Periodo:
 	'periodo' nome=EString;
 
 enum Fonte returns Fonte:
-				Normal = 'Normal' | Sans = 'Sans' | Serif = 'Serif' | Monospace = 'Monospace';
+				Sans = 'Sans' | Serif = 'Serif' | Monospace = 'Monospace';

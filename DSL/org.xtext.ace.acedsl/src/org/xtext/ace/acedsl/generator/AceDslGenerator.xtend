@@ -146,7 +146,7 @@ class AceDslGenerator extends AbstractGenerator {
 	        <item name="android:layout_height">wrap_content</item>
 	        <item name="android:includeFontPadding">false</item>
 	        <item name="android:lineSpacingMultiplier">1.3</item>
-	        <item name="android:fontFamily">«estilo.fonte.toString.toLowerCase»</item>
+	        <item name="android:typeface">«estilo.fonte.toString.toLowerCase»</item>
 	    </style>
 	
 	    <style name="TextElement.H1">
