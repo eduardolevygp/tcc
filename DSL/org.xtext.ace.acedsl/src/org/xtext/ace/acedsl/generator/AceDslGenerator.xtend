@@ -20,7 +20,6 @@ import org.xtext.ace.acedsl.acedsl.Estilo
 import org.xtext.ace.acedsl.acedsl.Logo
 import java.util.Map
 import java.util.HashMap
-import java.awt.Image
 
 /**
  * Generates code from your model files on save.
@@ -31,19 +30,19 @@ class AceDslGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		var Aplicativo app = resource.contents.findFirst[item | item instanceof Aplicativo] as Aplicativo;
+		
+//		Strings
+		fsa.generateFile('app/src/main/res/values/strings.xml', generateStringsTemplate(app));
+		
+//		Colors
 		fsa.generateFile('app/src/main/res/values/colors.xml', generateColorsTemplate(app.estilo));
 		
+//		Styles
+		fsa.generateFile('app/src/main/res/values/styles.xml', generateStylesTemplate(app.estilo));
 		
+//		Logo
 		createLogoFiles(app.estilo.logo, fsa);
 		
-//		var x = app.estilo;
-		
-		//'app/src/main/res/values/colors.xml'
-//		fsa.generateFile('greetings.txt', 'People to greet: ' + 
-//			resource.allContents
-//				.filter(typeof(Greeting))
-//				.map[name]
-//				.join(', '))
 	}
 	
 	def createLogoFiles(Logo logo, IFileSystemAccess2 fsa) {
@@ -108,5 +107,53 @@ class AceDslGenerator extends AbstractGenerator {
 		</resources>
 	'''
 	
+	def generateStringsTemplate (Aplicativo app) '''
+	<resources>
+	    <!-- Main -->
+	    <string name="academic_center_name_initials">«app.nome»</string>
+	    <string name="nav_bar_logo">NavBarLogo</string>
 	
+	    <!-- Home -->
+	    <string name="home_welcome">Bem-vindo ao <b>%s</b>!</string>
+	
+	    <string name="navigation_drawer_open">Open navigation drawer</string>
+	    <string name="navigation_drawer_close">Close navigation drawer</string>
+	
+	    <!--Drawer Menu-->
+	    <string name="section_1">Gestão</string>
+	    <string name="section_2">Membros</string>
+	    <string name="section_3">Eventos</string>
+	    <string name="section_4">Notícias</string>
+	</resources>'''
+	
+	def generateStylesTemplate (Estilo estilo) '''
+	<resources>
+	
+	    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+	        <item name="colorPrimary" >@color/color_primary</item>
+	        <item name="colorAccent">@color/color_primary</item>
+	    </style>
+	
+	    <style name="AppTheme.NoActionBar">
+	        <item name="windowActionBar">false</item>
+	        <item name="windowNoTitle">true</item>
+	    </style>
+	    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+	    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+	
+	    <style name="TextElement">
+	        <item name="android:layout_width">wrap_content</item>
+	        <item name="android:layout_height">wrap_content</item>
+	        <item name="android:includeFontPadding">false</item>
+	        <item name="android:lineSpacingMultiplier">1.3</item>
+	        <item name="android:fontFamily">«estilo.fonte.toString.toLowerCase»</item>
+	    </style>
+	
+	    <style name="TextElement.H1">
+	        <item name="android:textSize">@dimen/font_size_extra_large</item>
+	        <item name="android:textColor">@color/color_black</item>
+	    </style>
+	
+	</resources>
+	'''
 }
