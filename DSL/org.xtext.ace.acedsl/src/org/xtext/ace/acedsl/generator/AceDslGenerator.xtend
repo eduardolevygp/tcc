@@ -20,6 +20,9 @@ import org.xtext.ace.acedsl.acedsl.Estilo
 import org.xtext.ace.acedsl.acedsl.Logo
 import java.util.Map
 import java.util.HashMap
+import java.net.URL
+import org.eclipse.core.runtime.FileLocator
+import java.io.FileInputStream
 
 /**
  * Generates code from your model files on save.
@@ -31,18 +34,34 @@ class AceDslGenerator extends AbstractGenerator {
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		var Aplicativo app = resource.contents.findFirst[item | item instanceof Aplicativo] as Aplicativo;
 		
+		var URL url = new URL("platform:/plugin/org.xtext.ace.acedsl/base/android/");
+		var File file = new File(FileLocator.resolve(url).toURI());
+		copyFile(fsa, file, 'android');
+				
 //		Strings
-		fsa.generateFile('app/src/main/res/values/strings.xml', generateStringsTemplate(app));
+		fsa.generateFile('android/app/src/main/res/values/strings.xml', generateStringsTemplate(app));
 		
 //		Colors
-		fsa.generateFile('app/src/main/res/values/colors.xml', generateColorsTemplate(app.estilo));
+		fsa.generateFile('android/app/src/main/res/values/colors.xml', generateColorsTemplate(app.estilo));
 		
 //		Styles
-		fsa.generateFile('app/src/main/res/values/styles.xml', generateStylesTemplate(app.estilo));
+		fsa.generateFile('android/app/src/main/res/values/styles.xml', generateStylesTemplate(app.estilo));
 		
 //		Logo
 		createLogoFiles(app.estilo.logo, fsa);
 		
+		
+	}
+	
+	
+	def void copyFile (IFileSystemAccess2 fsa, File file, String path) {
+		if (file.isDirectory) {
+			file.listFiles.forEach[arq | {
+				copyFile(fsa, arq, path + '/' + arq.name);
+			}];	
+		} else {
+			fsa.generateFile(path, new FileInputStream(file));
+		}
 	}
 	
 	def createLogoFiles(Logo logo, IFileSystemAccess2 fsa) {
@@ -53,7 +72,7 @@ class AceDslGenerator extends AbstractGenerator {
 			return;
 		}
 		
-		val String basePath = 'app/src/main/res/drawable-';
+		val String basePath = 'android/app/src/main/res/drawable-';
 		val String filename = '/ic_logo.png';
 		
 		fsa.generateFile(basePath+'mdpi'+filename, logoResized(logoImg, 100, 100));
