@@ -10,8 +10,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!--Drawer Menu-->
-    <string name="section_1">Gestão</string>
-    <string name="section_2">Membros</string>
-    <string name="section_3">Eventos</string>
-    <string name="section_4">Notícias</string>
+    <string name="section_adm">Gestão</string>
+    <string name="section_disciplines">Disciplinas</string>
+    <string name="section_events">Eventos</string>
+    <string name="section_news">Notícias</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
