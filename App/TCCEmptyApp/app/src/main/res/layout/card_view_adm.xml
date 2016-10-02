@@ -17,6 +17,7 @@
             android:layout_width="256dp"
             android:layout_height="256dp"
             android:layout_gravity="center"
+            android:layout_marginTop="8dp"
             android:src="@drawable/placeholder_avatar_image" />
 
         <TextView
@@ -24,13 +25,18 @@
             style="@style/TextElement.Header.H1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:text="Joao da Silva" />
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp" >
 
             <TextView
                 android:id="@+id/card_adm_role"
