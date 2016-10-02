@@ -15,11 +15,7 @@ import com.example.tcc.tccemptyapp.components.Placeholder;
  * A simple {@link Fragment} subclass.
  */
 public abstract class BaseFragment extends Fragment {
-
-    private final int CONTENT = 0;
-    private final int PLACEHOLDER = 1;
-    private final int LOAD = 2;
-
+    
     private Placeholder mPlaceholder;
     private FrameLayout mContentContainer;
     private ProgressBar mLoadingView;
