@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_adm" android:title="@string/section_adm" />
+        <item android:id="@+id/nav_adm" android:title="@string/section_adm" android:visible="true" />
         <item android:id="@+id/nav_disciplines" android:title="@string/section_disciplines" />
         <item android:id="@+id/nav_events" android:title="@string/section_events" />
         <item android:id="@+id/nav_news" android:title="@string/section_news" />
