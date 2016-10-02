@@ -17,8 +17,9 @@ import android.widget.Toast;
 import com.example.tcc.tccemptyapp.fragments.ADMFragment;
 import com.example.tcc.tccemptyapp.fragments.HomeFragment;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private int mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,25 +61,33 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        if (id != mCurrentFragment) {
+           openFragment(id);
+            mCurrentFragment = id;
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void openFragment(int id) {
         Toast toast;
 
         if (id == R.id.nav_adm) {
             ADMFragment fragment = new ADMFragment();
             replaceTransition(fragment);
         } else if (id == R.id.nav_disciplines) {
-            toast = Toast.makeText(this, "Disciplinas selecionado", 3);
+            toast = Toast.makeText(this, "Disciplinas selecionado", Toast.LENGTH_SHORT);
             toast.show();
         } else if (id == R.id.nav_events) {
-            toast = Toast.makeText(this, "Eventos selecionado", 3);
+            toast = Toast.makeText(this, "Eventos selecionado", Toast.LENGTH_SHORT);
             toast.show();
         } else if (id == R.id.nav_news) {
-            toast = Toast.makeText(this, "Notícias selecionado", 3);
+            toast = Toast.makeText(this, "Notícias selecionado", Toast.LENGTH_SHORT);
             toast.show();
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
     private void replaceTransition(Fragment fragment) {

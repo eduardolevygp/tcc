@@ -1,14 +1,12 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.tcc.tccemptyapp.fragments.ADMFragment">
 
-    <TextView
-        style="@style/TextElement.H1"
-        android:text="ADM Activity" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/adm_recycler"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
 
-</FrameLayout>
+</LinearLayout>

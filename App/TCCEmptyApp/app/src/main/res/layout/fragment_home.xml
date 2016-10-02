@@ -5,6 +5,6 @@
 
     <TextView
         android:id="@+id/home_welcome_text_view"
-        style="@style/TextElement.H1" />
+        style="@style/TextElement.Header.H1" />
 
 </FrameLayout>
