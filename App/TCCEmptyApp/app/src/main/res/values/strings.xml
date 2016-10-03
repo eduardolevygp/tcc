@@ -21,5 +21,6 @@
 
     <!--Descriptions-->
     <string name="placeholder_image_description">Connection Image</string>
+    <string name="card_adm_placeholder">Placeholder Image</string>
 
 </resources>

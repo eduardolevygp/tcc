@@ -27,7 +27,7 @@
         <item name="android:layout_height">45dp</item>
         <item name="android:background">@color/color_secondary</item>
         <item name="android:padding">8dp</item>
-        <item name="android:textColor">@color/color_white</item>
+        <item name="android:textColor">@color/color_secondary_contrast</item>
     </style>
 
     <style name="TextElement">
@@ -47,9 +47,13 @@
         <item name="android:textSize">@dimen/font_size_extra_large</item>
     </style>
 
+    <style name="TextElement.Header.H2">
+        <item name="android:textSize">@dimen/font_size_large</item>
+    </style>
+
     <style name="TextElement.Body">
         <item name="android:layout_marginTop">4dp</item>
-        <item name="android:textSize">@dimen/font_size_medium</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
         <item name="android:textColor">@color/color_black</item>
         <item name="android:textStyle">bold</item>
     </style>
