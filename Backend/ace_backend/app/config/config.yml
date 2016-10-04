@@ -8,6 +8,17 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    database_host: 127.0.0.1
+    database_port: 3306
+    database_name: ace_app
+    database_user: root
+    database_password: ~
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: Ace2016AppSecret
+    photo_folder: '%kernel.root_dir%/../web/images/membros'
 
 framework:
     #esi:             ~
@@ -19,7 +30,7 @@ framework:
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
-    #serializer:      { enable_annotations: true }
+    serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
     default_locale:  "%locale%"
@@ -37,6 +48,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+      app_name: "%app_name%"
 
 # Doctrine Configuration
 doctrine:

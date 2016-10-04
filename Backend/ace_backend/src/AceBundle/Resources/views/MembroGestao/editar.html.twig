@@ -1,0 +1,15 @@
+{%  extends 'base.html.twig' %}
+
+{%  block body %}
+        <h1>Editar membro da gestão</h1>
+        {% if photo is not empty %}
+        <img src="{{ asset('images/membros/'~photo) }}" style="max-width: 120px; max-height: 120px;" alt="{{ membroGestao.name }}">
+
+        <form action=" {{ path('membrogestao_delete_photo', {'id': membroGestao.id}) }}" method="post">
+            <button class="btn btn-default" type="submit">Apagar foto</button>
+        </form>
+        {% endif %}
+        {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+        {{ form(form) }}
+
+{%  endblock %}
