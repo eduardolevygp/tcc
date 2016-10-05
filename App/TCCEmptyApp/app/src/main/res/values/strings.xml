@@ -10,8 +10,17 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!--Drawer Menu-->
-    <string name="section_1">Gestão</string>
-    <string name="section_2">Membros</string>
-    <string name="section_3">Eventos</string>
-    <string name="section_4">Notícias</string>
+    <string name="section_adm">Gestão</string>
+    <string name="section_disciplines">Disciplinas</string>
+    <string name="section_events">Eventos</string>
+    <string name="section_news">Notícias</string>
+
+    <!--Placeholder-->
+    <string name="placeholder_text">Ocorreu um erro na comunicação com o servidor. Por favor, tente novamente!</string>
+    <string name="placeholder_button_text">Tentar novamente</string>
+
+    <!--Descriptions-->
+    <string name="placeholder_image_description">Connection Image</string>
+    <string name="card_adm_placeholder">Placeholder Image</string>
+
 </resources>
