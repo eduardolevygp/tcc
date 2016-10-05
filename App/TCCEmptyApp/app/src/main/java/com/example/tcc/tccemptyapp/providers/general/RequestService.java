@@ -1,4 +1,4 @@
-package com.example.tcc.tccemptyapp.providers;
+package com.example.tcc.tccemptyapp.providers.general;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;

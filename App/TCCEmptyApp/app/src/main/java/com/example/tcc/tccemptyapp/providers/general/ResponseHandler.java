@@ -1,4 +1,4 @@
-package com.example.tcc.tccemptyapp.providers;
+package com.example.tcc.tccemptyapp.providers.general;
 
 /**
  * Created by Alan on 04/10/2016.
