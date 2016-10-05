@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.tcc.tccemptyapp.fragments.ADMFragment;
 import com.example.tcc.tccemptyapp.fragments.HomeFragment;
+import com.example.tcc.tccemptyapp.providers.ADMProvider;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         setupHomeFragment();
+        new ADMProvider().reqTest();
     }
 
     @Override

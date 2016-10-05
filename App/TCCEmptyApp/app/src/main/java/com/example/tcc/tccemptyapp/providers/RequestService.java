@@ -1,0 +1,88 @@
+package com.example.tcc.tccemptyapp.providers;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
+
+/**
+ * Created by Alan on 04/10/2016.
+ */
+public class RequestService {
+
+    private AsyncHttpClient mClient;
+
+    public RequestService() {
+        mClient = new AsyncHttpClient();
+    }
+
+    public void performRequest(final int method, final String url, final ResponseHandler handler) {
+        performRequest(method, url, null, handler);
+    }
+
+    public void performRequest(final int method, final String url, final RequestParams params, final ResponseHandler handler) {
+
+        switch (method) {
+            case HttpMethod.GET:
+                mClient.get(url, params, getJsonResponseHandler(handler));
+                break;
+
+            case HttpMethod.POST:
+                mClient.post(url, params, getJsonResponseHandler(handler));
+                break;
+
+            case HttpMethod.PUT:
+                mClient.put(url, params, getJsonResponseHandler(handler));
+                break;
+
+            case HttpMethod.DELETE:
+                mClient.delete(url, params, getJsonResponseHandler(handler));
+                break;
+        }
+    }
+
+    private JsonHttpResponseHandler getJsonResponseHandler(final ResponseHandler handler) {
+        return new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                handler.onSuccess(response.toString());
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                super.onSuccess(statusCode, headers, response);
+                handler.onSuccess(response.toString());
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                super.onSuccess(statusCode, headers, responseString);
+                handler.onSuccess(responseString);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                handler.onFailure(responseString);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                handler.onFailure(errorResponse.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                handler.onFailure(errorResponse.toString());
+            }
+
+        };
+    }
+}
