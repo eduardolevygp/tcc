@@ -62,8 +62,7 @@ Estilo returns Estilo:
 		('logo' logo=Logo &
 		('fonte' fonte=Fonte)? &
 		'corPrimaria' corPrimaria=Cor &
-		'corSecundaria' corSecundaria=Cor &
-		'corTerciaria' corTerciaria=Cor)
+		'corSecundaria' corSecundaria=Cor)
 	'}';
 
 ListaCursos returns ListaCursos:

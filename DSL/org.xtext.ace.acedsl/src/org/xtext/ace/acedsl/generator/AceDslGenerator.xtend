@@ -23,6 +23,7 @@ import java.util.HashMap
 import java.net.URL
 import org.eclipse.core.runtime.FileLocator
 import java.io.FileInputStream
+import java.awt.Color
 
 /**
  * Generates code from your model files on save.
@@ -115,16 +116,57 @@ class AceDslGenerator extends AbstractGenerator {
 		
 	}
 	
-	def generateColorsTemplate (Estilo estilo) '''
-		<?xml version="1.0" encoding="utf-8"?>
-		<resources>
-		    <color name="color_primary">«estilo.corPrimaria.valor»</color>
-		    <color name="color_secondary">«estilo.corSecundaria.valor»</color>
-		    <color name="color_tertiary">«estilo.corTerciaria.valor»</color>
-		    <color name="color_white">#FFFFFF</color>
-		    <color name="color_black">#000000</color>
-		</resources>
+	def generateColorsTemplate (Estilo estilo)  {
+		var String primaria = estilo.corPrimaria.valor;
+		var String secundaria = estilo.corSecundaria.valor;
+		
+		var Color primariaCor = new Color(Integer.parseInt(primaria.trim().substring(1), 16));
+		var Color secundariaCor = new Color(Integer.parseInt(secundaria.trim().substring(1), 16));
+		
+		var String contrastePrimaria = "#FFFFFF";
+		var String contrasteSecundaria= "#FFFFFF";
+		
+		if (contrasteDeCorParaPreto(primariaCor) > 4.5) {
+			contrastePrimaria = "#000000";
+		} 
+		if (contrasteDeCorParaPreto(secundariaCor) > 4.5) {
+			contrasteSecundaria= "#000000";
+		}
+		
+		return '''
+	<?xml version="1.0" encoding="utf-8"?>
+	<resources>
+	    <color name="color_white">#FFFFFF</color>
+	    <color name="color_black">#000000</color>
+	    <color name="color_primary">«primaria»</color>
+	    <color name="color_secondary">«secundaria»</color>
+	    <color name="color_primary_contrast">«contrastePrimaria»</color>
+	    <color name="color_secondary_contrast">«contrasteSecundaria»</color>
+	</resources>
 	'''
+	}
+	
+	def double contrasteDeCorParaPreto (Color color) {
+		
+		var double R = colorComponent(color.red/255f);
+		var double G = colorComponent(color.green/255f);
+		var double B = colorComponent(color.blue/255f);
+
+		
+		var double luminancia = 0.2126 * R + 0.7152 * G + 0.0722 * B;
+		
+		System.out.println((luminancia + 0.05) / 0.05);
+		
+		return (luminancia + 0.05) / 0.05;
+	}
+	
+	def double colorComponent (double Cs) {
+		if (Cs <= 0.03928) {
+			return Cs/12.92;
+		} else {
+			return ((Cs + 0.055)/1.055) ** 2.4;
+		}
+	}
 	
 	def generateStringsTemplate (Aplicativo app) '''
 	<resources>
