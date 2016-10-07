@@ -2,7 +2,7 @@
 
 {%  block body %}
 
-        <h1>Membros da gestão</h1>
+        <h1>{{ membros_label }}</h1>
         <a href="{{ path("membrogestao_novo") }}"><button class="btn btn-primary pull-right">Adicionar membro</button></a>
         {% if membros is empty %}
             Nenhum membro cadastrado

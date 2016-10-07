@@ -26,7 +26,9 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ path('membrogestao_index') }}">Membros da gestão</a></li>
+                {% if membros_visibility %}
+                    <li><a href="{{ path('membrogestao_index') }}">{{ membros_label }}</a></li>
+                {% endif %}
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

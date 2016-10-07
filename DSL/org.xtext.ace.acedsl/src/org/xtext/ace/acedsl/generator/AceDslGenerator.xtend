@@ -3,14 +3,22 @@
  */
 package org.xtext.ace.acedsl.generator
 
+import com.google.common.base.Strings
+import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
+import java.net.URL
+import java.nio.charset.StandardCharsets
+import java.util.HashMap
+import java.util.Map
 import javax.imageio.ImageIO
+import org.eclipse.core.runtime.FileLocator
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
@@ -18,13 +26,6 @@ import org.eclipse.xtext.generator.IGeneratorContext
 import org.xtext.ace.acedsl.acedsl.Aplicativo
 import org.xtext.ace.acedsl.acedsl.Estilo
 import org.xtext.ace.acedsl.acedsl.Logo
-import java.util.Map
-import java.util.HashMap
-import java.net.URL
-import org.eclipse.core.runtime.FileLocator
-import java.io.FileInputStream
-import java.awt.Color
-import java.nio.charset.StandardCharsets
 
 /**
  * Generates code from your model files on save.
@@ -59,7 +60,9 @@ class AceDslGenerator extends AbstractGenerator {
 //		Logo
 		createLogoFiles(app.estilo.logo, fsa);
 		
-		
+//		Parameter do servidor
+		fsa.generateFile('server/app/config/parameters.yml', toUtf8(generateServerParametersTemplate(app)));
+		fsa.generateFile('server/app/config/parameters.yml.dist', toUtf8(generateServerParametersTemplate(app)));
 	}
 	
 	def void copyFile (IFileSystemAccess2 fsa, File file, String path) {
@@ -161,8 +164,6 @@ class AceDslGenerator extends AbstractGenerator {
 
 		
 		var double luminancia = 0.2126 * R + 0.7152 * G + 0.0722 * B;
-		
-		System.out.println((luminancia + 0.05) / 0.05);
 		
 		return (luminancia + 0.05) / 0.05;
 	}
@@ -280,7 +281,7 @@ class AceDslGenerator extends AbstractGenerator {
 	package com.example.tcc.tccemptyapp.constants;
 	
 	public class Constants {
-	    public static final String BASE_URL = "«app.url»";
+	    public static final String BASE_URL = "«app.servidor.url»";
 	
 	    public static final String ADM_URL = BASE_URL + "/api/membrosGestao";
 	    public static final String BASE_URL_IMAGE = BASE_URL + "/images/membros/";
@@ -308,4 +309,20 @@ class AceDslGenerator extends AbstractGenerator {
 	def InputStream toUtf8 (CharSequence text) {
 		new ByteArrayInputStream(text.toString.getBytes(StandardCharsets.UTF_8));
 	}
+	
+	def generateServerParametersTemplate (Aplicativo app) '''
+	parameters:
+	    database_host: «app.servidor.banco.host»
+	    database_port: «app.servidor.banco.porta.toString»
+	    database_name: «app.servidor.banco.nome»
+	    database_user: «app.servidor.banco.usuario»
+	    database_password: «if (Strings.isNullOrEmpty(app.servidor.banco.senha))
+	    						'~'
+	    						else app.servidor.banco.senha»
+	    app_name: «app.nome»
+
+	    membros_visibility: «if (app.secaoMembros == null) 'false' else 'true'»
+	    membros_label: «if (app.secaoMembros == null) '' else app.secaoMembros.nome»
+
+	'''
 }
