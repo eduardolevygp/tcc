@@ -1,9 +1,6 @@
 package com.example.tcc.tccemptyapp.adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.media.Image;
-import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -103,7 +100,7 @@ public class ADMAdapter extends RecyclerView.Adapter<ADMAdapter.ADMViewHolder> {
         holder.setColors(position);
 
         Picasso.with(mContext)
-                .load(member.getImageUrl())
+                .load(member.getFullImageUrl())
                 .placeholder(R.drawable.placeholder_avatar_image)
                 .error(R.drawable.placeholder_avatar_error)
                 .into(imageView);
