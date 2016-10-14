@@ -9,7 +9,7 @@ generate acedsl "http://www.example.org/acedsl"
 Aplicativo returns Aplicativo:
 	'Aplicativo' nome=EString
 	'{'
-		('url' url=EString &
+		(servidor=Servidor &
 		(secaoEventos=SecaoEventos)? &
 		(secaoMembros=SecaoMembros)? &
 		(secaoDisciplinas=SecaoDisciplinas)? &
@@ -21,6 +21,25 @@ Aplicativo returns Aplicativo:
 
 SeparacaoDisciplinas returns SeparacaoDisciplinas:
 	ListaCursos | ListaDisciplinas | ListaDepartamentos | ListaPeriodos;
+
+Banco returns Banco:
+	'banco de dados'
+	'{'
+		('host' host=STRING &
+		'porta' porta=INT &
+		'usuario' usuario=STRING &
+		('senha' senha=STRING) ? &
+		'nome' nome=STRING)
+	'}'
+;
+
+Servidor returns Servidor:
+	'servidor'
+	'{'
+		('url' url=STRING &
+		banco = Banco)
+	'}'
+;
 
 Cor returns Cor: 
 	valor = STRING;

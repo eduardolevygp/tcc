@@ -72,8 +72,6 @@ public class GenerationHandler extends AbstractHandler implements IHandler {
 				
 				GeneratorContext context = new GeneratorContext();
 				
-				System.out.println("Chamou o handler e vai chamar pra gerar lá");
-				
 				generator.doGenerate(r, fsa, context);
 			}
 		}

@@ -3,14 +3,22 @@
  */
 package org.xtext.ace.acedsl.generator
 
+import com.google.common.base.Strings
+import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
+import java.net.URL
+import java.nio.charset.StandardCharsets
+import java.util.HashMap
+import java.util.Map
 import javax.imageio.ImageIO
+import org.eclipse.core.runtime.FileLocator
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
@@ -18,12 +26,6 @@ import org.eclipse.xtext.generator.IGeneratorContext
 import org.xtext.ace.acedsl.acedsl.Aplicativo
 import org.xtext.ace.acedsl.acedsl.Estilo
 import org.xtext.ace.acedsl.acedsl.Logo
-import java.util.Map
-import java.util.HashMap
-import java.net.URL
-import org.eclipse.core.runtime.FileLocator
-import java.io.FileInputStream
-import java.awt.Color
 
 /**
  * Generates code from your model files on save.
@@ -37,23 +39,31 @@ class AceDslGenerator extends AbstractGenerator {
 		
 		var URL url = new URL("platform:/plugin/org.xtext.ace.acedsl/base/android/");
 		var File file = new File(FileLocator.resolve(url).toURI());
+		
 		copyFile(fsa, file, 'android');
 				
 //		Strings
-		fsa.generateFile('android/app/src/main/res/values/strings.xml', generateStringsTemplate(app));
+		fsa.generateFile('android/app/src/main/res/values/strings.xml', toUtf8(generateStringsTemplate(app)));
 		
 //		Colors
-		fsa.generateFile('android/app/src/main/res/values/colors.xml', generateColorsTemplate(app.estilo));
+		fsa.generateFile('android/app/src/main/res/values/colors.xml', toUtf8(generateColorsTemplate(app.estilo)));
 		
 //		Styles
-		fsa.generateFile('android/app/src/main/res/values/styles.xml', generateStylesTemplate(app.estilo));
+		fsa.generateFile('android/app/src/main/res/values/styles.xml', toUtf8(generateStylesTemplate(app.estilo)));
 		
+// 		Constants
+		fsa.generateFile('android/app/src/main/java/com/example/tcc/tccemptyapp/constants/Constants.java', toUtf8(generateAppConstantsTemplate(app)));
+
+//		Drawer menu
+		fsa.generateFile('android/app/src/main/res/menu/activity_main_drawer.xml', toUtf8(generateDrawerLayoutTemplate(app)));
+
 //		Logo
 		createLogoFiles(app.estilo.logo, fsa);
 		
-		
+//		Parameter do servidor
+		fsa.generateFile('server/app/config/parameters.yml', toUtf8(generateServerParametersTemplate(app)));
+		fsa.generateFile('server/app/config/parameters.yml.dist', toUtf8(generateServerParametersTemplate(app)));
 	}
-	
 	
 	def void copyFile (IFileSystemAccess2 fsa, File file, String path) {
 		if (file.isDirectory) {
@@ -155,8 +165,6 @@ class AceDslGenerator extends AbstractGenerator {
 		
 		var double luminancia = 0.2126 * R + 0.7152 * G + 0.0722 * B;
 		
-		System.out.println((luminancia + 0.05) / 0.05);
-		
 		return (luminancia + 0.05) / 0.05;
 	}
 	
@@ -181,40 +189,140 @@ class AceDslGenerator extends AbstractGenerator {
 	    <string name="navigation_drawer_close">Close navigation drawer</string>
 	
 	    <!--Drawer Menu-->
-	    <string name="section_1">Gestão</string>
-	    <string name="section_2">Membros</string>
-	    <string name="section_3">Eventos</string>
-	    <string name="section_4">Notícias</string>
-	</resources>'''
+	    <string name="section_adm">«app.secaoMembros.nome»</string>
+	    <string name="section_disciplines">Disciplinas</string>
+	    <string name="section_events">Eventos</string>
+	    <string name="section_news">Notícias</string>
 	
-	def generateStylesTemplate (Estilo estilo) '''
-	<resources>
+	    <!--Placeholder-->
+	    <string name="placeholder_text">Ocorreu um erro na comunicação com o servidor. Por favor, tente novamente!</string>
+	    <string name="placeholder_button_text">Tentar novamente</string>
 	
-	    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-	        <item name="colorPrimary" >@color/color_primary</item>
-	        <item name="colorAccent">@color/color_primary</item>
-	    </style>
-	
-	    <style name="AppTheme.NoActionBar">
-	        <item name="windowActionBar">false</item>
-	        <item name="windowNoTitle">true</item>
-	    </style>
-	    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-	    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-	
-	    <style name="TextElement">
-	        <item name="android:layout_width">wrap_content</item>
-	        <item name="android:layout_height">wrap_content</item>
-	        <item name="android:includeFontPadding">false</item>
-	        <item name="android:lineSpacingMultiplier">1.3</item>
-	        <item name="android:typeface">«estilo.fonte.toString.toLowerCase»</item>
-	    </style>
-	
-	    <style name="TextElement.H1">
-	        <item name="android:textSize">@dimen/font_size_extra_large</item>
-	        <item name="android:textColor">@color/color_black</item>
-	    </style>
+	    <!--Descriptions-->
+	    <string name="placeholder_image_description">Connection Image</string>
+	    <string name="card_adm_placeholder">Placeholder Image</string>
 	
 	</resources>
+'''
+	
+	def generateStylesTemplate (Estilo estilo) '''
+<resources>
+    
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary" >@color/color_primary</item>
+        <item name="colorAccent">@color/color_primary</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="DefaultLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginTop">@dimen/activity_vertical_margin</item>
+        <item name="android:layout_marginBottom">@dimen/activity_vertical_margin</item>
+        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:background">@color/color_secondary</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textColor">@color/color_secondary_contrast</item>
+    </style>
+
+    <style name="TextElement">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:typeface">«estilo.fonte.toString.toLowerCase»</item>
+    </style>
+
+    <style name="TextElement.Header">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:textColor">@color/color_black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextElement.Header.H1">
+        <item name="android:textSize">@dimen/font_size_extra_large</item>
+    </style>
+
+    <style name="TextElement.Header.H2">
+        <item name="android:textSize">@dimen/font_size_large</item>
+    </style>
+
+    <style name="TextElement.Body">
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:textColor">@color/color_black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextElement.Paragraph">
+        <item name="android:layout_marginTop">@dimen/activity_vertical_margin</item>
+        <item name="android:layout_marginBottom">@dimen/activity_vertical_margin</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
+        <item name="android:textColor">@color/color_black</item>
+        <item name="android:lineSpacingMultiplier">1.0</item>
+    </style>
+
+</resources>
+	'''
+
+	def generateAppConstantsTemplate (Aplicativo app) '''
+	package com.example.tcc.tccemptyapp.constants;
+	
+	public class Constants {
+	    public static final String BASE_URL = "«app.servidor.url»";
+	
+	    public static final String ADM_URL = BASE_URL + "/api/membrosGestao";
+	    public static final String BASE_URL_IMAGE = BASE_URL + "/images/membros/";
+	}
+	'''
+	
+	def generateDrawerLayoutTemplate (Aplicativo app) {
+		var String admVisibility = if (app.secaoMembros != null) 'true' else 'false'; 
+	
+		return	'''
+		<?xml version="1.0" encoding="utf-8"?>
+		<menu xmlns:android="http://schemas.android.com/apk/res/android">
+		
+		    <group android:checkableBehavior="single">
+		        <item android:id="@+id/nav_adm" android:title="@string/section_adm" android:visible="«admVisibility»" />
+		        <item android:id="@+id/nav_disciplines" android:title="@string/section_disciplines" />
+		        <item android:id="@+id/nav_events" android:title="@string/section_events" />
+		        <item android:id="@+id/nav_news" android:title="@string/section_news" />
+		    </group>
+		
+		</menu>
+		'''
+	}
+	
+	def InputStream toUtf8 (CharSequence text) {
+		new ByteArrayInputStream(text.toString.getBytes(StandardCharsets.UTF_8));
+	}
+	
+	def generateServerParametersTemplate (Aplicativo app) '''
+	parameters:
+	    database_host: «app.servidor.banco.host»
+	    database_port: «app.servidor.banco.porta.toString»
+	    database_name: «app.servidor.banco.nome»
+	    database_user: «app.servidor.banco.usuario»
+	    database_password: «if (Strings.isNullOrEmpty(app.servidor.banco.senha))
+	    						'~'
+	    						else app.servidor.banco.senha»
+	    app_name: «app.nome»
+
+	    membros_visibility: «if (app.secaoMembros == null) 'false' else 'true'»
+	    membros_label: «if (app.secaoMembros == null) '' else app.secaoMembros.nome»
+
 	'''
 }

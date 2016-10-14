@@ -45,6 +45,8 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
       app_name: "%app_name%"
+      membros_visibility: "%membros_visibility%"
+      membros_label: "%membros_label%"
 
 # Doctrine Configuration
 doctrine:
