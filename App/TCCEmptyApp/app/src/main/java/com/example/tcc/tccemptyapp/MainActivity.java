@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.tcc.tccemptyapp.fragments.ADMFragment;
+import com.example.tcc.tccemptyapp.fragments.BaseFragment;
+import com.example.tcc.tccemptyapp.fragments.DepartmentsFragment;
 import com.example.tcc.tccemptyapp.fragments.HomeFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -73,13 +75,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void openFragment(int id) {
         Toast toast;
+        BaseFragment fragment;
 
         if (id == R.id.nav_adm) {
-            ADMFragment fragment = new ADMFragment();
+            fragment = new ADMFragment();
             replaceTransition(fragment);
         } else if (id == R.id.nav_disciplines) {
-            toast = Toast.makeText(this, "Disciplinas selecionado", Toast.LENGTH_SHORT);
-            toast.show();
+            fragment = new DepartmentsFragment();
+            replaceTransition(fragment);
         } else if (id == R.id.nav_events) {
             toast = Toast.makeText(this, "Eventos selecionado", Toast.LENGTH_SHORT);
             toast.show();
