@@ -8,4 +8,20 @@ import java.util.List;
 public class Program {
     private String name;
     private List<Period> periodList;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Period> getPeriodList() {
+        return periodList;
+    }
+
+    public void setPeriodList(List<Period> periodList) {
+        this.periodList = periodList;
+    }
 }

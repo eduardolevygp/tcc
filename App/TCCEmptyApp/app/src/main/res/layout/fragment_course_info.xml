@@ -4,13 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.tcc.tccemptyapp.fragments.ADMFragment">
-
+    tools:context="com.example.tcc.tccemptyapp.fragments.CourseInfo">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_departments"
+        android:id="@+id/recycler_view_course_info"
         android:layout_height="match_parent"
         android:layout_width="match_parent" />
-
 
 </LinearLayout>

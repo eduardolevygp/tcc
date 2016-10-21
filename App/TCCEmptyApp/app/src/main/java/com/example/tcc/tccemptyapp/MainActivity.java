@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void replaceTransition(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.menu_fragment_container, fragment);
+        ft.replace(R.id.main_activity_container, fragment);
         ft.commit();
     }
 
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         HomeFragment fragment = new HomeFragment();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.menu_fragment_container, fragment);
+        ft.add(R.id.main_activity_container, fragment);
         ft.commit();
     }
 }

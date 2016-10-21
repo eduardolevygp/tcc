@@ -8,46 +8,46 @@ import android.view.ViewGroup;
 
 import com.example.tcc.tccemptyapp.R;
 import com.example.tcc.tccemptyapp.components.CourseInfoViewHolder;
-import com.example.tcc.tccemptyapp.models.courseInfo.Department;
+import com.example.tcc.tccemptyapp.models.courseInfo.Program;
 
 import java.util.List;
 
 /**
- * Created by Alan on 17/10/2016.
+ * Created by Alan on 21/10/2016.
  */
-public class DepartmentsAdapter extends RecyclerView.Adapter<CourseInfoViewHolder> {
+public class ProgramsAdapter extends RecyclerView.Adapter<CourseInfoViewHolder> {
 
     private final Context mContext;
-    private final List<Department> mDepartments;
-    private final DepartmentsListener mListener;
+    private final List<Program> mPrograms;
+    private final ProgramsListener mListener;
 
-    public DepartmentsAdapter(Context context, List<Department> departments, DepartmentsListener listener) {
+    public ProgramsAdapter(Context context, List<Program> programs, ProgramsListener listener) {
         mContext = context;
-        mDepartments = departments;
+        mPrograms = programs;
         mListener = listener;
     }
 
     @Override
     public int getItemCount() {
-        return mDepartments.size();
+        return mPrograms.size();
     }
 
     @Override
     public CourseInfoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_course_info, parent, false);
+        View itemView = LayoutInflater.from(mContext).inflate(R.layout.card_view_course_info, parent, false);
 
         return new CourseInfoViewHolder(itemView, mContext);
     }
 
     @Override
     public void onBindViewHolder(CourseInfoViewHolder holder, int position) {
-        final Department department = mDepartments.get(position);
+        final Program program = mPrograms.get(position);
 
-        holder.setText(department.getName());
+        holder.setText(program.getName());
         holder.getBackground().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onDepartmentClick(department);
+                mListener.onProgramClicked(program);
             }
         });
     }

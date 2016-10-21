@@ -58,6 +58,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextElement.Table">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textSize">@dimen/font_size_extra_large</item>
+    </style>
+
     <style name="TextElement.Paragraph">
         <item name="android:layout_marginTop">@dimen/activity_vertical_margin</item>
         <item name="android:layout_marginBottom">@dimen/activity_vertical_margin</item>

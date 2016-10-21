@@ -1,11 +1,13 @@
 package com.example.tcc.tccemptyapp.models.courseInfo;
 
+import com.example.tcc.tccemptyapp.models.BaseModel;
+
 import java.util.List;
 
 /**
  * Created by Alan on 17/10/2016.
  */
-public class Department {
+public class Department extends BaseModel{
     private String name;
     private List<Program> programList;
 
