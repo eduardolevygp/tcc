@@ -2,6 +2,7 @@
 
 namespace AceBundle\Controller;
 
+use AceBundle\Entity\Disciplina;
 use AceBundle\Entity\MembroGestao;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -31,6 +32,29 @@ class ApiController extends Controller
 
         return $this->jsonResponse($membros);
 
+    }
+
+    /**
+     * @Route("/disciplinas/lista/{id}")
+     */
+    public function disciplinasListaAction($id)
+    {
+        $disciplinas = $this->getDoctrine()->getRepository('AceBundle:Disciplina')
+                            ->createQueryBuilder('d')
+                            ->select('d.id, d.name, d.code')
+                            ->where('d.listId = :lista_id')
+                            ->setParameter('lista_id', $id)
+                            ->getQuery()->getResult();
+
+        return $this->jsonResponse($disciplinas);
+    }
+
+    /**
+     * @Route("/disciplinas/{id}")
+     */
+    public function disciplinaAction (Disciplina $disciplina)
+    {
+        return $this->jsonResponse($disciplina);
     }
 
     /**

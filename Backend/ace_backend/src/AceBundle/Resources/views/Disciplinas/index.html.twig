@@ -1,0 +1,49 @@
+{%  extends '@Ace/base.html.twig' %}
+
+{%  block body %}
+
+    <h1>{{ disciplinas_label }}</h1>
+
+    <div class="menu-disciplinas">
+        {#@@@disciplinas_html_twig@@@#}
+        <span class="tipo">Departamentos</span>
+        <ul>
+            <li>
+                <span class="titulo">PSI</span>
+                <span class="tipo">Períodos</span>
+                <ul>
+                    <li>
+                        <a class="titulo" href="{{ path('disciplinas_lista', {'id': 1}) }}">Primeiro Semestre</a>
+                    </li>
+                    <li>
+                        <a class="titulo" href="{{ path('disciplinas_lista', {'id': 2}) }}">Segundo Semestre</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <span class="titulo">PCS</span>
+                <span class="tipo">Cursos</span>
+                <ul>
+                    <li>
+                        <span class="titulo">Computação Cooperativo</span>
+                        <span class="tipo">Períodos</span>
+                        <ul>
+                            <li>
+                                <a href="{{ path('disciplinas_lista', {'id': 3}) }}" class="titulo">Quinto Quadrimestre</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('disciplinas_lista', {'id': 4}) }}" class="titulo">Sexto Quadrimestre</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ path('disciplinas_lista', {'id': 5}) }}" class="titulo">Computação Semestral</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+
+
+{% endblock %}
