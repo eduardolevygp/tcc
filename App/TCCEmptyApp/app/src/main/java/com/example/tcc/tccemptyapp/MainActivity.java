@@ -3,7 +3,7 @@ package com.example.tcc.tccemptyapp;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.tcc.tccemptyapp.fragments.ADMFragment;
 import com.example.tcc.tccemptyapp.fragments.BaseFragment;
-import com.example.tcc.tccemptyapp.fragments.DepartmentsFragment;
+import com.example.tcc.tccemptyapp.fragments.courseInfo.DepartmentsFragment;
 import com.example.tcc.tccemptyapp.fragments.HomeFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -93,16 +93,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void replaceTransition(Fragment fragment) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.main_activity_container, fragment);
-        ft.commit();
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_activity_container, fragment)
+                .commit();
     }
 
     private void setupHomeFragment() {
         HomeFragment fragment = new HomeFragment();
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.main_activity_container, fragment);
-        ft.commit();
+        getSupportFragmentManager().beginTransaction()
+            .add(R.id.main_activity_container, fragment)
+                .commit();
     }
+
 }

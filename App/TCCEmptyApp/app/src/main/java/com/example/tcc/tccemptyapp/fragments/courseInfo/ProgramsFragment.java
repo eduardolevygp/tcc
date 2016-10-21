@@ -1,13 +1,8 @@
-package com.example.tcc.tccemptyapp.fragments;
+package com.example.tcc.tccemptyapp.fragments.courseInfo;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.tcc.tccemptyapp.R;
 import com.example.tcc.tccemptyapp.adapters.ProgramsAdapter;
@@ -18,10 +13,9 @@ import com.example.tcc.tccemptyapp.models.courseInfo.Program;
 /**
  * Created by Alan on 21/10/2016.
  */
-public class ProgramsFragment extends BaseFragment {
+public class ProgramsFragment extends CourseInfoFragment {
 
     private static final String DEPARTMENT_KEY = "department";
-    private RecyclerView mRecyclerView;
     private Department mDepartment;
 
     public static ProgramsFragment newInstance(Department department) {
@@ -34,31 +28,20 @@ public class ProgramsFragment extends BaseFragment {
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflateFragment(R.layout.fragment_course_info, inflater, container);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_course_info);
-
-        setDepartment();
-        getActivity().setTitle(R.string.fragment_programs);
-        setupRecyclerView();
-    }
-
-    @Override
-    protected void onPlaceholderButtonSelected() {}
-
-    private void setDepartment() {
+    protected void setData() {
         String serializedDepartment = getArguments().getString(DEPARTMENT_KEY);
         mDepartment = Department.toModel(serializedDepartment, Department.class);
     }
 
-    private void setupRecyclerView() {
+
+    @Override
+    protected int getFragmentTitle() {
+        return R.string.fragment_programs;
+    }
+
+    @Override
+    protected void setupRecyclerView() {
         Context context = getContext();
         ProgramsAdapter adapter = new ProgramsAdapter(context, mDepartment.getProgramList(), getListener());
 

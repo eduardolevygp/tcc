@@ -1,4 +1,4 @@
-package com.example.tcc.tccemptyapp.fragments;
+package com.example.tcc.tccemptyapp.fragments.courseInfo;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.example.tcc.tccemptyapp.R;
 import com.example.tcc.tccemptyapp.adapters.DepartmentsAdapter;
 import com.example.tcc.tccemptyapp.adapters.DepartmentsListener;
+import com.example.tcc.tccemptyapp.fragments.BaseFragment;
 import com.example.tcc.tccemptyapp.models.courseInfo.Department;
 import com.example.tcc.tccemptyapp.models.courseInfo.Program;
 
@@ -22,29 +23,18 @@ import java.util.List;
 /**
  * Created by Alan on 17/10/2016.
  */
-public class DepartmentsFragment extends BaseFragment {
+public class DepartmentsFragment extends CourseInfoFragment {
 
-    private RecyclerView mRecyclerView;
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflateFragment(R.layout.fragment_course_info, inflater, container);
+    protected void setData() {}
+
+    @Override
+    protected int getFragmentTitle() {
+        return R.string.fragment_departments;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_course_info);
-
-        setupRecyclerView();
-        getActivity().setTitle(R.string.fragment_departments);
-    }
-
-    @Override
-    protected void onPlaceholderButtonSelected() {}
-
-    private void setupRecyclerView() {
+    protected void setupRecyclerView() {
         DepartmentsAdapter adapter = new DepartmentsAdapter(getContext(), getMockDepartments(), getDepartmentsListener());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(adapter);
@@ -61,8 +51,12 @@ public class DepartmentsFragment extends BaseFragment {
 
     private void goToPrograms(Department department) {
         ProgramsFragment fragment = ProgramsFragment.newInstance(department);
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.main_activity_container, fragment).addToBackStack(null).commit();
+        getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_activity_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private List<Department> getMockDepartments() {
