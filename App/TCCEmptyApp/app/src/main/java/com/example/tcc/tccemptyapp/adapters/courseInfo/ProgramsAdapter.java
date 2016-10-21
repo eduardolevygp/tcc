@@ -1,12 +1,7 @@
-package com.example.tcc.tccemptyapp.adapters;
+package com.example.tcc.tccemptyapp.adapters.courseInfo;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.tcc.tccemptyapp.R;
 import com.example.tcc.tccemptyapp.components.CourseInfoViewHolder;
 import com.example.tcc.tccemptyapp.models.courseInfo.Program;
 
@@ -15,14 +10,13 @@ import java.util.List;
 /**
  * Created by Alan on 21/10/2016.
  */
-public class ProgramsAdapter extends RecyclerView.Adapter<CourseInfoViewHolder> {
+public class ProgramsAdapter extends CourseInfoAdapter {
 
-    private final Context mContext;
     private final List<Program> mPrograms;
     private final ProgramsListener mListener;
 
-    public ProgramsAdapter(Context context, List<Program> programs, ProgramsListener listener) {
-        mContext = context;
+    public ProgramsAdapter(final Context context, final List<Program> programs, final ProgramsListener listener) {
+        super(context);
         mPrograms = programs;
         mListener = listener;
     }
@@ -33,14 +27,7 @@ public class ProgramsAdapter extends RecyclerView.Adapter<CourseInfoViewHolder> 
     }
 
     @Override
-    public CourseInfoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(mContext).inflate(R.layout.card_view_course_info, parent, false);
-
-        return new CourseInfoViewHolder(itemView, mContext);
-    }
-
-    @Override
-    public void onBindViewHolder(CourseInfoViewHolder holder, int position) {
+    public void onBindViewHolder(CourseInfoViewHolder holder, final int position) {
         final Program program = mPrograms.get(position);
 
         holder.setText(program.getName());

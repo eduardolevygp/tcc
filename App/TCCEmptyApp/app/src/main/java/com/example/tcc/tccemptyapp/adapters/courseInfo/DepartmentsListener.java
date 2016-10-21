@@ -1,4 +1,4 @@
-package com.example.tcc.tccemptyapp.adapters;
+package com.example.tcc.tccemptyapp.adapters.courseInfo;
 
 import com.example.tcc.tccemptyapp.models.courseInfo.Department;
 

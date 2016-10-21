@@ -1,19 +1,11 @@
 package com.example.tcc.tccemptyapp.fragments.courseInfo;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.tcc.tccemptyapp.R;
-import com.example.tcc.tccemptyapp.adapters.DepartmentsAdapter;
-import com.example.tcc.tccemptyapp.adapters.DepartmentsListener;
-import com.example.tcc.tccemptyapp.fragments.BaseFragment;
+import com.example.tcc.tccemptyapp.adapters.courseInfo.CourseInfoAdapter;
+import com.example.tcc.tccemptyapp.adapters.courseInfo.DepartmentsAdapter;
+import com.example.tcc.tccemptyapp.adapters.courseInfo.DepartmentsListener;
 import com.example.tcc.tccemptyapp.models.courseInfo.Department;
+import com.example.tcc.tccemptyapp.models.courseInfo.Period;
 import com.example.tcc.tccemptyapp.models.courseInfo.Program;
 
 import java.util.ArrayList;
@@ -34,10 +26,8 @@ public class DepartmentsFragment extends CourseInfoFragment {
     }
 
     @Override
-    protected void setupRecyclerView() {
-        DepartmentsAdapter adapter = new DepartmentsAdapter(getContext(), getMockDepartments(), getDepartmentsListener());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(adapter);
+    protected CourseInfoAdapter getAdapter() {
+        return new DepartmentsAdapter(getContext(), getMockDepartments(), getDepartmentsListener());
     }
 
     private DepartmentsListener getDepartmentsListener() {
@@ -111,6 +101,33 @@ public class DepartmentsFragment extends CourseInfoFragment {
             programs.addAll(Arrays.asList(program1, program2, program3, program4));
         }
 
+        program1.setPeriodList(getMockPeriods(false));
+        program2.setPeriodList(getMockPeriods(false));
+        program3.setPeriodList(getMockPeriods(false));
+        program4.setPeriodList(getMockPeriods(true));
+
         return programs;
+    }
+
+    private List<Period> getMockPeriods(boolean isLast) {
+        Period period1 = new Period();
+        Period period2 = new Period();
+        Period period3 = new Period();
+        Period period4 = new Period();
+        List<Period> periods = new ArrayList<>();
+
+        if (!isLast) {
+            period1.setName("1º Semestre");
+            period2.setName("2º Semestre");
+            periods.addAll(Arrays.asList(period1, period2));
+        } else {
+            period1.setName("1º Semestre");
+            period2.setName("2º Semestre");
+            period3.setName("3º Semestre");
+            period4.setName("4º Semestre");
+            periods.addAll(Arrays.asList(period1, period2, period3, period4));
+        }
+
+        return periods;
     }
 }

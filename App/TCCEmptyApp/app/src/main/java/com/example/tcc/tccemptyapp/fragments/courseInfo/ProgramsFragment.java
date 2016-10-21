@@ -1,12 +1,11 @@
 package com.example.tcc.tccemptyapp.fragments.courseInfo;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 
 import com.example.tcc.tccemptyapp.R;
-import com.example.tcc.tccemptyapp.adapters.ProgramsAdapter;
-import com.example.tcc.tccemptyapp.adapters.ProgramsListener;
+import com.example.tcc.tccemptyapp.adapters.courseInfo.CourseInfoAdapter;
+import com.example.tcc.tccemptyapp.adapters.courseInfo.ProgramsAdapter;
+import com.example.tcc.tccemptyapp.adapters.courseInfo.ProgramsListener;
 import com.example.tcc.tccemptyapp.models.courseInfo.Department;
 import com.example.tcc.tccemptyapp.models.courseInfo.Program;
 
@@ -34,27 +33,32 @@ public class ProgramsFragment extends CourseInfoFragment {
         mDepartment = Department.toModel(serializedDepartment, Department.class);
     }
 
-
     @Override
     protected int getFragmentTitle() {
         return R.string.fragment_programs;
     }
 
     @Override
-    protected void setupRecyclerView() {
-        Context context = getContext();
-        ProgramsAdapter adapter = new ProgramsAdapter(context, mDepartment.getProgramList(), getListener());
-
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(adapter);
+    protected CourseInfoAdapter getAdapter() {
+        return new ProgramsAdapter(getContext(), mDepartment.getProgramList(), getListener());
     }
 
     private ProgramsListener getListener() {
         return new ProgramsListener() {
             @Override
             public void onProgramClicked(Program program) {
-                int a = 3;
+                goToPeriods(program);
             }
         };
+    }
+
+    private void goToPeriods(Program program) {
+        PeriodsFragment fragment = PeriodsFragment.newInstance(program);
+        getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_activity_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
