@@ -48,7 +48,8 @@ public class PeriodsFragment extends CourseInfoFragment {
         return new PeriodsListener() {
             @Override
             public void onPeriodClicked(Period period) {
-                int a = 3;
+                CoursesFragment fragment = CoursesFragment.newInstance(period);
+                goToFragment(fragment);
             }
         };
     }

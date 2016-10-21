@@ -47,18 +47,9 @@ public class ProgramsFragment extends CourseInfoFragment {
         return new ProgramsListener() {
             @Override
             public void onProgramClicked(Program program) {
-                goToPeriods(program);
+                PeriodsFragment fragment = PeriodsFragment.newInstance(program);
+                goToFragment(fragment);
             }
         };
-    }
-
-    private void goToPeriods(Program program) {
-        PeriodsFragment fragment = PeriodsFragment.newInstance(program);
-        getActivity()
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_activity_container, fragment)
-                .addToBackStack(null)
-                .commit();
     }
 }

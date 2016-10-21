@@ -38,6 +38,14 @@ public abstract class CourseInfoFragment extends BaseFragment {
         setupRecyclerView();
     }
 
+    protected void goToFragment(BaseFragment fragment) {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_activity_container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
     @Override
     protected void onPlaceholderButtonSelected() {}
 

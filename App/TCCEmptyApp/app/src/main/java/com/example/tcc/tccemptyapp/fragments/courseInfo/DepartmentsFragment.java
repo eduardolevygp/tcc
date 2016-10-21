@@ -4,6 +4,7 @@ import com.example.tcc.tccemptyapp.R;
 import com.example.tcc.tccemptyapp.adapters.courseInfo.CourseInfoAdapter;
 import com.example.tcc.tccemptyapp.adapters.courseInfo.DepartmentsAdapter;
 import com.example.tcc.tccemptyapp.adapters.courseInfo.DepartmentsListener;
+import com.example.tcc.tccemptyapp.models.courseInfo.Course;
 import com.example.tcc.tccemptyapp.models.courseInfo.Department;
 import com.example.tcc.tccemptyapp.models.courseInfo.Period;
 import com.example.tcc.tccemptyapp.models.courseInfo.Program;
@@ -34,19 +35,10 @@ public class DepartmentsFragment extends CourseInfoFragment {
         return new DepartmentsListener() {
             @Override
             public void onDepartmentClick(Department department) {
-                goToPrograms(department);
+                ProgramsFragment fragment = ProgramsFragment.newInstance(department);
+                goToFragment(fragment);
             }
         };
-    }
-
-    private void goToPrograms(Department department) {
-        ProgramsFragment fragment = ProgramsFragment.newInstance(department);
-        getActivity()
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_activity_container, fragment)
-                .addToBackStack(null)
-                .commit();
     }
 
     private List<Department> getMockDepartments() {
@@ -128,6 +120,49 @@ public class DepartmentsFragment extends CourseInfoFragment {
             periods.addAll(Arrays.asList(period1, period2, period3, period4));
         }
 
+        period1.setCourseList(getMockCourses(1));
+        period2.setCourseList(getMockCourses(2));
+        period3.setCourseList(getMockCourses(3));
+        period4.setCourseList(getMockCourses(4));
+
         return periods;
+    }
+
+    private List<Course> getMockCourses(int position) {
+        Course course1 = new Course();
+        Course course2 = new Course();
+        Course course3 = new Course();
+        Course course4 = new Course();
+        List<Course> courses = new ArrayList<>();
+
+        if (position == 1) {
+            course1.setName("PCS2214");
+            course1.setId(1);
+            course2.setName("PCS2215");
+            course2.setId(2);
+            courses.addAll(Arrays.asList(course1, course2));
+        } else if (position == 2) {
+            course1.setName("PEA1234");
+            course1.setId(3);
+            course2.setName("PEA4321");
+            course2.setId(4);
+            courses.addAll(Arrays.asList(course1, course2));
+        } else if (position == 3) {
+            course1.setName("PTCXXXX");
+            course1.setId(5);
+            courses.add(course1);
+        } else if (position == 4) {
+            course1.setName("MAC2166");
+            course1.setId(6);
+            course2.setName("MAC2167");
+            course2.setId(7);
+            course3.setName("MAC0000");
+            course3.setId(8);
+            course4.setName("MAC0001");
+            course4.setId(9);
+            courses.addAll(Arrays.asList(course1, course2, course3, course4));
+        }
+
+        return courses;
     }
 }
