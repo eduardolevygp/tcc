@@ -18,7 +18,7 @@ import com.example.tcc.tccemptyapp.fragments.BaseFragment;
 public abstract class CourseInfoFragment extends BaseFragment {
     protected RecyclerView mRecyclerView;
 
-    protected abstract void setData();
+    protected abstract void setParentObjectData();
     protected abstract int getFragmentTitle();
     protected abstract CourseInfoAdapter getAdapter();
 
@@ -33,17 +33,9 @@ public abstract class CourseInfoFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_course_info);
 
-        setData();
+        setParentObjectData();
         getActivity().setTitle(getFragmentTitle());
         setupRecyclerView();
-    }
-
-    protected void goToFragment(BaseFragment fragment) {
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_activity_container, fragment)
-                .addToBackStack(null)
-                .commit();
     }
 
     @Override

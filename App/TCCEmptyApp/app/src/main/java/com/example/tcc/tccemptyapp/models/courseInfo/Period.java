@@ -1,23 +1,12 @@
 package com.example.tcc.tccemptyapp.models.courseInfo;
 
-import com.example.tcc.tccemptyapp.models.BaseModel;
-
 import java.util.List;
 
 /**
  * Created by Alan on 17/10/2016.
  */
-public class Period extends BaseModel {
-    private String name;
+public class Period extends CourseInfo {
     private List<Course> courseList;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public List<Course> getCourseList() {
         return courseList;
@@ -27,3 +16,4 @@ public class Period extends BaseModel {
         this.courseList = courseList;
     }
 }
+

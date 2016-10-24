@@ -10,6 +10,11 @@ import android.widget.TextView;
 import com.example.tcc.tccemptyapp.R;
 import com.example.tcc.tccemptyapp.fragments.BaseFragment;
 import com.example.tcc.tccemptyapp.models.courseInfo.Course;
+import com.example.tcc.tccemptyapp.models.courseInfo.CourseDetail;
+import com.example.tcc.tccemptyapp.providers.courseInfo.CourseDetailResponse;
+import com.example.tcc.tccemptyapp.providers.courseInfo.CourseInfoProvider;
+
+import java.security.Key;
 
 
 /**
@@ -18,15 +23,14 @@ import com.example.tcc.tccemptyapp.models.courseInfo.Course;
 public class CourseDetailsFragment extends BaseFragment {
 
     private static final String COURSE_KEY = "course";
+    private TextView mTitle;
     private TextView mTextView;
-    private Course mCourse;
 
-    public static CourseDetailsFragment newInstance(Course course) {
+    public static CourseDetailsFragment newInstance(int id) {
         Bundle args = new Bundle();
         CourseDetailsFragment fragment = new CourseDetailsFragment();
-        String jsonCourse = course.toJson();
 
-        args.putString(COURSE_KEY, jsonCourse);
+        args.putInt(COURSE_KEY, id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -41,21 +45,33 @@ public class CourseDetailsFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTextView = (TextView) view.findViewById(R.id.courses_details_textview);
+        mTitle = (TextView) view.findViewById(R.id.courses_details_title);
 
-        setCourse();
-        getActivity().setTitle(mCourse.getName());
-        String text = "Detalhes do Curso " + mCourse.getName() + " cujo ID é " + mCourse.getId();
-        mTextView.setText(text);
+        getActivity().setTitle(R.string.fragment_course_details);
+        fetchDetails();
+    }
+
+    private void fetchDetails() {
+        int id = getArguments().getInt(COURSE_KEY);
+
+        showLoading();
+        new CourseInfoProvider().getCourseDetails(id, new CourseDetailResponse() {
+            @Override
+            public void onCourseDetailSuccess(CourseDetail course) {
+                mTitle.setText(course.getCodeAndName());
+                mTextView.setText(course.getInfo());
+                showContent();
+            }
+
+            @Override
+            public void onCourseDetailFailure() {
+                showPlaceholder();
+            }
+        });
     }
 
     @Override
     protected void onPlaceholderButtonSelected() {
-
+        fetchDetails();
     }
-
-    private void setCourse() {
-        String jsonCourse = getArguments().getString(COURSE_KEY);
-        mCourse = Course.toModel(jsonCourse, Course.class);
-    }
-
 }

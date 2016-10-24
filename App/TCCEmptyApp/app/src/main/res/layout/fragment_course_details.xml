@@ -4,9 +4,23 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/courses_details_textview"
+        android:id="@+id/courses_details_title"
         style="@style/TextElement.Header.H1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@color/color_secondary"
+        android:textColor="@color/color_secondary_contrast"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="PCS1234 - Laboratório Digital para isso e para aquilo"/>
+
+
+    <TextView
+        android:id="@+id/courses_details_textview"
+        style="@style/TextElement.Paragraph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Lorem ipsum dolor sit amet, est justo aliquam expetendis eu. Nam ad case nostrud phaedrum. Enim menandri posidonium et eos, nulla fuisset denique pri ut. Sed brute consetetur dissentiunt ex.\n\nSummo atomorum mea cu, cum ne tritani maiestatis. Eos partiendo suscipiantur ut, ex quo perpetua quaerendum. Utroque denique voluptua an vel, ea vim dicat falli, cu sea adhuc similique. Ad per clita salutandi.\n\nPer justo definitionem interpretaris in. At sed brute zril. Vocibus evertitur similique in eum, dolor eruditi ut per. Sit ex choro utinam. Et has augue antiopam, eos in tale recteque. Elitr dissentiet cum te, sit ignota aeterno an."/>
 
 </LinearLayout>

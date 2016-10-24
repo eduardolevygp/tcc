@@ -6,8 +6,12 @@ import com.example.tcc.tccemptyapp.R;
 import com.example.tcc.tccemptyapp.adapters.courseInfo.CourseInfoAdapter;
 import com.example.tcc.tccemptyapp.adapters.courseInfo.PeriodsAdapter;
 import com.example.tcc.tccemptyapp.adapters.courseInfo.PeriodsListener;
+import com.example.tcc.tccemptyapp.helpers.TransactionHelper;
+import com.example.tcc.tccemptyapp.models.courseInfo.Department;
 import com.example.tcc.tccemptyapp.models.courseInfo.Period;
 import com.example.tcc.tccemptyapp.models.courseInfo.Program;
+
+import java.util.List;
 
 
 /**
@@ -15,23 +19,39 @@ import com.example.tcc.tccemptyapp.models.courseInfo.Program;
  */
 public class PeriodsFragment extends CourseInfoFragment {
 
-    private static final String PROGRAM_KEY = "program";
+    private static final String PARENT_KEY = "parent";
     private Program mProgram;
+    private Department mDepartment;
+
+    public static PeriodsFragment newInstance(final Department department) {
+        return newInstance(department, null);
+    }
 
     public static PeriodsFragment newInstance(final Program program) {
+        return newInstance(null, program);
+    }
+
+    private static PeriodsFragment newInstance(final Department department, final Program program) {
         Bundle args = new Bundle();
         PeriodsFragment fragment = new PeriodsFragment();
-        String jsonProgram = program.toJson();
+        String jsonParent;
 
-        args.putString(PROGRAM_KEY, jsonProgram);
+        if (department != null) {
+            jsonParent = department.toJson();
+        } else {
+            jsonParent = program.toJson();
+        }
+
+        args.putString(PARENT_KEY, jsonParent);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    protected void setData() {
-        String jsonProgram = getArguments().getString(PROGRAM_KEY);
+    protected void setParentObjectData() {
+        String jsonProgram = getArguments().getString(PARENT_KEY);
         mProgram = Program.toModel(jsonProgram, Program.class);
+        mDepartment = Department.toModel(jsonProgram, Department.class);
     }
 
     @Override
@@ -41,15 +61,23 @@ public class PeriodsFragment extends CourseInfoFragment {
 
     @Override
     protected CourseInfoAdapter getAdapter() {
-        return new PeriodsAdapter(getContext(), mProgram.getPeriodList(), getListener());
+        List<Period> periodList;
+
+        if (mDepartment != null) {
+             periodList = mDepartment.getPeriodList();
+        } else {
+            periodList = mProgram.getPeriodList();
+        }
+
+        return new PeriodsAdapter(getContext(), periodList, getListener());
     }
 
     private PeriodsListener getListener() {
         return new PeriodsListener() {
             @Override
             public void onPeriodClicked(Period period) {
-                CoursesFragment fragment = CoursesFragment.newInstance(period);
-                goToFragment(fragment);
+                CoursesFragment fragment = CoursesFragment.newInstance(period.getId());
+                TransactionHelper.pushFragment(getActivity(), R.id.main_activity_container, fragment);
             }
         };
     }

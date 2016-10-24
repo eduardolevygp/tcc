@@ -6,6 +6,8 @@ import com.example.tcc.tccemptyapp.R;
 import com.example.tcc.tccemptyapp.adapters.courseInfo.CourseInfoAdapter;
 import com.example.tcc.tccemptyapp.adapters.courseInfo.ProgramsAdapter;
 import com.example.tcc.tccemptyapp.adapters.courseInfo.ProgramsListener;
+import com.example.tcc.tccemptyapp.fragments.BaseFragment;
+import com.example.tcc.tccemptyapp.helpers.TransactionHelper;
 import com.example.tcc.tccemptyapp.models.courseInfo.Department;
 import com.example.tcc.tccemptyapp.models.courseInfo.Program;
 
@@ -28,7 +30,7 @@ public class ProgramsFragment extends CourseInfoFragment {
     }
 
     @Override
-    protected void setData() {
+    protected void setParentObjectData() {
         String serializedDepartment = getArguments().getString(DEPARTMENT_KEY);
         mDepartment = Department.toModel(serializedDepartment, Department.class);
     }
@@ -47,8 +49,15 @@ public class ProgramsFragment extends CourseInfoFragment {
         return new ProgramsListener() {
             @Override
             public void onProgramClicked(Program program) {
-                PeriodsFragment fragment = PeriodsFragment.newInstance(program);
-                goToFragment(fragment);
+                BaseFragment fragment;
+
+                if (program.getId() > 0) {
+                    fragment = CoursesFragment.newInstance(program.getId());
+                } else {
+                    fragment = PeriodsFragment.newInstance(program);
+                }
+
+                TransactionHelper.pushFragment(getActivity(), R.id.main_activity_container, fragment);
             }
         };
     }
