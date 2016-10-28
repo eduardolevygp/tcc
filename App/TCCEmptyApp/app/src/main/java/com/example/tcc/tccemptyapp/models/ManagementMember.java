@@ -1,7 +1,7 @@
 package com.example.tcc.tccemptyapp.models;
 
 
-import com.example.tcc.tccemptyapp.constants.Constants;
+import com.example.tcc.tccemptyapp.constants.APIRoutes;
 
 /**
  * Created by Alan on 02/10/2016.
@@ -33,7 +33,7 @@ public class ManagementMember extends BaseModel {
 
     public String getFullImageUrl() {
         if (this.fullImageUrl == null && this.imageUrl != null) {
-            this.fullImageUrl = Constants.BASE_URL_IMAGE + this.imageUrl;
+            this.fullImageUrl = APIRoutes.BASE_URL_IMAGE + this.imageUrl;
         }
         return fullImageUrl;
     }

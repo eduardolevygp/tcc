@@ -25,6 +25,7 @@
     <style name="Button">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">45dp</item>
+        <item name="android:layout_marginTop">@dimen/activity_vertical_margin</item>
         <item name="android:background">@color/color_secondary</item>
         <item name="android:padding">8dp</item>
         <item name="android:textColor">@color/color_secondary_contrast</item>
@@ -58,9 +59,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextElement.Table">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textSize">@dimen/font_size_extra_large</item>
+    </style>
+
     <style name="TextElement.Paragraph">
-        <item name="android:layout_marginTop">@dimen/activity_vertical_margin</item>
-        <item name="android:layout_marginBottom">@dimen/activity_vertical_margin</item>
+        <item name="android:layout_marginTop">8dp</item>
         <item name="android:textSize">@dimen/font_size_medium</item>
         <item name="android:textColor">@color/color_black</item>
         <item name="android:lineSpacingMultiplier">1.0</item>
