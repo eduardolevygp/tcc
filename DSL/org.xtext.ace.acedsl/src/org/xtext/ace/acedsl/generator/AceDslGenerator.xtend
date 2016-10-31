@@ -37,10 +37,10 @@ class AceDslGenerator extends AbstractGenerator {
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		var Aplicativo app = resource.contents.findFirst[item | item instanceof Aplicativo] as Aplicativo;
 		
-		var URL url = new URL("platform:/plugin/org.xtext.ace.acedsl/base/android/");
+		var URL url = new URL("platform:/plugin/org.xtext.ace.acedsl/base/");
 		var File file = new File(FileLocator.resolve(url).toURI());
 		
-		copyFile(fsa, file, 'android');
+		copyFile(fsa, file, '.');
 				
 //		Strings
 		fsa.generateFile('android/app/src/main/res/values/strings.xml', toUtf8(generateStringsTemplate(app)));
@@ -63,6 +63,10 @@ class AceDslGenerator extends AbstractGenerator {
 //		Parameter do servidor
 		fsa.generateFile('server/app/config/parameters.yml', toUtf8(generateServerParametersTemplate(app)));
 		fsa.generateFile('server/app/config/parameters.yml.dist', toUtf8(generateServerParametersTemplate(app)));
+		
+		val DisciplinasGenerator disciplinasGen = new DisciplinasGenerator(app, fsa);
+		disciplinasGen.generate();
+		
 	}
 	
 	def void copyFile (IFileSystemAccess2 fsa, File file, String path) {
@@ -323,6 +327,9 @@ class AceDslGenerator extends AbstractGenerator {
 
 	    membros_visibility: «if (app.secaoMembros == null) 'false' else 'true'»
 	    membros_label: «if (app.secaoMembros == null) '' else app.secaoMembros.nome»
+	
+	    disciplinas_visibility: @@@disciplinas_visibility@@@
+	    disciplinas_label: '@@@disciplinas_label@@@'
 
 	'''
 }
