@@ -1,0 +1,12 @@
+{%  extends '@Ace/base.html.twig' %}
+
+{%  block body %}
+
+    <h1> {{ form.vars.value.id is null ? 'Nova' : 'Editar' }} disciplina</h1>
+    <div class="h4"> {{  titulo }}</div>
+
+
+    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+    {{ form(form) }}
+
+{% endblock %}

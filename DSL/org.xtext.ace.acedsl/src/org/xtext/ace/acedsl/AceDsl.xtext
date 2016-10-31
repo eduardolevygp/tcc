@@ -48,10 +48,10 @@ Logo returns Logo:
 	caminho = STRING;
 
 OrganizacaoCurso returns OrganizacaoCurso:
-	ListaDisciplinas | ListaPeriodos;
+	organizacao = (ListaDisciplinas | ListaPeriodos);
 
 OrganizacaoDepartamento returns OrganizacaoDepartamento:
-	ListaCursos | ListaDisciplinas | ListaPeriodos;
+	organizacao = (ListaCursos | ListaDisciplinas | ListaPeriodos);
 
 
 EString returns ecore::EString:
