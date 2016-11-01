@@ -12,12 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import java.util.List;
 
-import com.example.tcc.tccemptyapp.fragments.ADMFragment;
-import com.example.tcc.tccemptyapp.fragments.BaseFragment;
-import com.example.tcc.tccemptyapp.fragments.events.EventsFragment;
-import com.example.tcc.tccemptyapp.fragments.courseInfo.DepartmentsFragment;
-import com.example.tcc.tccemptyapp.fragments.HomeFragment;
+@@@import_disciplinas_fragment@@@
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -82,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragment = new ADMFragment();
             replaceTransition(fragment);
         } else if (id == R.id.nav_disciplines) {
-            fragment = new DepartmentsFragment();
+            fragment = @@@disciplinas_construtor@@@;
             replaceTransition(fragment);
         } else if (id == R.id.nav_events) {
             fragment = new EventsFragment();

@@ -1,0 +1,38 @@
+<resources>
+    <!-- Main -->
+    <string name="academic_center_name_initials">CEE</string>
+    <string name="nav_bar_logo">NavBarLogo</string>
+
+
+    <!-- Titles -->
+    <string name="fragment_departments">Escolha o departamento</string>
+    <string name="fragment_programs">Escolha o curso</string>
+    <string name="fragment_period">Escolha o período</string>
+    <string name="fragment_course">Escolha a disciplina</string>
+    <string name="fragment_course_details">Disciplina</string>
+
+    <!-- Home -->
+    <string name="home_welcome">Bem-vindo ao <b>%s</b>!</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--Drawer Menu-->
+    <string name="section_adm">Gestão</string>
+    <string name="section_disciplines">Disciplinas</string>
+    <string name="section_events">Eventos</string>
+    <string name="section_news">Notícias</string>
+
+    <!--Placeholder-->
+    <string name="placeholder_title">Erro na comunicação!</string>
+    <string name="placeholder_text">Ocorreu um erro na comunicação com o servidor. Por favor, tente novamente!</string>
+    <string name="placeholder_button_text">Tentar novamente</string>
+    <string name="placeholder_empty_list_title">Sem disciplinas!</string>
+    <string name="placeholder_empty_list_text">Não há disciplinas cadastradas que seguem a especificação.</string>
+    <string name="placeholder_empty_list_button_text">Voltar</string>
+
+    <!--Descriptions-->
+    <string name="placeholder_image_description">Connection Image</string>
+    <string name="card_adm_placeholder">Placeholder Image</string>
+
+</resources>

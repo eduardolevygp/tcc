@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DefaultLayout"
+    android:gravity="center_horizontal" >
+
+    <ImageView
+        android:layout_height="200dp"
+        android:layout_width="200dp"
+        android:src="@drawable/placeholder_empty_list"
+        android:tint="#999999"
+        android:contentDescription="@string/placeholder_image_description" />
+
+    <TextView
+        style="@style/TextElement.Header.H2"
+        android:text="@string/placeholder_empty_list_title"
+        android:gravity="center_horizontal" />
+
+    <TextView
+        style="@style/TextElement.Paragraph"
+        android:text="@string/placeholder_empty_list_text"
+        android:gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/placeholder_empty_list_button"
+        style="@style/Button"
+        android:text="@string/placeholder_empty_list_button_text" />
+
+</LinearLayout>

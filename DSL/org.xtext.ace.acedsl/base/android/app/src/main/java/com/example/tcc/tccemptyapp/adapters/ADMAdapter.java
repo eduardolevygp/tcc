@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tcc.tccemptyapp.R;
+import com.example.tcc.tccemptyapp.components.BaseViewHolder;
 import com.example.tcc.tccemptyapp.models.ManagementMember;
 import com.squareup.picasso.Picasso;
 
@@ -24,16 +25,15 @@ public class ADMAdapter extends RecyclerView.Adapter<ADMAdapter.ADMViewHolder> {
     private Context mContext;
     private List<ManagementMember> mMembers;
 
-    public class ADMViewHolder extends RecyclerView.ViewHolder {
+    public class ADMViewHolder extends BaseViewHolder {
 
-        private LinearLayout background;
         private TextView name, role, email, phone;
         private ImageView image;
 
         public ADMViewHolder(View view) {
-            super(view);
+            super(view, mContext);
 
-            background = (LinearLayout) view.findViewById(R.id.card_adm_background);
+            setBackground((LinearLayout) view.findViewById(R.id.card_adm_background));
             image = (ImageView) view.findViewById(R.id.card_adm_image);
             name = (TextView) view.findViewById(R.id.card_adm_name);
             role = (TextView) view.findViewById(R.id.card_adm_role);
@@ -46,24 +46,8 @@ public class ADMAdapter extends RecyclerView.Adapter<ADMAdapter.ADMViewHolder> {
             return this.image;
         }
 
-        public void setColors(int position) {
-            int color, textColor;
-
-            if (position % 2 == 0) {
-                color = R.color.color_primary;
-                textColor = R.color.color_primary_contrast;
-            } else {
-                color = R.color.color_secondary;
-                textColor = R.color.color_secondary_contrast;
-            }
-
-            setTextColor(textColor);
-            this.background.setBackgroundColor(ContextCompat.getColor(mContext, color));
-        }
-
-        private void setTextColor(int color) {
-            int colorCode = ContextCompat.getColor(mContext, color);
-
+        @Override
+        protected void setTextColors(int colorCode) {
             name.setTextColor(colorCode);
             role.setTextColor(colorCode);
             email.setTextColor(colorCode);
@@ -97,7 +81,7 @@ public class ADMAdapter extends RecyclerView.Adapter<ADMAdapter.ADMViewHolder> {
         holder.role.setText(member.getRole());
         holder.email.setText(member.getEmail());
         holder.phone.setText(member.getPhone());
-        holder.setColors(position);
+        holder.setBackgroundColor(position);
 
         Picasso.with(mContext)
                 .load(member.getFullImageUrl())

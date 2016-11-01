@@ -3,7 +3,7 @@ package com.example.tcc.tccemptyapp;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,7 +14,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.tcc.tccemptyapp.fragments.ADMFragment;
+import com.example.tcc.tccemptyapp.fragments.BaseFragment;
 import com.example.tcc.tccemptyapp.fragments.HomeFragment;
+
+import java.util.List;
+
+@@@import_disciplinas_fragment@@@
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -73,33 +78,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void openFragment(int id) {
         Toast toast;
+        BaseFragment fragment;
 
         if (id == R.id.nav_adm) {
-            ADMFragment fragment = new ADMFragment();
+            fragment = new ADMFragment();
             replaceTransition(fragment);
         } else if (id == R.id.nav_disciplines) {
-            toast = Toast.makeText(this, "Disciplinas selecionado", Toast.LENGTH_SHORT);
-            toast.show();
+            fragment = @@@disciplinas_construtor@@@;
+            replaceTransition(fragment);
         } else if (id == R.id.nav_events) {
             toast = Toast.makeText(this, "Eventos selecionado", Toast.LENGTH_SHORT);
             toast.show();
         } else if (id == R.id.nav_news) {
-            toast = Toast.makeText(this, "NotÃ­cias selecionado", Toast.LENGTH_SHORT);
+            toast = Toast.makeText(this, "Notícias selecionado", Toast.LENGTH_SHORT);
             toast.show();
         }
     }
 
     private void replaceTransition(Fragment fragment) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.menu_fragment_container, fragment);
-        ft.commit();
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_activity_container, fragment)
+                .commit();
     }
 
     private void setupHomeFragment() {
         HomeFragment fragment = new HomeFragment();
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.menu_fragment_container, fragment);
-        ft.commit();
+        getSupportFragmentManager().beginTransaction()
+            .add(R.id.main_activity_container, fragment)
+                .commit();
     }
+
 }

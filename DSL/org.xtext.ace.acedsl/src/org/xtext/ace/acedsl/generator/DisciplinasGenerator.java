@@ -32,24 +32,181 @@ public class DisciplinasGenerator extends ModuloGenerator {
 			Map<String, Object> arvore = geraArvore();
 			geraListaIndex(arvore);
 			geraRepository();
+			replaceInFile(androidRes + "menu/activity_main_drawer.xml", "disciplines_visible", "true");
+			stringsXml();
+			mainFragment(arvore);
+			if (arvore.containsKey("id")) {
+				fsa.deleteFile(androidJava + "models/courseInfo/CourseInfoStructure.java");
+			} else {
+				courseInfoStructure(arvore);
+			}
 		}
+		
+		id = 1;
 	}
 	
 	private static List<Map<String,Object>> listas = new ArrayList<>();
 
 	private void limpaArquivos() {
-		String parameters = (String) fsa.readTextFile("server/app/config/parameters.yml");
-		parameters = replacePlaceholder(parameters, "disciplinas_visiblity", "false");
-		parameters = replacePlaceholder(parameters, "disciplinas_label", "");
-		fsa.generateFile("server/app/config/parameters.yml", parameters);
-		fsa.generateFile("server/app/config/parameters.yml.dist", parameters);
-		fsa.deleteFile("server/src/AceBundle/Controller/DisciplinasController.php");
-		fsa.deleteFile("server/src/AceBundle/Entity/Disciplina.php");
-		fsa.deleteFile("server/src/AceBundle/Form/DisciplinaType.php");
-		fsa.deleteFile("server/src/AceBundle/Repository/DisciplinaRepository.php");
-		fsa.deleteFile("server/src/AceBundle/Resources/views/Disciplinas/index.html.twig");
-		fsa.deleteFile("server/src/AceBundle/Resources/views/Disciplinas/lista.html.twig");
-		fsa.deleteFile("server/src/AceBundle/Resources/views/Disciplinas/nova.html.twig");
+		//server
+		Map<String,String> parameterValues = new HashMap<>();
+		parameterValues.put("disciplinas_visiblity", "false");
+		parameterValues.put("disciplinas_label", "");
+		replaceInFile(serverConfig + "parameters.yml", parameterValues);
+		replaceInFile(serverConfig + "parameters.yml.dist", parameterValues);
+		
+		fsa.deleteFile(serverBundle + "Controller/DisciplinasController.php");
+		fsa.deleteFile(serverBundle + "Entity/Disciplina.php");
+		fsa.deleteFile(serverBundle + "Form/DisciplinaType.php");
+		fsa.deleteFile(serverBundle + "Repository/DisciplinaRepository.php");
+		fsa.deleteFile(serverViews + "Disciplinas/index.html.twig");
+		fsa.deleteFile(serverViews + "Disciplinas/lista.html.twig");
+		fsa.deleteFile(serverViews + "Disciplinas/nova.html.twig");
+		
+		
+		//app
+		limpaArquivo(androidRes + "values/strings.xml", "disciplinas_strings");
+		fsa.deleteFile(androidJava + "adapters/courseInfo/CourseInfoAdapter.java");
+		fsa.deleteFile(androidJava + "adapters/courseInfo/CoursesAdapter.java");
+		fsa.deleteFile(androidJava + "adapters/courseInfo/CoursesListener.java");
+		fsa.deleteFile(androidJava + "adapters/courseInfo/DepartmentsAdapter.java");
+		fsa.deleteFile(androidJava + "adapters/courseInfo/DepartmentsListener.java");
+		fsa.deleteFile(androidJava + "adapters/courseInfo/PeriodsAdapter.java");
+		fsa.deleteFile(androidJava + "adapters/courseInfo/PeriodsListener.java");
+		fsa.deleteFile(androidJava + "adapters/courseInfo/ProgramsAdapter.java");
+		fsa.deleteFile(androidJava + "adapters/courseInfo/ProgramsListener.java");
+		fsa.deleteFile(androidJava + "components/CourseInfoViewHolder.java");
+		fsa.deleteFile(androidJava + "fragments/courseInfo/CourseDetailsFragment.java");
+		fsa.deleteFile(androidJava + "fragments/courseInfo/CourseInfoFragment.java");
+		fsa.deleteFile(androidJava + "fragments/courseInfo/CoursesFragment.java");
+		fsa.deleteFile(androidJava + "fragments/courseInfo/DepartmentsFragment.java");
+		fsa.deleteFile(androidJava + "fragments/courseInfo/PeriodsFragment.java");
+		fsa.deleteFile(androidJava + "fragments/courseInfo/ProgramsFragment.java");
+		fsa.deleteFile(androidJava + "models/courseInfo/Course.java");
+		fsa.deleteFile(androidJava + "models/courseInfo/CourseDetail.java");
+		fsa.deleteFile(androidJava + "models/courseInfo/CourseInfo.java");
+		fsa.deleteFile(androidJava + "models/courseInfo/CourseInfoStructure.java");
+		fsa.deleteFile(androidJava + "models/courseInfo/Department.java");
+		fsa.deleteFile(androidJava + "models/courseInfo/Period.java");
+		fsa.deleteFile(androidJava + "models/courseInfo/Program.java");
+		fsa.deleteFile(androidJava + "providers/courseInfo/CourseDetailResponse.java");
+		fsa.deleteFile(androidJava + "providers/courseInfo/CourseInfoProvider.java");
+		fsa.deleteFile(androidJava + "providers/courseInfo/CourseListResponse.java");
+		
+		fsa.deleteFile(androidRes + "layout/card_view_course_info.xml");
+		fsa.deleteFile(androidRes + "layout/fragment_course_details.xml");
+		fsa.deleteFile(androidRes + "layout/fragment_course_info.xml");
+		
+		replaceInFile(androidRes + "menu/activity_main_drawer.xml", "disciplines_visible", "false");
+	}
+	
+	private void stringsXml () {
+		String replacement = "<!-- Titles -->\n";
+		replacement += "    <string name=\"fragment_departments\">Escolha o departamento</string>\n";
+		replacement += "    <string name=\"fragment_programs\">Escolha o curso</string>\n";
+		replacement += "    <string name=\"fragment_period\">Escolha o período</string>\n";
+		replacement += "    <string name=\"fragment_course\">Escolha a disciplina</string>\n";
+		replacement += "    <string name=\"fragment_course_details\">Disciplina</string>";
+		
+		replaceInFile(androidRes + "values/strings.xml", "disciplinas_strings", replacement);
+	}
+	
+	private void mainFragment(Map<String,Object> arvore) {
+		String constructor = "";
+		String importa = "import com.example.tcc.tccemptyapp.fragments.courseInfo.";
+		String classe = (String) arvore.get("classe");
+		if (classe == ListaDisciplinas.class.getName()) {
+			importa += "CoursesFragment";
+			constructor = "CoursesFragment.newInstance(" + arvore.get("id").toString() +")";
+		} else if (classe == ListaPeriodos.class.getName()) {
+			importa += "PeriodsFragment";
+			constructor = "new PeriodsFragment()";
+		} else if (classe == ListaCursos.class.getName()) {
+			importa += "ProgramsFragment";
+			constructor = "new ProgramsFragment()";
+		} else {
+			importa += "DepartmentsFragment";
+			constructor = "new DepartmentsFragment()";
+		}
+		Map<String, String> replacements = new HashMap<>();
+		replacements.put("import_disciplinas_fragment", importa + ";");
+		replacements.put("disciplinas_construtor", constructor);
+		
+		replaceInFile(androidJava + "MainActivity.java", replacements);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void courseInfoStructure (Map<String,Object> arvore) {
+		String classeApp = classeAppModel(arvore.get("classe").toString());
+		String listaNome = classeApp.toLowerCase() + "List";
+		String getterLista = "get" + classeApp + "List";
+
+		String createStructure = "List<" + classeApp + "> baseList = new ArrayList<>();\n";
+		
+		for (Map<String, Object> map : (List<Map<String,Object>>) arvore.get("lista")) {
+			if (map.containsKey("id")) {
+				createStructure += "baseList.add(new " + classeApp + "(\""+map.get("nome").toString()+"\", "+map.get("id").toString()+""+"));\n";  
+			} else {
+//				createStructure += "{\n";
+//				String modelName = classeApp.toLowerCase();
+//				createStructure += classeApp + " "+ modelName +" = new " + classeApp + "(\""+map.get("nome").toString()+"\");\n";
+//				String subClasse = classeAppModel(map.get("classe").toString());
+//				String subNameList = subClasse.toLowerCase() + "s";
+//				createStructure += "List<" + subClasse + "> " +  subNameList + " = new ArrayList<>();\n";
+//				for (Map<String, Object> subMap : (List<Map<String,Object>>) map.get("lista")) {
+//					if (subMap.containsKey("id")) {
+//						createStructure += subNameList + ".add(new " + subClasse + "(\"" +subMap.get("nome").toString()+ "\", " + subMap.get("id").toString() + "));\n";
+//					} else {
+//						
+//					}
+//				}
+//				createStructure += modelName += ".set" + subClasse + "List(" + subNameList + ");\n";
+//				createStructure += "baseList.add("+modelName+");\n";
+//				createStructure += "}\n";
+				createStructure += subStructureInfo(map, "baseList", classeApp);
+			}
+		}
+		
+		createStructure += "return baseList;\n";
+		
+		Map<String, String> subs = new HashMap<>();
+		subs.put("classe_app", classeApp);
+		subs.put("lista_nome", listaNome);
+		subs.put("getter_lista", getterLista);
+		subs.put("create_structure", createStructure);
+		replaceAllInFile(androidJava + "models/courseInfo/CourseInfoStructure.java", subs);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private String subStructureInfo (Map<String,Object> map, String baseListName, String classeApp) {
+		String createStructure = "";
+		createStructure += "{\n";
+		String modelName = classeApp.toLowerCase();
+		createStructure += classeApp + " "+ modelName +" = new " + classeApp + "(\""+map.get("nome").toString()+"\");\n";
+		String subClasse = classeAppModel(map.get("classe").toString());
+		String subNameList = subClasse.toLowerCase() + "s";
+		createStructure += "List<" + subClasse + "> " +  subNameList + " = new ArrayList<>();\n";
+		for (Map<String, Object> subMap : (List<Map<String,Object>>) map.get("lista")) {
+			if (subMap.containsKey("id")) {
+				createStructure += subNameList + ".add(new " + subClasse + "(\"" +subMap.get("nome").toString()+ "\", " + subMap.get("id").toString() + "));\n";
+			} else {
+				createStructure += subStructureInfo(subMap, subNameList, subClasse);
+			}
+		}
+		createStructure += modelName + ".set" + subClasse + "List(" + subNameList + ");\n";
+		createStructure += baseListName+".add("+modelName+");\n";
+		createStructure += "}\n";
+		return createStructure;
+	}
+	
+	private String classeAppModel(String classeGenerator) {
+		if (classeGenerator == ListaDepartamentos.class.getName()) {
+			return "Department";
+		} else if (classeGenerator == ListaCursos.class.getName()) {
+			return "Program";
+		} else {
+			return "Period";
+		}
 	}
 	
 	private Map<String, Object> geraArvore() {
@@ -145,17 +302,15 @@ public class DisciplinasGenerator extends ModuloGenerator {
 	}
 	
 	private void arrumaParameters() {
-		String parameters = (String) fsa.readTextFile("server/app/config/parameters.yml");
+		String parameters = (String) fsa.readTextFile(serverConfig + "parameters.yml");
 		parameters = replacePlaceholder(parameters, "disciplinas_visibility", "true");
 		parameters = replacePlaceholder(parameters, "disciplinas_label", app.getSecaoDisciplinas().getNome());
-		fsa.generateFile("server/app/config/parameters.yml", parameters);
-		fsa.generateFile("server/app/config/parameters.yml.dist", parameters);
+		fsa.generateFile(serverConfig + "parameters.yml", parameters);
+		fsa.generateFile(serverConfig + "parameters.yml.dist", parameters);
 	}
 	
 	private void geraListaIndex(Map<String,Object> arvore) {
-		String fonte = (String) fsa.readTextFile("server/src/AceBundle/Resources/views/Disciplinas/index.html.twig");
-		fonte = replacePlaceholder(fonte, "disciplinas_html_twig", htmlLista(arvore));
-		fsa.generateFile("server/src/AceBundle/Resources/views/Disciplinas/index.html.twig", fonte);
+		replaceInFile(serverViews + "Disciplinas/index.html.twig", "disciplinas_html_twig", htmlLista(arvore));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -203,14 +358,13 @@ public class DisciplinasGenerator extends ModuloGenerator {
 	}
 
 	private void geraRepository() {
-		String repo = (String) fsa.readTextFile("server/src/AceBundle/Repository/DisciplinaRepository.php");
 		String cases = "";
 		for (Iterator<Map<String, Object>> iterator = listas.iterator(); iterator.hasNext();) {
 			Map<String, Object> map = iterator.next();
 			cases += "case " + map.get("id").toString() + ":\n";
 			cases += "$title = '" + map.get("title").toString() + "'; break;\n";
 		}
-		repo = replacePlaceholder(repo, "title_cases", cases);
-		fsa.generateFile("server/src/AceBundle/Repository/DisciplinaRepository.php", repo);
+		
+		replaceInFile(serverBundle + "Repository/DisciplinaRepository.php", "title_cases", cases);
 	}
 }
