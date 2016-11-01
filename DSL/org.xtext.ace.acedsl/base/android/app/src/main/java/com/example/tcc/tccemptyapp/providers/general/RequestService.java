@@ -1,5 +1,6 @@
 package com.example.tcc.tccemptyapp.providers.general;
 
+import com.example.tcc.tccemptyapp.constants.APIRoutes;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -20,11 +21,13 @@ public class RequestService {
         mClient = new AsyncHttpClient();
     }
 
-    public void performRequest(final int method, final String url, final ResponseHandler handler) {
-        performRequest(method, url, null, handler);
+    public void performRequest(final int method, final String route, final ResponseHandler handler) {
+        performRequest(method, route, null, handler);
     }
 
-    public void performRequest(final int method, final String url, final RequestParams params, final ResponseHandler handler) {
+    public void performRequest(final int method, final String route, final RequestParams params, final ResponseHandler handler) {
+
+        final String url = APIRoutes.BASE_URL + route;
 
         switch (method) {
             case HttpMethod.GET:
@@ -74,13 +77,13 @@ public class RequestService {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                handler.onFailure(errorResponse.toString());
+                handler.onFailure(errorResponse != null ? errorResponse.toString() : "");
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                handler.onFailure(errorResponse.toString());
+                handler.onFailure(errorResponse != null ? errorResponse.toString() : "");
             }
 
         };

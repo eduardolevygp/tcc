@@ -5,7 +5,7 @@
     tools:context="com.example.tcc.tccemptyapp.fragments.ADMFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/adm_recycler"
+        android:id="@+id/recycler_view_adm"
         android:layout_height="match_parent"
         android:layout_width="match_parent" />
 

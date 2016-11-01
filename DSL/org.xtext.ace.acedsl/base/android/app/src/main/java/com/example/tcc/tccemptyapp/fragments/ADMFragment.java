@@ -37,7 +37,7 @@ public class ADMFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.adm_recycler);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_adm);
 
         fetchMembers();
     }

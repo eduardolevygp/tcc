@@ -52,7 +52,7 @@ class AceDslGenerator extends AbstractGenerator {
 		fsa.generateFile('android/app/src/main/res/values/styles.xml', toUtf8(generateStylesTemplate(app.estilo)));
 		
 // 		Constants
-		fsa.generateFile('android/app/src/main/java/com/example/tcc/tccemptyapp/constants/Constants.java', toUtf8(generateAppConstantsTemplate(app)));
+		fsa.generateFile('android/app/src/main/java/com/example/tcc/tccemptyapp/constants/APIRoutes.java', toUtf8(generateAppConstantsTemplate(app)));
 
 //		Drawer menu
 		fsa.generateFile('android/app/src/main/res/menu/activity_main_drawer.xml', toUtf8(generateDrawerLayoutTemplate(app)));
@@ -186,6 +186,8 @@ class AceDslGenerator extends AbstractGenerator {
 	    <string name="academic_center_name_initials">«app.nome»</string>
 	    <string name="nav_bar_logo">NavBarLogo</string>
 	
+		@@@disciplinas_strings@@@
+	
 	    <!-- Home -->
 	    <string name="home_welcome">Bem-vindo ao <b>%s</b>!</string>
 	
@@ -199,8 +201,12 @@ class AceDslGenerator extends AbstractGenerator {
 	    <string name="section_news">Notícias</string>
 	
 	    <!--Placeholder-->
+	    <string name="placeholder_title">Erro na comunicação!</string>
 	    <string name="placeholder_text">Ocorreu um erro na comunicação com o servidor. Por favor, tente novamente!</string>
 	    <string name="placeholder_button_text">Tentar novamente</string>
+	    <string name="placeholder_empty_list_title">Sem disciplinas!</string>
+	    <string name="placeholder_empty_list_text">Não há disciplinas cadastradas que seguem a especificação.</string>
+	    <string name="placeholder_empty_list_button_text">Voltar</string>
 	
 	    <!--Descriptions-->
 	    <string name="placeholder_image_description">Connection Image</string>
@@ -210,85 +216,96 @@ class AceDslGenerator extends AbstractGenerator {
 '''
 	
 	def generateStylesTemplate (Estilo estilo) '''
-<resources>
-    
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary" >@color/color_primary</item>
-        <item name="colorAccent">@color/color_primary</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="DefaultLayout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:layout_marginTop">@dimen/activity_vertical_margin</item>
-        <item name="android:layout_marginBottom">@dimen/activity_vertical_margin</item>
-        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
-        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
-    </style>
-
-    <style name="Button">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">45dp</item>
-        <item name="android:background">@color/color_secondary</item>
-        <item name="android:padding">8dp</item>
-        <item name="android:textColor">@color/color_secondary_contrast</item>
-    </style>
-
-    <style name="TextElement">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:includeFontPadding">false</item>
-        <item name="android:typeface">«estilo.fonte.toString.toLowerCase»</item>
-    </style>
-
-    <style name="TextElement.Header">
-        <item name="android:layout_marginTop">20dp</item>
-        <item name="android:textColor">@color/color_black</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextElement.Header.H1">
-        <item name="android:textSize">@dimen/font_size_extra_large</item>
-    </style>
-
-    <style name="TextElement.Header.H2">
-        <item name="android:textSize">@dimen/font_size_large</item>
-    </style>
-
-    <style name="TextElement.Body">
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:textSize">@dimen/font_size_small</item>
-        <item name="android:textColor">@color/color_black</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextElement.Paragraph">
-        <item name="android:layout_marginTop">@dimen/activity_vertical_margin</item>
-        <item name="android:layout_marginBottom">@dimen/activity_vertical_margin</item>
-        <item name="android:textSize">@dimen/font_size_medium</item>
-        <item name="android:textColor">@color/color_black</item>
-        <item name="android:lineSpacingMultiplier">1.0</item>
-    </style>
-
-</resources>
+	<resources>
+	
+	    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+	        <item name="colorPrimary" >@color/color_primary</item>
+	        <item name="colorAccent">@color/color_primary</item>
+	    </style>
+	
+	    <style name="AppTheme.NoActionBar">
+	        <item name="windowActionBar">false</item>
+	        <item name="windowNoTitle">true</item>
+	    </style>
+	    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+	    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+	
+	    <style name="DefaultLayout">
+	        <item name="android:layout_width">match_parent</item>
+	        <item name="android:layout_height">match_parent</item>
+	        <item name="android:orientation">vertical</item>
+	        <item name="android:layout_marginTop">@dimen/activity_vertical_margin</item>
+	        <item name="android:layout_marginBottom">@dimen/activity_vertical_margin</item>
+	        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
+	        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+	    </style>
+	
+	    <style name="Button">
+	        <item name="android:layout_width">wrap_content</item>
+	        <item name="android:layout_height">45dp</item>
+	        <item name="android:layout_marginTop">@dimen/activity_vertical_margin</item>
+	        <item name="android:background">@color/color_secondary</item>
+	        <item name="android:padding">8dp</item>
+	        <item name="android:textColor">@color/color_secondary_contrast</item>
+	    </style>
+	
+	    <style name="TextElement">
+	        <item name="android:layout_width">wrap_content</item>
+	        <item name="android:layout_height">wrap_content</item>
+	        <item name="android:includeFontPadding">false</item>
+	        <item name="android:typeface">«estilo.fonte.toString.toLowerCase»</item>
+	    </style>
+	
+	    <style name="TextElement.Header">
+	        <item name="android:layout_marginTop">20dp</item>
+	        <item name="android:textColor">@color/color_black</item>
+	        <item name="android:textStyle">bold</item>
+	    </style>
+	
+	    <style name="TextElement.Header.H1">
+	        <item name="android:textSize">@dimen/font_size_extra_large</item>
+	    </style>
+	
+	    <style name="TextElement.Header.H2">
+	        <item name="android:textSize">@dimen/font_size_large</item>
+	    </style>
+	
+	    <style name="TextElement.Body">
+	        <item name="android:layout_marginTop">4dp</item>
+	        <item name="android:textSize">@dimen/font_size_small</item>
+	        <item name="android:textColor">@color/color_black</item>
+	        <item name="android:textStyle">bold</item>
+	    </style>
+	
+	    <style name="TextElement.Table">
+	        <item name="android:layout_marginTop">8dp</item>
+	        <item name="android:layout_marginBottom">8dp</item>
+	        <item name="android:textSize">@dimen/font_size_extra_large</item>
+	    </style>
+	
+	    <style name="TextElement.Paragraph">
+	        <item name="android:layout_marginTop">8dp</item>
+	        <item name="android:textSize">@dimen/font_size_medium</item>
+	        <item name="android:textColor">@color/color_black</item>
+	        <item name="android:lineSpacingMultiplier">1.0</item>
+	    </style>
+	
+	</resources>
+	
 	'''
 
 	def generateAppConstantsTemplate (Aplicativo app) '''
 	package com.example.tcc.tccemptyapp.constants;
 	
-	public class Constants {
+	public class APIRoutes {
 	    public static final String BASE_URL = "«app.servidor.url»";
 	
-	    public static final String ADM_URL = BASE_URL + "/api/membrosGestao";
+	    public static final String ADM_URL = "/api/membrosGestao";
+	    public static final String COURSE_LIST_URL = "/api/disciplinas/lista/";
+	    public static final String COURSE_DETAILS_URL = "/api/disciplinas/";
+	    
 	    public static final String BASE_URL_IMAGE = BASE_URL + "/images/membros/";
+	    
 	}
 	'''
 	
@@ -301,7 +318,7 @@ class AceDslGenerator extends AbstractGenerator {
 		
 		    <group android:checkableBehavior="single">
 		        <item android:id="@+id/nav_adm" android:title="@string/section_adm" android:visible="«admVisibility»" />
-		        <item android:id="@+id/nav_disciplines" android:title="@string/section_disciplines" />
+		        <item android:id="@+id/nav_disciplines" android:title="@string/section_disciplines" android:visible="@@@disciplines_visible@@@" />
 		        <item android:id="@+id/nav_events" android:title="@string/section_events" />
 		        <item android:id="@+id/nav_news" android:title="@string/section_news" />
 		    </group>
