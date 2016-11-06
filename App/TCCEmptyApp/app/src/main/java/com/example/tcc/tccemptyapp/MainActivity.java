@@ -17,13 +17,6 @@ import com.example.tcc.tccemptyapp.fragments.ADMFragment;
 import com.example.tcc.tccemptyapp.fragments.BaseFragment;
 import com.example.tcc.tccemptyapp.fragments.courseInfo.DepartmentsFragment;
 import com.example.tcc.tccemptyapp.fragments.HomeFragment;
-import com.example.tcc.tccemptyapp.models.courseInfo.Course;
-import com.example.tcc.tccemptyapp.models.courseInfo.CourseDetail;
-import com.example.tcc.tccemptyapp.providers.courseInfo.CourseDetailResponse;
-import com.example.tcc.tccemptyapp.providers.courseInfo.CourseInfoProvider;
-import com.example.tcc.tccemptyapp.providers.courseInfo.CourseListResponse;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
