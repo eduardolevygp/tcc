@@ -2,7 +2,3 @@ ace:
     resource: "@AceBundle/Controller/"
     type:     annotation
     prefix:   /
-
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation

@@ -32,7 +32,7 @@ public class CoursesAdapter extends CourseInfoAdapter {
         final Course course = mCourses.get(position);
 
         holder.setText(course.getName());
-        holder.getBackground().setOnClickListener(new View.OnClickListener() {
+        holder.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onCourseClicked(course);

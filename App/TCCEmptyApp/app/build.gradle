@@ -14,12 +14,9 @@ android {
 
     productFlavors {
         development {
-            applicationId "com.example.tcc.tccemptyapp.development"
+            applicationId "com.example.tcc.tccemptyapp"
             versionCode 1
             versionName "0.1.0"
-        }
-        production {
-            applicationId "com.example.tcc.tccemptyapp"
         }
     }
 

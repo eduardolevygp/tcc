@@ -1,0 +1,15 @@
+{%  extends '@Ace/base.html.twig' %}
+
+{%  block body %}
+        <h1>Editar evento</h1>
+        {% if photo is not empty %}
+        <img src="{{ asset('images/eventos/'~photo) }}" style="max-width: 120px; max-height: 120px;" alt="{{ evento.title }}">
+
+        <form action=" {{ path('evento_delete_image', {'id': evento.id}) }}" method="post">
+            <button class="btn btn-default" type="submit">Apagar imagem</button>
+        </form>
+        {% endif %}
+        {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+        {{ form(form) }}
+
+{%  endblock %}

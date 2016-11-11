@@ -55,8 +55,16 @@ public class PeriodsFragment extends CourseInfoFragment {
     }
 
     @Override
-    protected int getFragmentTitle() {
-        return R.string.fragment_period;
+    protected String getFragmentTitle() {
+        String title;
+
+        if (mDepartment != null) {
+            title = mDepartment.getName();
+        } else {
+            title = mProgram.getName();
+        }
+
+        return title;
     }
 
     @Override
@@ -76,7 +84,7 @@ public class PeriodsFragment extends CourseInfoFragment {
         return new PeriodsListener() {
             @Override
             public void onPeriodClicked(Period period) {
-                CoursesFragment fragment = CoursesFragment.newInstance(period.getId());
+                CoursesFragment fragment = CoursesFragment.newInstance(period.getId(), period.getName());
                 TransactionHelper.pushFragment(getActivity(), R.id.main_activity_container, fragment);
             }
         };

@@ -16,3 +16,29 @@
 .table-vertical-middle td {
     vertical-align: middle !important;
 }
+
+.menu-disciplinas ul {
+    list-style: none;
+}
+
+.menu-disciplinas ul li {
+    border-left: 1px solid #aaaaaa;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.menu-disciplinas .tipo {
+    display: block;
+    font-size: small;
+    margin-left: 15px;
+}
+
+.menu-disciplinas .titulo {
+    display: block;
+    font-size: large;
+}
+
+.menu-disciplinas a {
+    color: black;
+    text-decoration: underline;
+}

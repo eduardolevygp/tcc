@@ -2,6 +2,7 @@
 
 namespace AceBundle\Controller;
 
+use Intervention\Image\Constraint;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManagerStatic;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -105,7 +106,7 @@ class MembroGestaoController extends Controller
                 $photoname = $this->saveImage($uploadedPhoto);
 
                 if ($photo) {
-                    $oldFile = $this->getParameter('photo_folder') . '/' . $photo;
+                    $oldFile = $this->getParameter('membro_photo_folder') . '/' . $photo;
                     if (file_exists($oldFile))
                         unlink($oldFile);
                 }
@@ -137,7 +138,7 @@ class MembroGestaoController extends Controller
     public function deleteAction(MembroGestao $membroGestao)
     {
         if ($membroGestao->getImageUrl()) {
-            $oldFile = $this->getParameter('photo_folder') . '/' . $membroGestao->getImageUrl();
+            $oldFile = $this->getParameter('membro_photo_folder') . '/' . $membroGestao->getImageUrl();
             if (file_exists($oldFile))
                 unlink($oldFile);
         }
@@ -158,7 +159,7 @@ class MembroGestaoController extends Controller
     public function deletePhotoAction(MembroGestao $membroGestao)
     {
         if ($membroGestao->getImageUrl()) {
-            $oldFile = $this->getParameter('photo_folder') . '/' . $membroGestao->getImageUrl();
+            $oldFile = $this->getParameter('membro_photo_folder') . '/' . $membroGestao->getImageUrl();
             if (file_exists($oldFile))
                 unlink($oldFile);
         }
@@ -185,21 +186,22 @@ class MembroGestaoController extends Controller
         //nome de arquivo
         $photoname = md5(uniqid()) . '.' . $uploadedPhoto->guessExtension();
 
-        //$uploadedPhoto->move($this->getParameter('photo_folder'), $photoname);
+        //$uploadedPhoto->move($this->getParameter('membro_photo_folder'), $photoname);
 
 
         /* @var Image $image */
         $image = ImageManagerStatic::make($uploadedPhoto->getRealPath());
 
         $image->fit(500, 500, function ($constraint) {
+            /* @var Constraint $constraint */
             // não deixa aumentar de tamanho
             $constraint->upsize();
         });
 
-        $image->save($this->getParameter('photo_folder') . '/' . $photoname);
+        $image->save($this->getParameter('membro_photo_folder') . '/' . $photoname);
 
         return $photoname;
-}
+    }
 
 
 }

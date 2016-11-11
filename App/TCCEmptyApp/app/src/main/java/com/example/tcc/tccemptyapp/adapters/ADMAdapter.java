@@ -42,16 +42,25 @@ public class ADMAdapter extends RecyclerView.Adapter<ADMAdapter.ADMViewHolder> {
             image = (ImageView) view.findViewById(R.id.card_adm_image);
         }
 
-        public ImageView getImageView() {
-            return this.image;
-        }
-
         @Override
         protected void setTextColors(int colorCode) {
             name.setTextColor(colorCode);
             role.setTextColor(colorCode);
             email.setTextColor(colorCode);
             phone.setTextColor(colorCode);
+        }
+
+        public void setFields(ManagementMember member) {
+            name.setText(member.getName());
+            role.setText(member.getRole());
+            email.setText(member.getEmail());
+            phone.setText(member.getPhone());
+
+            Picasso.with(mContext)
+                    .load(member.getFullImageUrl())
+                    .placeholder(R.drawable.placeholder_avatar_image)
+                    .error(R.drawable.placeholder_avatar_error)
+                    .into(image);
         }
     }
 
@@ -75,18 +84,8 @@ public class ADMAdapter extends RecyclerView.Adapter<ADMAdapter.ADMViewHolder> {
     @Override
     public void onBindViewHolder(ADMViewHolder holder, int position) {
         ManagementMember member = mMembers.get(position);
-        ImageView imageView = holder.getImageView();
 
-        holder.name.setText(member.getName());
-        holder.role.setText(member.getRole());
-        holder.email.setText(member.getEmail());
-        holder.phone.setText(member.getPhone());
+        holder.setFields(member);
         holder.setBackgroundColor(position);
-
-        Picasso.with(mContext)
-                .load(member.getFullImageUrl())
-                .placeholder(R.drawable.placeholder_avatar_image)
-                .error(R.drawable.placeholder_avatar_error)
-                .into(imageView);
     }
 }

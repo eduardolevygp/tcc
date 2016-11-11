@@ -25,8 +25,8 @@ public class DepartmentsFragment extends CourseInfoFragment {
     protected void setParentObjectData() {}
 
     @Override
-    protected int getFragmentTitle() {
-        return R.string.fragment_departments;
+    protected String getFragmentTitle() {
+        return getContext().getString(R.string.fragment_courses_title);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class DepartmentsFragment extends CourseInfoFragment {
                 BaseFragment fragment;
 
                 if (department.getId() > 0) {
-                    fragment = CoursesFragment.newInstance(department.getId());
+                    fragment = CoursesFragment.newInstance(department.getId(), department.getName());
                 } else if (department.getPeriodList() != null) {
                     fragment = PeriodsFragment.newInstance(department);
                 } else {
