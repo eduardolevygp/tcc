@@ -7,6 +7,7 @@
     <string name="fragment_adm_title">Gestão</string>
     <string name="fragment_courses_title">Departamentos</string>
     <string name="fragment_course_details_title">Disciplina</string>
+    <string name="fragment_events_title">Eventos</string>
 
     <!-- Home -->
     <string name="home_welcome">Bem-vindo ao <b>%s</b>!</string>
@@ -30,6 +31,13 @@
 
     <!--Descriptions-->
     <string name="placeholder_image_description">Connection Image</string>
-    <string name="card_adm_placeholder">Placeholder Image</string>
+    <string name="card_adm_placeholder">ADM Placeholder Image</string>
+    <string name="card_event_placeholder">Event Placeholder Image</string>
+
+    <!--Test Strings-->
+    <string name="test_card_event_title">Copa Zeus</string>
+    <string name="test_card_event_date_time">Dia 20 de novembro, a partir das 8h</string>
+    <string name="test_card_event_location">Centro da Engenhaira Elétrica</string>
+    <string name="test_card_event_description">A Copa Zeus é um campeonato de games em geral em que qualquer aluno da Escola Politécnica pode participar.\nTraga seus amigos e escolha suas modalidades!</string>
 
 </resources>
