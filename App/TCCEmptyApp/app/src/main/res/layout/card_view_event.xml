@@ -5,61 +5,40 @@
     android:layout_height="match_parent"
     android:layout_margin="8dp">
 
+
     <LinearLayout
         android:id="@+id/card_event_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/card_event_image"
+        <TextView
+            android:id="@+id/card_event_title"
+            style="@style/TextElement.Header.H1"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:src="@drawable/placeholder_avatar_image"
-            android:contentDescription="@string/card_event_placeholder" />
+            android:text="@string/test_card_event_title"/>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/card_event_date_time"
+            style="@style/TextElement.Paragraph"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="@string/test_card_event_date_time"/>
+
+        <TextView
+            android:id="@+id/card_event_location"
+            style="@style/TextElement.Paragraph"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/card_event_title"
-                style="@style/TextElement.Header.H1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/test_card_event_title"/>
-
-            <TextView
-                android:id="@+id/card_event_date_time"
-                style="@style/TextElement.Paragraph"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/test_card_event_date_time"/>
-
-            <TextView
-                android:id="@+id/card_event_location"
-                style="@style/TextElement.Paragraph"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/test_card_event_location"/>
-
-            <TextView
-                android:id="@+id/card_event_description"
-                style="@style/TextElement.Paragraph"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/test_card_event_description"/>
-
-        </LinearLayout>
+            android:text="@string/test_card_event_location"/>
 
     </LinearLayout>
 

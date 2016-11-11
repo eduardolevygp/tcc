@@ -27,8 +27,8 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
         this.background = background;
     }
 
-    public LinearLayout getBackground() {
-        return this.background;
+    public void setClickListener(final View.OnClickListener listener) {
+        this.background.setOnClickListener(listener);
     }
 
     public void setBackgroundColor(int position) {

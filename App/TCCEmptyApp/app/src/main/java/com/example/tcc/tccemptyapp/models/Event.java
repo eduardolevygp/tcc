@@ -1,17 +1,25 @@
 package com.example.tcc.tccemptyapp.models;
 
+import com.example.tcc.tccemptyapp.constants.APIRoutes;
+
 /**
  * Created by Alan on 11/11/2016.
  */
 public class Event extends BaseModel {
+    private String id;
     private String title;
     private String date;
     private String time;
     private String location;
     private String description;
-    private String imageUrl;
+    private String image;
 
     private transient String dateTime;
+    private transient String imageUrl;
+
+    public String getId() {
+        return this.id;
+    }
 
     public String getTitle() {
         return title;
@@ -33,31 +41,9 @@ public class Event extends BaseModel {
     }
 
     public String getImageUrl() {
-        return imageUrl;
-    }
-
-    // Remover setters depois que deleter mock
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+        if (this.imageUrl == null && this.image != null) {
+            this.imageUrl = APIRoutes.BASE_URL_EVENT_IMAGE + this.image;
+        }
+        return this.imageUrl;
     }
 }

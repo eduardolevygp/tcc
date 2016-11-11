@@ -1,4 +1,4 @@
-package com.example.tcc.tccemptyapp.fragments;
+package com.example.tcc.tccemptyapp.fragments.events;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,10 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tcc.tccemptyapp.R;
-import com.example.tcc.tccemptyapp.adapters.EventsAdapter;
+import com.example.tcc.tccemptyapp.adapters.events.EventsAdapter;
+import com.example.tcc.tccemptyapp.adapters.events.EventsListener;
+import com.example.tcc.tccemptyapp.fragments.BaseFragment;
+import com.example.tcc.tccemptyapp.helpers.TransactionHelper;
 import com.example.tcc.tccemptyapp.models.Event;
+import com.example.tcc.tccemptyapp.providers.events.EventsProvider;
+import com.example.tcc.tccemptyapp.providers.events.EventsResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,28 +49,35 @@ public class EventsFragment extends BaseFragment {
     }
 
     private void fetchEvents() {
-        setupRecyclerView();
+        showLoading();
+
+        new EventsProvider().getEvents(new EventsResponse() {
+            @Override
+            public void onEventsSuccess(List<Event> events) {
+                setupRecyclerView(events);
+                showContent();
+            }
+
+            @Override
+            public void onEventsFailure() {
+                showPlaceholder();
+            }
+        });
     }
 
-    private void setupRecyclerView() {
-        EventsAdapter adapter = new EventsAdapter(getContext(), getMockEvents());
+    private void setupRecyclerView(List<Event> events) {
+        EventsAdapter adapter = new EventsAdapter(getContext(), events, getListener());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(adapter);
     }
 
-    private List<Event> getMockEvents() {
-        List<Event> events = new ArrayList<>();
-
-        Event event = new Event();
-        event.setTitle("Copa Zeus");
-        event.setDate("Dia 20 de novembro");
-        event.setTime("a partir das 8h");
-        event.setLocation("Centro da Engenharia Elétrica");
-        event.setDescription("A Copa Zeus é um campeonato de games em geral em que qualquer aluno da Escola Politécnica pode participar.\\nTraga seus amigos e escolha suas modalidades!");
-
-        events.add(event);
-        events.add(event);
-
-        return events;
+    private EventsListener getListener() {
+        return new EventsListener() {
+            @Override
+            public void onEventSelected(Event event) {
+                EventDetailsFragment fragment = EventDetailsFragment.newInstance(event.getId());
+                TransactionHelper.pushFragment(getActivity(), R.id.main_activity_container, fragment);
+            }
+        };
     }
 }

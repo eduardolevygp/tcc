@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.tcc.tccemptyapp.fragments.ADMFragment;
 import com.example.tcc.tccemptyapp.fragments.BaseFragment;
-import com.example.tcc.tccemptyapp.fragments.EventsFragment;
+import com.example.tcc.tccemptyapp.fragments.events.EventsFragment;
 import com.example.tcc.tccemptyapp.fragments.courseInfo.DepartmentsFragment;
 import com.example.tcc.tccemptyapp.fragments.HomeFragment;
 
