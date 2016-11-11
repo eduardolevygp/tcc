@@ -33,7 +33,7 @@ public class ManagementMember extends BaseModel {
 
     public String getFullImageUrl() {
         if (this.fullImageUrl == null && this.imageUrl != null) {
-            this.fullImageUrl = APIRoutes.BASE_URL_IMAGE + this.imageUrl;
+            this.fullImageUrl = APIRoutes.BASE_URL_ADM_IMAGE + this.imageUrl;
         }
         return fullImageUrl;
     }
