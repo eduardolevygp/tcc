@@ -20,7 +20,7 @@ class DisciplinaType extends AbstractType
         $builder
             ->add('list_id', HiddenType::class)
             ->add('name', TextType::class, array('label' => 'Nome'))
-            ->add('code', TextType::class, array('label' => 'Código'))
+            ->add('code', TextType::class, array('label' => 'Código', 'required' => false))
             ->add('info', TextareaType::class, array('label' => 'Info', 'attr' => array('rows' => 10)))
         ;
     }

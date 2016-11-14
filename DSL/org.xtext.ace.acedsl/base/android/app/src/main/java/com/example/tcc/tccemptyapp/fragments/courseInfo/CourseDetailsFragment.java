@@ -47,7 +47,7 @@ public class CourseDetailsFragment extends BaseFragment {
         mTextView = (TextView) view.findViewById(R.id.courses_details_textview);
         mTitle = (TextView) view.findViewById(R.id.courses_details_title);
 
-        getActivity().setTitle(R.string.fragment_course_details);
+        getActivity().setTitle(R.string.fragment_course_details_title);
         fetchDetails();
     }
 

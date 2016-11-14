@@ -1,5 +1,6 @@
 package com.example.tcc.tccemptyapp.fragments.courseInfo;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,15 +27,21 @@ import java.util.List;
 public class CoursesFragment extends BaseFragment {
 
     private static final String ID_KEY = "idKey";
+    private static final String PARENT_NAME_KEY = "parentNameKey";
     private RecyclerView mRecyclerView;
     private PlaceholderEmptyList mPlaceholderEmptyList;
     private List<Course> mCourseList;
 
     public static CoursesFragment newInstance(int id) {
+        return newInstance(id, null);
+    }
+
+    public static CoursesFragment newInstance(int id, String parentName) {
         Bundle args = new Bundle();
         CoursesFragment fragment = new CoursesFragment();
 
         args.putInt(ID_KEY, id);
+        args.putString(PARENT_NAME_KEY, parentName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,9 +58,9 @@ public class CoursesFragment extends BaseFragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_course_info);
         mPlaceholderEmptyList = (PlaceholderEmptyList) view.findViewById(R.id.placeholder_empty_list);
 
+        setTitle();
         setEmptyListPlaceholderButton();
         fetchCourseList();
-        getActivity().setTitle(R.string.fragment_course);
     }
 
     @Override
@@ -83,6 +90,16 @@ public class CoursesFragment extends BaseFragment {
                 showPlaceholder();
             }
         });
+    }
+
+    private void setTitle() {
+        String title = getArguments().getString(PARENT_NAME_KEY);
+
+        if (title == null) {
+            title = getContext().getString(R.string.fragment_courses_title);
+        }
+
+        getActivity().setTitle(title);
     }
 
     private void setEmptyListPlaceholderButton() {

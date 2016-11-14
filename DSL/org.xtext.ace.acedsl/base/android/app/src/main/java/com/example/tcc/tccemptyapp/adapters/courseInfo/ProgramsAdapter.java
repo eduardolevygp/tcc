@@ -31,7 +31,7 @@ public class ProgramsAdapter extends CourseInfoAdapter {
         final Program program = mPrograms.get(position);
 
         holder.setText(program.getName());
-        holder.getBackground().setOnClickListener(new View.OnClickListener() {
+        holder.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onProgramClicked(program);

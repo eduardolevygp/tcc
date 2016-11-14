@@ -12,5 +12,8 @@ parameters:
     membros_visibility: true
     membros_label: 'Geston'
 
-    disciplinas_visibility: @@@disciplinas_visibility@@@
+     disciplinas_visibility: @@@disciplinas_visibility@@@
     disciplinas_label: '@@@disciplinas_label@@@'
+
+    eventos_visibility: true
+    eventos_label: 'Eventos'

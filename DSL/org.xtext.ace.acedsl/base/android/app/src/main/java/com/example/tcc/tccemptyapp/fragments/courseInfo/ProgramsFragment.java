@@ -36,8 +36,8 @@ public class ProgramsFragment extends CourseInfoFragment {
     }
 
     @Override
-    protected int getFragmentTitle() {
-        return R.string.fragment_programs;
+    protected String getFragmentTitle() {
+        return mDepartment.getName();
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ProgramsFragment extends CourseInfoFragment {
                 BaseFragment fragment;
 
                 if (program.getId() > 0) {
-                    fragment = CoursesFragment.newInstance(program.getId());
+                    fragment = CoursesFragment.newInstance(program.getId(), program.getName());
                 } else {
                     fragment = PeriodsFragment.newInstance(program);
                 }

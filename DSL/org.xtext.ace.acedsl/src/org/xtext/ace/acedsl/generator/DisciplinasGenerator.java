@@ -37,6 +37,7 @@ public class DisciplinasGenerator extends ModuloGenerator {
 			mainFragment(arvore);
 			if (arvore.containsKey("id")) {
 				fsa.deleteFile(androidJava + "models/courseInfo/CourseInfoStructure.java");
+				fsa.deleteFile(androidJava + "fragments/courseInfo/DepartmentsFragment.java");
 			} else {
 				courseInfoStructure(arvore);
 			}
@@ -50,7 +51,7 @@ public class DisciplinasGenerator extends ModuloGenerator {
 	private void limpaArquivos() {
 		//server
 		Map<String,String> parameterValues = new HashMap<>();
-		parameterValues.put("disciplinas_visiblity", "false");
+		parameterValues.put("disciplinas_visibility", "false");
 		parameterValues.put("disciplinas_label", "");
 		replaceInFile(serverConfig + "parameters.yml", parameterValues);
 		replaceInFile(serverConfig + "parameters.yml.dist", parameterValues);
@@ -65,7 +66,7 @@ public class DisciplinasGenerator extends ModuloGenerator {
 		
 		
 		//app
-		limpaArquivo(androidRes + "values/strings.xml", "disciplinas_strings");
+		limpaArquivo(androidRes + "values/strings.xml", "disciplinas_strings", "disciplinas_title");
 		fsa.deleteFile(androidJava + "adapters/courseInfo/CourseInfoAdapter.java");
 		fsa.deleteFile(androidJava + "adapters/courseInfo/CoursesAdapter.java");
 		fsa.deleteFile(androidJava + "adapters/courseInfo/CoursesListener.java");
@@ -98,17 +99,27 @@ public class DisciplinasGenerator extends ModuloGenerator {
 		fsa.deleteFile(androidRes + "layout/fragment_course_info.xml");
 		
 		replaceInFile(androidRes + "menu/activity_main_drawer.xml", "disciplines_visible", "false");
+		
+		Map<String,String> mainFragReplace = new HashMap<>();
+		mainFragReplace.put("import_disciplinas_fragment", "");
+		mainFragReplace.put("disciplinas_construtor", "null");
+		
+		replaceInFile(androidJava + "MainActivity.java", mainFragReplace);
 	}
 	
 	private void stringsXml () {
-		String replacement = "<!-- Titles -->\n";
+		String replacement = "";
 		replacement += "    <string name=\"fragment_departments\">Escolha o departamento</string>\n";
 		replacement += "    <string name=\"fragment_programs\">Escolha o curso</string>\n";
 		replacement += "    <string name=\"fragment_period\">Escolha o período</string>\n";
 		replacement += "    <string name=\"fragment_course\">Escolha a disciplina</string>\n";
 		replacement += "    <string name=\"fragment_course_details\">Disciplina</string>";
 		
-		replaceInFile(androidRes + "values/strings.xml", "disciplinas_strings", replacement);
+		Map<String, String> reps = new HashMap<>();
+		reps.put("disciplinas_strings", replacement);
+		reps.put("disciplinas_title", app.getSecaoDisciplinas().getNome());
+		
+		replaceAllInFile(androidRes + "values/strings.xml", reps);
 	}
 	
 	private void mainFragment(Map<String,Object> arvore) {

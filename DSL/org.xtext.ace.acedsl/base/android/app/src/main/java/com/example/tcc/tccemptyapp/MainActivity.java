@@ -12,14 +12,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import java.util.List;
 
 import com.example.tcc.tccemptyapp.fragments.ADMFragment;
 import com.example.tcc.tccemptyapp.fragments.BaseFragment;
 import com.example.tcc.tccemptyapp.fragments.HomeFragment;
 
-import java.util.List;
-
 @@@import_disciplinas_fragment@@@
+@@@import_events_fragment@@@
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -87,10 +87,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragment = @@@disciplinas_construtor@@@;
             replaceTransition(fragment);
         } else if (id == R.id.nav_events) {
-            toast = Toast.makeText(this, "Eventos selecionado", Toast.LENGTH_SHORT);
-            toast.show();
+            fragment = @@@events_constructor@@@;
+            replaceTransition(fragment);
         } else if (id == R.id.nav_news) {
-            toast = Toast.makeText(this, "Notícias selecionado", Toast.LENGTH_SHORT);
+            toast = Toast.makeText(this, "NotÃ­cias selecionado", Toast.LENGTH_SHORT);
             toast.show();
         }
     }

@@ -67,6 +67,9 @@ class AceDslGenerator extends AbstractGenerator {
 		val DisciplinasGenerator disciplinasGen = new DisciplinasGenerator(app, fsa);
 		disciplinasGen.generate();
 		
+		val EventosGenerator eventosGen = new EventosGenerator(app, fsa);
+		eventosGen.generate();
+		
 	}
 	
 	def void copyFile (IFileSystemAccess2 fsa, File file, String path) {
@@ -191,15 +194,23 @@ class AceDslGenerator extends AbstractGenerator {
 	    <!-- Home -->
 	    <string name="home_welcome">Bem-vindo ao <b>%s</b>!</string>
 	
+	
+		<!-- Titles -->
+	    <string name="fragment_adm_title">«if (app.secaoMembros != null) app.secaoMembros.nome else ""»</string>
+	    <string name="fragment_courses_title">@@@disciplinas_title@@@</string>
+	    <string name="fragment_course_details_title">Disciplina</string>
+	    <string name="fragment_events_title">@@@events_title@@@</string>
+	    <string name="fragment_event_details">Evento</string>
+	
 	    <string name="navigation_drawer_open">Open navigation drawer</string>
 	    <string name="navigation_drawer_close">Close navigation drawer</string>
 	
 	    <!--Drawer Menu-->
-	    <string name="section_adm">«app.secaoMembros.nome»</string>
-	    <string name="section_disciplines">Disciplinas</string>
-	    <string name="section_events">Eventos</string>
+	    <string name="section_adm">«if (app.secaoMembros != null) app.secaoMembros.nome else ""»</string>
+	    <string name="section_disciplines">@@@disciplinas_title@@@</string>
+	    <string name="section_events">@@@events_title@@@</string>
 	    <string name="section_news">Notícias</string>
-	
+
 	    <!--Placeholder-->
 	    <string name="placeholder_title">Erro na comunicação!</string>
 	    <string name="placeholder_text">Ocorreu um erro na comunicação com o servidor. Por favor, tente novamente!</string>
@@ -211,6 +222,7 @@ class AceDslGenerator extends AbstractGenerator {
 	    <!--Descriptions-->
 	    <string name="placeholder_image_description">Connection Image</string>
 	    <string name="card_adm_placeholder">Placeholder Image</string>
+	    <string name="event_image">Event Placeholder Image</string>
 	
 	</resources>
 '''
@@ -303,9 +315,11 @@ class AceDslGenerator extends AbstractGenerator {
 	    public static final String ADM_URL = "/api/membrosGestao";
 	    public static final String COURSE_LIST_URL = "/api/disciplinas/lista/";
 	    public static final String COURSE_DETAILS_URL = "/api/disciplinas/";
+	    public static final String EVENTS_URL = "/api/eventos";
 	    
-	    public static final String BASE_URL_IMAGE = BASE_URL + "/images/membros/";
-	    
+	    public static final String BASE_URL_ADM_IMAGE = BASE_URL + "/images/membros/";
+	    public static final String BASE_URL_EVENT_IMAGE = BASE_URL + "/images/eventos/";
+	
 	}
 	'''
 	
@@ -319,7 +333,7 @@ class AceDslGenerator extends AbstractGenerator {
 		    <group android:checkableBehavior="single">
 		        <item android:id="@+id/nav_adm" android:title="@string/section_adm" android:visible="«admVisibility»" />
 		        <item android:id="@+id/nav_disciplines" android:title="@string/section_disciplines" android:visible="@@@disciplines_visible@@@" />
-		        <item android:id="@+id/nav_events" android:title="@string/section_events" />
+		        <item android:id="@+id/nav_events" android:title="@string/section_events" android:visible="@@@events_visible@@@" />
 		        <item android:id="@+id/nav_news" android:title="@string/section_news" />
 		    </group>
 		
@@ -347,6 +361,9 @@ class AceDslGenerator extends AbstractGenerator {
 	
 	    disciplinas_visibility: @@@disciplinas_visibility@@@
 	    disciplinas_label: '@@@disciplinas_label@@@'
+
+	    eventos_visibility: @@@eventos_visibility@@@
+	    eventos_label: '@@@eventos_label@@@'
 
 	'''
 }

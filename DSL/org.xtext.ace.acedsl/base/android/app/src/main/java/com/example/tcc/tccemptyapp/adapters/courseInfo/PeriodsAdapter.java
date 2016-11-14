@@ -32,7 +32,7 @@ public class PeriodsAdapter extends CourseInfoAdapter {
         final Period period = mPeriods.get(position);
 
         holder.setText(period.getName());
-        holder.getBackground().setOnClickListener(new View.OnClickListener() {
+        holder.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onPeriodClicked(period);

@@ -1,5 +1,6 @@
 package org.xtext.ace.acedsl.generator;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -35,7 +36,7 @@ public abstract class ModuloGenerator {
 	protected void limpaArquivo(String arquivo, String... placeholders) {
 		String fonte = (String) fsa.readTextFile(arquivo);
 		for (int i = 0; i < placeholders.length; i++) {
-			fonte = replacePlaceholder(fonte, placeholders[i], "");
+			fonte = replaceAllPlaceholder(fonte, placeholders[i], "");
 		}
 		fsa.generateFile(arquivo, fonte);
 	}
@@ -65,6 +66,12 @@ public abstract class ModuloGenerator {
 		String fonte = (String) fsa.readTextFile(arquivo);
 		fonte = replaceAllPlaceholders(fonte, valores);
 		fsa.generateFile(arquivo, fonte);
+	}
+	
+	protected void replaceAllInfile (String arquivo, String placeholder, String valor) {
+		Map<String,String> valores = new HashMap<>();
+		valores.put(placeholder, valor);
+		replaceAllInFile(arquivo, valores);
 	}
 	
 	protected String replaceAllPlaceholders(String fonte, Map<String, String> valores) {

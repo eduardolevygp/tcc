@@ -1,12 +1,16 @@
-# This file is auto-generated during the composer install
 parameters:
-    database_host: 127.0.0.1
+    database_host: localhost
     database_port: 3306
     database_name: ace_app
     database_user: root
-    database_password: null
-    app_name: CEE
+    database_password: ~
+    app_name: asd
+
     membros_visibility: true
-    membros_label: Geston
-    disciplinas_visibility: @@@disciplinas_visibility@@@
-    disciplinas_label: '@@@disciplinas_label@@@'
+    membros_label: Gestãozera
+
+    disciplinas_visibility: true
+    disciplinas_label: 'Disc'
+
+    eventos_visibility: true
+    eventos_label: 'Eventos'

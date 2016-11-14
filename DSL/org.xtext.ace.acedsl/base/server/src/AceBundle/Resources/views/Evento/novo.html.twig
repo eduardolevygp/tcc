@@ -1,0 +1,10 @@
+{%  extends '@Ace/base.html.twig' %}
+
+{%  block body %}
+
+        <h1>Novo evento</h1>
+
+        {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+        {{ form(form) }}
+
+{%  endblock %}
