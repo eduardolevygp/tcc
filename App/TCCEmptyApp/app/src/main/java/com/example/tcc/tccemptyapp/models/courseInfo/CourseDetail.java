@@ -8,6 +8,8 @@ public class CourseDetail extends CourseInfo {
     private String code;
     private String info;
 
+    private transient String codeTitle;
+
     public int getListId() {
         return listId;
     }
@@ -33,6 +35,11 @@ public class CourseDetail extends CourseInfo {
     }
 
     public String getCodeAndName() {
-        return this.code + " - " + this.name;
+        if (codeTitle == null && code == null) {
+            codeTitle = this.name;
+        } else if (codeTitle == null) {
+            codeTitle = this.code + " - " + this.name;
+        }
+        return this.codeTitle;
     }
 }
