@@ -197,7 +197,7 @@ class AceDslGenerator extends AbstractGenerator {
 	
 		<!-- Titles -->
 	    <string name="fragment_adm_title">«if (app.secaoMembros != null) app.secaoMembros.nome else ""»</string>
-	    <string name="fragment_courses_title">@@@disciplinas_title@@@</string>
+	    <string name="fragment_courses_title">@@@courses_title@@@</string>
 	    <string name="fragment_course_details_title">Disciplina</string>
 	    <string name="fragment_events_title">@@@events_title@@@</string>
 	    <string name="fragment_event_details">Evento</string>

@@ -7,9 +7,9 @@ import com.example.tcc.tccemptyapp.adapters.courseInfo.CourseInfoAdapter;
 import com.example.tcc.tccemptyapp.adapters.courseInfo.PeriodsAdapter;
 import com.example.tcc.tccemptyapp.adapters.courseInfo.PeriodsListener;
 import com.example.tcc.tccemptyapp.helpers.TransactionHelper;
-import com.example.tcc.tccemptyapp.models.courseInfo.Department;
+import com.example.tcc.tccemptyapp.models.courseInfo.CourseInfoStructure;
 import com.example.tcc.tccemptyapp.models.courseInfo.Period;
-import com.example.tcc.tccemptyapp.models.courseInfo.Program;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -19,65 +19,34 @@ import java.util.List;
  */
 public class PeriodsFragment extends CourseInfoFragment {
 
-    private static final String PARENT_KEY = "parent";
-    private Program mProgram;
-    private Department mDepartment;
+    private static final String NAME_KEY = "name";
+    private static final String LIST_KEY = "list";
+    private List<Period> mPeriods;
 
-    public static PeriodsFragment newInstance(final Department department) {
-        return newInstance(department, null);
-    }
-
-    public static PeriodsFragment newInstance(final Program program) {
-        return newInstance(null, program);
-    }
-
-    private static PeriodsFragment newInstance(final Department department, final Program program) {
+    public static PeriodsFragment newInstance(final String name, final List<Period> periods) {
         Bundle args = new Bundle();
         PeriodsFragment fragment = new PeriodsFragment();
-        String jsonParent;
+        String jsonList = new Gson().toJson(periods);
 
-        if (department != null) {
-            jsonParent = department.toJson();
-        } else {
-            jsonParent = program.toJson();
-        }
-
-        args.putString(PARENT_KEY, jsonParent);
+        args.putString(NAME_KEY, name);
+        args.putString(LIST_KEY, jsonList);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected void setParentObjectData() {
-        String jsonProgram = getArguments().getString(PARENT_KEY);
-        mProgram = Program.toModel(jsonProgram, Program.class);
-        mDepartment = Department.toModel(jsonProgram, Department.class);
+        @@@periods@@@
     }
 
     @Override
     protected String getFragmentTitle() {
-        String title;
-
-        if (mDepartment != null) {
-            title = mDepartment.getName();
-        } else {
-            title = mProgram.getName();
-        }
-
-        return title;
+        return @@@titulo@@@;
     }
 
     @Override
     protected CourseInfoAdapter getAdapter() {
-        List<Period> periodList;
-
-        if (mDepartment != null) {
-             periodList = mDepartment.getPeriodList();
-        } else {
-            periodList = mProgram.getPeriodList();
-        }
-
-        return new PeriodsAdapter(getContext(), periodList, getListener());
+        return new PeriodsAdapter(getContext(), mPeriods, getListener());
     }
 
     private PeriodsListener getListener() {

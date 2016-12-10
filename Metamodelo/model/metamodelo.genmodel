@@ -11,14 +11,16 @@
       <genEnumLiterals ecoreEnumLiteral="metamodelo.ecore#//Fonte/Serif"/>
       <genEnumLiterals ecoreEnumLiteral="metamodelo.ecore#//Fonte/Monospace"/>
     </genEnums>
+    <genDataTypes ecoreDataType="metamodelo.ecore#//Cor"/>
+    <genDataTypes ecoreDataType="metamodelo.ecore#//Logo"/>
     <genClasses ecoreClass="metamodelo.ecore#//Aplicativo">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//Aplicativo/nome"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//Aplicativo/url"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference metamodelo.ecore#//Aplicativo/secaoEventos"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference metamodelo.ecore#//Aplicativo/secaoMembros"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference metamodelo.ecore#//Aplicativo/secaoDisciplinas"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference metamodelo.ecore#//Aplicativo/secaoNoticias"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference metamodelo.ecore#//Aplicativo/estilo"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference metamodelo.ecore#//Aplicativo/servidor"/>
     </genClasses>
     <genClasses ecoreClass="metamodelo.ecore#//Secao">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//Secao/nome"/>
@@ -29,14 +31,13 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference metamodelo.ecore#//SecaoDisciplinas/separacaoDisciplinas"/>
     </genClasses>
     <genClasses ecoreClass="metamodelo.ecore#//SecaoNoticias">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//SecaoNoticias/Facebook"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference metamodelo.ecore#//SecaoNoticias/Facebook"/>
     </genClasses>
     <genClasses ecoreClass="metamodelo.ecore#//Estilo">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//Estilo/logo"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//Estilo/fonte"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//Estilo/corPrimaria"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//Estilo/corSecundaria"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//Estilo/corTerciaria"/>
     </genClasses>
     <genClasses ecoreClass="metamodelo.ecore#//Departamento">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//Departamento/nome"/>
@@ -62,6 +63,22 @@
     <genClasses image="false" ecoreClass="metamodelo.ecore#//OrganizacaoCurso"/>
     <genClasses ecoreClass="metamodelo.ecore#//ListaPeriodos">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference metamodelo.ecore#//ListaPeriodos/periodo"/>
+    </genClasses>
+    <genClasses ecoreClass="metamodelo.ecore#//Servidor">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//Servidor/url"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference metamodelo.ecore#//Servidor/bancoDeDados"/>
+    </genClasses>
+    <genClasses ecoreClass="metamodelo.ecore#//BancoDeDados">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//BancoDeDados/host"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//BancoDeDados/porta"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//BancoDeDados/usuario"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//BancoDeDados/senha"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//BancoDeDados/nome"/>
+    </genClasses>
+    <genClasses ecoreClass="metamodelo.ecore#//Facebook">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//Facebook/pagina"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//Facebook/appId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute metamodelo.ecore#//Facebook/chaveApp"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

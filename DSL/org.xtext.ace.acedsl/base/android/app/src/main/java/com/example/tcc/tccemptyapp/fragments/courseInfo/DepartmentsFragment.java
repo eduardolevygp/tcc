@@ -6,11 +6,9 @@ import com.example.tcc.tccemptyapp.adapters.courseInfo.DepartmentsAdapter;
 import com.example.tcc.tccemptyapp.adapters.courseInfo.DepartmentsListener;
 import com.example.tcc.tccemptyapp.fragments.BaseFragment;
 import com.example.tcc.tccemptyapp.helpers.TransactionHelper;
-import com.example.tcc.tccemptyapp.models.courseInfo.Course;
 import com.example.tcc.tccemptyapp.models.courseInfo.CourseInfoStructure;
+
 import com.example.tcc.tccemptyapp.models.courseInfo.Department;
-import com.example.tcc.tccemptyapp.models.courseInfo.Period;
-import com.example.tcc.tccemptyapp.models.courseInfo.Program;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +24,7 @@ public class DepartmentsFragment extends CourseInfoFragment {
 
     @Override
     protected String getFragmentTitle() {
-        return getContext().getString(R.string.fragment_courses_title);
+        return null;
     }
 
     @Override
@@ -40,13 +38,7 @@ public class DepartmentsFragment extends CourseInfoFragment {
             public void onDepartmentClick(Department department) {
                 BaseFragment fragment;
 
-                if (department.getId() > 0) {
-                    fragment = CoursesFragment.newInstance(department.getId(), department.getName());
-                } else if (department.getPeriodList() != null) {
-                    fragment = PeriodsFragment.newInstance(department);
-                } else {
-                    fragment = ProgramsFragment.newInstance(department);
-                }
+                @@@adapter_click@@@
 
                 TransactionHelper.pushFragment(getActivity(), R.id.main_activity_container, fragment);
             }

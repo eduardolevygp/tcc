@@ -22,6 +22,8 @@ public class DisciplinasGenerator extends ModuloGenerator {
 	public DisciplinasGenerator(Aplicativo app, IFileSystemAccess2 fsa) {
 		super(app, fsa);
 	}
+	
+	List<String> tiposUsados = new ArrayList<>();
 
 	public void generate () {
 		if (app.getSecaoDisciplinas() == null) {
@@ -33,17 +35,159 @@ public class DisciplinasGenerator extends ModuloGenerator {
 			geraListaIndex(arvore);
 			geraRepository();
 			replaceInFile(androidRes + "menu/activity_main_drawer.xml", "disciplines_visible", "true");
-			stringsXml();
+			stringsXml((String)arvore.get("tipo"));
 			mainFragment(arvore);
 			if (arvore.containsKey("id")) {
 				fsa.deleteFile(androidJava + "models/courseInfo/CourseInfoStructure.java");
-				fsa.deleteFile(androidJava + "fragments/courseInfo/DepartmentsFragment.java");
 			} else {
 				courseInfoStructure(arvore);
 			}
+			
+			if (!tiposUsados.contains("Departamentos")) {
+				fsa.deleteFile(androidJava + "fragments/courseInfo/DepartmentsFragment.java");
+				fsa.deleteFile(androidJava + "models/courseInfo/Department.java");
+				fsa.deleteFile(androidJava + "adapters/courseInfo/DepartmentsListener.java");
+				fsa.deleteFile(androidJava + "adapters/courseInfo/DepartmentsAdapter.java");
+			} else {
+				geraModelDepartamento();
+				geraFragmentDepartamento();
+			}
+			if (!tiposUsados.contains("Cursos")) {
+				fsa.deleteFile(androidJava + "fragments/courseInfo/ProgramsFragment.java");
+				fsa.deleteFile(androidJava + "models/courseInfo/Program.java");
+				fsa.deleteFile(androidJava + "adapters/courseInfo/ProgramsListener.java");
+				fsa.deleteFile(androidJava + "adapters/courseInfo/ProgramsAdapter.java");
+			} else {
+				geraModelCurso();
+				geraFragmentCurso(arvore.get("tipo") == "Cursos");
+			}
+			if (!tiposUsados.contains("Períodos")) {
+				fsa.deleteFile(androidJava + "fragments/courseInfo/PeriodsFragment.java");
+				fsa.deleteFile(androidJava + "models/courseInfo/Period.java");
+				fsa.deleteFile(androidJava + "adapters/courseInfo/PeriodsListener.java");
+				fsa.deleteFile(androidJava + "adapters/courseInfo/PeriodsAdapter.java");
+			} else {
+				geraFragmentPeriodos(arvore.get("tipo") == "Períodos");
+			}
+			
+			
 		}
 		
 		id = 1;
+	}
+	
+	private void geraFragmentPeriodos(boolean eRaiz) {
+		String origemLista = "mPeriods = CourseInfoStructure.getInstance().getPeriodList();";
+		if (!eRaiz) {
+			origemLista = "String serializedList = getArguments().getString(LIST_KEY);\n";
+			origemLista += "\t\tmPeriods = Period.toListModel(serializedList, Period.class);";
+		}
+		
+		String titulo = "getArguments().getString(NAME_KEY)";
+		if (eRaiz) {
+			titulo = "null";
+		}
+		
+		Map<String,String> subs = new HashMap<>();
+		subs.put("periods", origemLista);
+		subs.put("titulo", titulo);
+		
+		replaceInFile(androidJava + "fragments/courseInfo/PeriodsFragment.java", subs);
+	}
+	
+	private void geraModelDepartamento() {
+		String conteudo = "";
+		if (tiposUsados.contains("Cursos")) {
+			conteudo += "\tprivate List<Program> programList;\n";
+			conteudo += "\tpublic List<Program> getProgramList() {\n";
+			conteudo += "\t\treturn programList;\n";
+			conteudo += "\t}\n\n";
+			conteudo += "\tpublic void setProgramList(List<Program> programList) {\n";
+			conteudo += "\t\tthis.programList = programList;\n";
+			conteudo += "\t}\n\n";
+		}
+		if (tiposUsados.contains("Períodos")) {
+			conteudo += "\tprivate List<Period> periodList;\n";
+			conteudo += "\tpublic List<Period> getPeriodList() {\n";
+			conteudo += "\t\treturn periodList;\n";
+			conteudo += "\t}\n\n";
+			conteudo += "\tpublic void setPeriodList(List<Period> periodList) {\n";
+			conteudo += "\t\tthis.periodList = periodList;\n";
+			conteudo += "\t}\n";
+		}
+		
+		replaceInFile(androidJava + "models/courseInfo/Department.java", "content", conteudo);
+	}
+	
+	private void geraFragmentDepartamento() {
+		String conteudo = "";
+		if (tiposUsados.contains("Cursos")) {
+			conteudo += tiposUsados.contains("Períodos") ? " else if (department.getProgramList() != null) {\n" : " else {\n";
+			conteudo += "\t\t\t\t\tfragment = ProgramsFragment.newInstance(department.getName(), department.getProgramList());\n";
+            conteudo += "\t\t\t\t}";
+		}
+		if (tiposUsados.contains("Períodos")) {
+			conteudo += " else {\n";
+			conteudo += "\t\t\t\t\tfragment = PeriodsFragment.newInstance(department.getName(), department.getPeriodList());\n";
+            conteudo += "\t\t\t\t}";
+		}
+		
+		if (conteudo == "") {
+			conteudo = "fragment = CoursesFragment.newInstance(department.getId(), department.getName());";
+		} else {
+			String conteudoInit = "if (department.getId() > 0) {\n";
+			conteudoInit += "\t\t\t\t\tfragment = CoursesFragment.newInstance(department.getId(), department.getName());\n";
+			conteudoInit += "\t\t\t\t}";
+			conteudo = conteudoInit + conteudo;
+		}
+		
+		replaceInFile(androidJava + "fragments/courseInfo/DepartmentsFragment.java", "adapter_click", conteudo);
+	}
+	
+	private void geraModelCurso() {
+		String conteudo = "";
+		if (tiposUsados.contains("Períodos")) {
+			conteudo += "\tprivate List<Period> periodList;\n";
+			conteudo += "\tpublic List<Period> getPeriodList() {\n";
+			conteudo += "\t\treturn periodList;\n";
+			conteudo += "\t}\n\n";
+			conteudo += "\tpublic void setPeriodList(List<Period> periodList) {\n";
+			conteudo += "\t\tthis.periodList = periodList;\n";
+			conteudo += "\t}\n";
+		}
+		
+		replaceInFile(androidJava + "models/courseInfo/Program.java", "content", conteudo);
+	}
+	
+	private void geraFragmentCurso(boolean eRaiz) {
+		String conteudo = "";
+		if (tiposUsados.contains("Períodos")) {
+			conteudo += "if (program.getId() > 0) {\n";
+			conteudo += "\t\t\t\t\tfragment = CoursesFragment.newInstance(program.getId(), program.getName());\n";
+			conteudo += "\t\t\t\t} else {\n";
+			conteudo += "\t\t\t\t\tfragment = PeriodsFragment.newInstance(program.getName(), program.getPeriodList());\n";
+            conteudo += "\t\t\t\t}";
+		} else {
+			conteudo = "fragment = CoursesFragment.newInstance(program.getId(), program.getName());";
+		}
+		
+		String origemLista = "mPrograms = CourseInfoStructure.getInstance().getProgramList();";
+		if (!eRaiz) {
+			origemLista = "String serializedList = getArguments().getString(LIST_KEY);\n";
+			origemLista += "\t\tmPrograms = Program.toListModel(serializedList, Program.class);";
+		}
+		
+		String titulo = "getArguments().getString(NAME_KEY)";
+		if (eRaiz) {
+			titulo = "null";
+		}
+		
+		Map<String,String> subs = new HashMap<>();
+		subs.put("adapter_click", conteudo);
+		subs.put("origem_cursos", origemLista);
+		subs.put("titulo", titulo);
+		
+		replaceInFile(androidJava + "fragments/courseInfo/ProgramsFragment.java", subs);
 	}
 	
 	private static List<Map<String,Object>> listas = new ArrayList<>();
@@ -66,7 +210,7 @@ public class DisciplinasGenerator extends ModuloGenerator {
 		
 		
 		//app
-		limpaArquivo(androidRes + "values/strings.xml", "disciplinas_strings", "disciplinas_title");
+		limpaArquivo(androidRes + "values/strings.xml", "disciplinas_strings", "disciplinas_title", "courses_title");
 		fsa.deleteFile(androidJava + "adapters/courseInfo/CourseInfoAdapter.java");
 		fsa.deleteFile(androidJava + "adapters/courseInfo/CoursesAdapter.java");
 		fsa.deleteFile(androidJava + "adapters/courseInfo/CoursesListener.java");
@@ -107,7 +251,7 @@ public class DisciplinasGenerator extends ModuloGenerator {
 		replaceInFile(androidJava + "MainActivity.java", mainFragReplace);
 	}
 	
-	private void stringsXml () {
+	private void stringsXml (String titulo) {
 		String replacement = "";
 		replacement += "    <string name=\"fragment_departments\">Escolha o departamento</string>\n";
 		replacement += "    <string name=\"fragment_programs\">Escolha o curso</string>\n";
@@ -118,6 +262,7 @@ public class DisciplinasGenerator extends ModuloGenerator {
 		Map<String, String> reps = new HashMap<>();
 		reps.put("disciplinas_strings", replacement);
 		reps.put("disciplinas_title", app.getSecaoDisciplinas().getNome());
+		reps.put("courses_title", titulo);
 		
 		replaceAllInFile(androidRes + "values/strings.xml", reps);
 	}
@@ -294,10 +439,14 @@ public class DisciplinasGenerator extends ModuloGenerator {
 	}
 	
 	private String getSeparacaoLabel(SeparacaoDisciplinas sep) {
-		if (sep instanceof ListaDisciplinas) return "Disciplinas";
-		if (sep instanceof ListaPeriodos) return "Períodos";
-		if (sep instanceof ListaCursos) return "Cursos";
-		return "Departamentos";
+		String label;
+		if (sep instanceof ListaDisciplinas) label = "Disciplinas";
+		else if (sep instanceof ListaPeriodos) label = "Períodos";
+		else if (sep instanceof ListaCursos) label = "Cursos";
+		else label = "Departamentos";
+		
+		adicionaTipoUsado(label);
+		return label;
 	}
 	
 	private String getSeparacaoClass(SeparacaoDisciplinas sep) {
@@ -377,5 +526,11 @@ public class DisciplinasGenerator extends ModuloGenerator {
 		}
 		
 		replaceInFile(serverBundle + "Repository/DisciplinaRepository.php", "title_cases", cases);
+	}
+	
+	private void adicionaTipoUsado (String tipo) {
+		if (!tiposUsados.contains(tipo)) {
+			tiposUsados.add(tipo);
+		}
 	}
 }

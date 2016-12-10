@@ -34,7 +34,11 @@ public abstract class CourseInfoFragment extends BaseFragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_course_info);
 
         setParentObjectData();
-        getActivity().setTitle(getFragmentTitle());
+        String title = getFragmentTitle();
+        if (title == null) {
+            title = getContext().getString(R.string.fragment_courses_title);
+        }
+        getActivity().setTitle(title);
         setupRecyclerView();
     }
 
