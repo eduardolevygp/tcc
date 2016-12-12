@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/card_news_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/color_primary">
+
+        <TextView
+            android:id="@+id/card_news_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            style="@style/TextElement.Header.H2"
+            android:textColor="@color/color_primary_contrast"
+            android:singleLine="true"
+            android:text="CEE - Centro da Engenharia Elétrica e Computação" />
+
+        <TextView
+            android:id="@+id/card_news_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            style="@style/TextElement.Paragraph"
+            android:textColor="@color/color_primary_contrast"
+            android:textStyle="italic"
+            android:text="01/12/2016 - 09:32" />
+
+        <TextView
+            android:id="@+id/card_news_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            style="@style/TextElement.Paragraph"
+            android:textColor="@color/color_primary_contrast"
+            android:text="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\nXII SEQEP - Semana de Engenharia Qu\u00edmica da Escola Polit\u00e9cnica\n\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\nA Semana de Engenharia Qu\u00edmica da Escola Polit\u00e9cnica, SEQEP, \u00e9 um evento que visa, por meio das atividades propostas, maior integra\u00e7\u00e3o entre o \u00e2mbito universit\u00e1rio e o mercado de trabalho. Organizada desde 2005 pelos alunos de Engenharia Qu\u00edmica da POLI-USP, a SEQEP hoje est\u00e1 na sua 12\u00aa edi\u00e7\u00e3o.\n\nLink do evento: https://www.facebook.com/events/1465574650123806/" />
+
+        <ImageView
+            android:id="@+id/card_news_picture"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:layout_marginTop="-16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

@@ -15,9 +15,13 @@ import android.widget.Toast;
 
 import com.example.tcc.tccemptyapp.fragments.ADMFragment;
 import com.example.tcc.tccemptyapp.fragments.BaseFragment;
+import com.example.tcc.tccemptyapp.fragments.NewsFragment;
 import com.example.tcc.tccemptyapp.fragments.events.EventsFragment;
 import com.example.tcc.tccemptyapp.fragments.courseInfo.DepartmentsFragment;
 import com.example.tcc.tccemptyapp.fragments.HomeFragment;
+import com.example.tcc.tccemptyapp.models.news.NewsList;
+import com.example.tcc.tccemptyapp.providers.news.NewsProvider;
+import com.example.tcc.tccemptyapp.providers.news.NewsResponse;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -75,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void openFragment(int id) {
-        Toast toast;
         BaseFragment fragment;
 
         if (id == R.id.nav_adm) {
@@ -88,8 +91,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragment = new EventsFragment();
             replaceTransition(fragment);
         } else if (id == R.id.nav_news) {
-            toast = Toast.makeText(this, "Notícias selecionado", Toast.LENGTH_SHORT);
-            toast.show();
+            fragment = new NewsFragment();
+            replaceTransition(fragment);
         }
     }
 
@@ -105,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getSupportFragmentManager().beginTransaction()
             .add(R.id.main_activity_container, fragment)
-                .commit();
+            .commit();
     }
 
 }
