@@ -17,6 +17,10 @@ public class NewsList extends BaseModel {
     private List<New> data;
     private Paging paging;
 
+    public List<New> getData() {
+        return this.data;
+    }
+
     public String getNextPageUrl() {
         return this.paging.next;
     }

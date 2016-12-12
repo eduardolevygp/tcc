@@ -2,6 +2,7 @@ package com.example.tcc.tccemptyapp.providers.news;
 
 import com.example.tcc.tccemptyapp.constants.APIRoutes;
 import com.example.tcc.tccemptyapp.models.BaseModel;
+import com.example.tcc.tccemptyapp.models.news.NewsFieldsParameter;
 import com.example.tcc.tccemptyapp.models.news.NewsList;
 import com.example.tcc.tccemptyapp.providers.general.HttpMethod;
 import com.example.tcc.tccemptyapp.providers.general.RequestService;
@@ -62,7 +63,11 @@ public class NewsProvider {
     }
 
     private void performNewsRequest(final NewsToken newsToken, final NewsResponse handler) {
+        NewsFieldsParameter fieldsParams = new NewsFieldsParameter();
+
         RequestParams params = new RequestParams("access_token", newsToken.accessToken);
+        params.put(fieldsParams.paramKey, fieldsParams.getEnumaretedParams());
+
         new RequestService().performRequest(HttpMethod.GET, APIRoutes.NEWS_FACEBOOK_URL, false, params, getNewsResponseHandler(handler));
     }
 
