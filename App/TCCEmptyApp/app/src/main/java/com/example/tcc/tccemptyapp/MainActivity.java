@@ -1,7 +1,5 @@
 package com.example.tcc.tccemptyapp;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,23 +9,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.ActionProvider;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.tcc.tccemptyapp.fragments.ADMFragment;
 import com.example.tcc.tccemptyapp.fragments.BaseFragment;
 import com.example.tcc.tccemptyapp.fragments.NewsFragment;
 import com.example.tcc.tccemptyapp.fragments.events.EventsFragment;
 import com.example.tcc.tccemptyapp.fragments.courseInfo.DepartmentsFragment;
-import com.example.tcc.tccemptyapp.fragments.HomeFragment;
-import com.example.tcc.tccemptyapp.models.news.NewsList;
-import com.example.tcc.tccemptyapp.providers.news.NewsProvider;
-import com.example.tcc.tccemptyapp.providers.news.NewsResponse;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
