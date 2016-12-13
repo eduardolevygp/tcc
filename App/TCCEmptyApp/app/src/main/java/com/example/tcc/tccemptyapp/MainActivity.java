@@ -1,5 +1,7 @@
 package com.example.tcc.tccemptyapp;
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -9,8 +11,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.ActionProvider;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.tcc.tccemptyapp.fragments.ADMFragment;
@@ -43,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setupHomeFragment();
+        selectFirstFragment();
     }
 
     @Override
@@ -70,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         if (id != mCurrentFragment) {
-           openFragment(id);
+            openFragment(id);
             mCurrentFragment = id;
         }
 
@@ -103,12 +109,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .commit();
     }
 
-    private void setupHomeFragment() {
-        HomeFragment fragment = new HomeFragment();
-
-        getSupportFragmentManager().beginTransaction()
-            .add(R.id.main_activity_container, fragment)
-            .commit();
+    private void selectFirstFragment() {
+        int id = R.id.nav_news;
+        
+        mCurrentFragment = id;
+        openFragment(id);
     }
 
 }
