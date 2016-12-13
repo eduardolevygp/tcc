@@ -25,6 +25,10 @@ public class NewsList extends BaseModel {
         this.pagination = newsList.pagination;
     }
 
+    public void setStopLoading() {
+        this.pagination.hasMore = false;
+    }
+
     public List<New> getData() {
         return this.data;
     }
@@ -34,6 +38,6 @@ public class NewsList extends BaseModel {
     }
 
     public Integer getNexPage() {
-        return this.pagination.currPage;
+        return this.pagination.currPage + 1;
     }
 }

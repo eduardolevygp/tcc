@@ -1,5 +1,6 @@
 package com.example.tcc.tccemptyapp.models.news;
 
+import com.example.tcc.tccemptyapp.constants.APIRoutes;
 import com.example.tcc.tccemptyapp.models.BaseModel;
 import com.google.gson.annotations.SerializedName;
 
@@ -18,7 +19,6 @@ public class New extends BaseModel {
     @SerializedName("created_time")
     private String createdTime;
     private String picture;
-    @SerializedName("from")
     private String link;
 
     private transient String formattedDate;
@@ -35,7 +35,7 @@ public class New extends BaseModel {
     }
 
     public String getPicture() {
-        return this.picture;
+        return this.picture != null ? APIRoutes.NEWS_IMAGES + this.picture : null;
     }
 
     private void setFormattedDate() {
@@ -49,6 +49,10 @@ public class New extends BaseModel {
         } catch (ParseException e) {
             this.formattedDate = this.createdTime;
         }
+    }
+
+    public String getId() {
+        return this.id;
     }
 
     public String getLink() {

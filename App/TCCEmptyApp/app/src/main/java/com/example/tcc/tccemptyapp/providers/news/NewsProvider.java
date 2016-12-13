@@ -1,6 +1,7 @@
 package com.example.tcc.tccemptyapp.providers.news;
 
 import com.example.tcc.tccemptyapp.constants.APIRoutes;
+import com.example.tcc.tccemptyapp.models.news.New;
 import com.example.tcc.tccemptyapp.models.news.NewsList;
 import com.example.tcc.tccemptyapp.providers.general.HttpMethod;
 import com.example.tcc.tccemptyapp.providers.general.RequestService;
@@ -37,4 +38,22 @@ public class NewsProvider {
         });
     }
 
+    public void getNewsDetail(final String id, final NewDetailsResponse handler) {
+        new RequestService().performRequest(HttpMethod.GET, APIRoutes.NEWS_DETAIL_URL + id, new ResponseHandler() {
+            @Override
+            public void onSuccess(String jsonResponse) {
+                New newDetails = New.toModel(jsonResponse, New.class);
+                if (newDetails != null) {
+                    handler.onNewDetailsSuccess(newDetails);
+                } else {
+                    handler.onNewDetailsFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(String jsonResponse) {
+                handler.onNewDetailsFailure();
+            }
+        });
+    }
 }

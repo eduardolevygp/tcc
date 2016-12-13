@@ -15,23 +15,24 @@ import com.example.tcc.tccemptyapp.models.news.NewsList;
  */
 public class NewsAdapter extends RecyclerView.Adapter<NewViewHolder> {
 
-    private Boolean hasMoreItems = true;
     private Context mContext;
     private NewsList mNewsList;
+    private NewsAdapterListener mListener;
 
-    public NewsAdapter(final Context context, final NewsList newsList) {
+    public NewsAdapter(final Context context, final NewsList newsList, final NewsAdapterListener listener) {
         mContext = context;
         mNewsList = newsList;
+        mListener = listener;
     }
 
     public void stopLoad() {
-        hasMoreItems = false;
+        mNewsList.setStopLoading();
     }
 
     @Override
     public int getItemCount() {
         int items = mNewsList.getData().size();
-        return hasMoreItems ? items + 1 : items;
+        return mNewsList.hasMorePages() ? items + 1 : items;
     }
 
     @Override
@@ -44,10 +45,16 @@ public class NewsAdapter extends RecyclerView.Adapter<NewViewHolder> {
     @Override
     public void onBindViewHolder(NewViewHolder holder, int position) {
         if (isNotLastPosition(position)) {
-            New currentNew = mNewsList.getData().get(position);
+            final New currentNew = mNewsList.getData().get(position);
 
             holder.setBackgroundColor(position);
             holder.setFields(currentNew);
+            holder.setCellClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onCellSelected(currentNew.getId());
+                }
+            });
             holder.showContent();
         } else {
             holder.showLoading();

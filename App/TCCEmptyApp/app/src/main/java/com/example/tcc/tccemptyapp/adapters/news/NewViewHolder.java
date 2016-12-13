@@ -2,6 +2,7 @@ package com.example.tcc.tccemptyapp.adapters.news;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,7 +22,7 @@ public class NewViewHolder extends BaseViewHolder {
 
     private Context mContext;
     private New mNew;
-    private TextView title, date, message;
+    private TextView title, date, message, link;
     private ImageView picture;
     private ProgressBar progress;
 
@@ -33,6 +34,7 @@ public class NewViewHolder extends BaseViewHolder {
         title = (TextView) view.findViewById(R.id.card_news_title);
         date = (TextView) view.findViewById(R.id.card_news_date);
         message = (TextView) view.findViewById(R.id.card_news_message);
+        link = (TextView) view.findViewById(R.id.card_news_link);
         picture = (ImageView) view.findViewById(R.id.card_news_picture);
         progress = (ProgressBar) view.findViewById(R.id.card_news_progress_bar);
     }
@@ -42,23 +44,25 @@ public class NewViewHolder extends BaseViewHolder {
         title.setTextColor(colorCode);
         date.setTextColor(colorCode);
         message.setTextColor(colorCode);
+        link.setTextColor(colorCode);
     }
 
     public void setFields(New currentNew) {
         mNew = currentNew;
 
-        title.setText(currentNew.getTitle());
         date.setText(currentNew.getDate());
         message.setText(currentNew.getMessage());
+        setLink();
         setPicture();
-
-        background.setOnClickListener(getClickListener());
-        message.setOnClickListener(getClickListener());
     }
 
     public void showLoading() {
         background.setVisibility(View.GONE);
         progress.setVisibility(View.VISIBLE);
+    }
+
+    public void setCellClickListener(final View.OnClickListener listener) {
+        background.setOnClickListener(listener);
     }
 
     public void showContent() {
@@ -79,7 +83,18 @@ public class NewViewHolder extends BaseViewHolder {
         }
     }
 
-    private View.OnClickListener getClickListener() {
+    private void setLink() {
+        if (mNew.getLink() == null) {
+            link.setVisibility(View.GONE);
+        } else {
+            link.setText(mNew.getLink());
+            link.setPaintFlags(link.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            link.setOnClickListener(getLinkClickListener());
+            link.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private View.OnClickListener getLinkClickListener() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -14,7 +14,7 @@ import android.view.MenuItem;
 
 import com.example.tcc.tccemptyapp.fragments.ADMFragment;
 import com.example.tcc.tccemptyapp.fragments.BaseFragment;
-import com.example.tcc.tccemptyapp.fragments.NewsFragment;
+import com.example.tcc.tccemptyapp.fragments.news.NewsFragment;
 import com.example.tcc.tccemptyapp.fragments.events.EventsFragment;
 import com.example.tcc.tccemptyapp.fragments.courseInfo.DepartmentsFragment;
 

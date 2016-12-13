@@ -1,16 +1,20 @@
-package com.example.tcc.tccemptyapp.fragments;
+package com.example.tcc.tccemptyapp.fragments.news;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tcc.tccemptyapp.R;
 import com.example.tcc.tccemptyapp.adapters.news.NewsAdapter;
+import com.example.tcc.tccemptyapp.adapters.news.NewsAdapterListener;
+import com.example.tcc.tccemptyapp.fragments.BaseFragment;
 import com.example.tcc.tccemptyapp.helpers.ScrollHelper;
+import com.example.tcc.tccemptyapp.helpers.TransactionHelper;
 import com.example.tcc.tccemptyapp.models.news.NewsList;
 import com.example.tcc.tccemptyapp.providers.news.NewsProvider;
 import com.example.tcc.tccemptyapp.providers.news.NewsResponse;
@@ -18,7 +22,7 @@ import com.example.tcc.tccemptyapp.providers.news.NewsResponse;
 /**
  * Created by Alan on 12/12/2016.
  */
-public class NewsFragment extends BaseFragment {
+public class NewsFragment extends BaseFragment implements NewsAdapterListener {
 
     private RecyclerView mRecyclerView;
     private NewsList mNewsList;
@@ -65,7 +69,7 @@ public class NewsFragment extends BaseFragment {
     }
 
     private void setupRecyclerView() {
-        mAdapter = new NewsAdapter(getContext(), mNewsList);
+        mAdapter = new NewsAdapter(getContext(), mNewsList, this);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -99,5 +103,11 @@ public class NewsFragment extends BaseFragment {
                 shouldLoadMore = true;
             }
         });
+    }
+
+    @Override
+    public void onCellSelected(String newId) {
+        NewDetailsFragment fragment = NewDetailsFragment.newInstance(newId);
+        TransactionHelper.pushFragment(getActivity(), R.id.main_activity_container, fragment);
     }
 }

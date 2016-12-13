@@ -12,6 +12,7 @@ public class APIRoutes {
     public static final String EVENTS_URL = "/api/eventos";
 
     public static final String NEWS_LIST_URL = "/api/noticias";
+    public static final String NEWS_IMAGES = BASE_URL + "/images/noticias/";
     public static final String NEWS_DETAIL_URL = "/api/noticias/";
 
     public static final String BASE_URL_ADM_IMAGE = BASE_URL + "/images/membros/";

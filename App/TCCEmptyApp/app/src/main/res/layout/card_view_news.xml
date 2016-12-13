@@ -43,21 +43,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginBottom="8dp"
             style="@style/TextElement.Paragraph"
             android:textColor="@color/color_primary_contrast"
             android:text="A Semana de Engenharia Qu\u00edmica da Escola Polit\u00e9cnica, SEQEP, \u00e9 um evento que visa, por meio das atividades propostas, maior integra\u00e7\u00e3o entre o \u00e2mbito universit\u00e1rio e o mercado de trabalho. Organizada desde 2005 pelos alunos de Engenharia Qu\u00edmica da POLI-USP, a SEQEP hoje est\u00e1 na sua 12\u00aa edi\u00e7\u00e3o." />
 
         <TextView
             android:id="@+id/card_news_link"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="-8dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
-            style="@style/TextElement.Paragraph"
+            style="@style/TextElement.Body"
             android:textColor="@color/color_primary_contrast"
             android:text="http://www.google.com"/>
 

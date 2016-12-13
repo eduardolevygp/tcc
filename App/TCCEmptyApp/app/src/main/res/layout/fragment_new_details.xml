@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/TextElement.Header.H1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_secondary"
+        android:textColor="@color/color_secondary_contrast"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/academic_center_name"/>
+
+    <TextView
+        android:id="@+id/new_details_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        style="@style/TextElement.Paragraph"
+        android:textStyle="italic"
+        android:text="01/12/2016 - 09:32" />
+
+    <TextView
+        android:id="@+id/new_details_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        style="@style/TextElement.Paragraph"
+        android:text="A Semana de Engenharia Qu\u00edmica da Escola Polit\u00e9cnica, SEQEP, \u00e9 um evento que visa, por meio das atividades propostas, maior integra\u00e7\u00e3o entre o \u00e2mbito universit\u00e1rio e o mercado de trabalho. Organizada desde 2005 pelos alunos de Engenharia Qu\u00edmica da POLI-USP, a SEQEP hoje est\u00e1 na sua 12\u00aa edi\u00e7\u00e3o." />
+
+    <TextView
+        android:id="@+id/new_details_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_marginTop="-16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        style="@style/TextElement.Body"
+        android:text="http://www.google.com"/>
+
+    <ImageView
+        android:id="@+id/new_details_picture"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="-16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+</LinearLayout>
