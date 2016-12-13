@@ -3,7 +3,6 @@ package com.example.tcc.tccemptyapp.models.news;
 import com.example.tcc.tccemptyapp.models.BaseModel;
 import com.google.gson.annotations.SerializedName;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,9 +22,12 @@ public class New extends BaseModel {
     private String message;
     @SerializedName("created_time")
     private String createdTime;
+    @SerializedName("full_picture")
     private String picture;
     @SerializedName("from")
     private Author author;
+    private String link;
+    private String story;
 
     private transient String formattedDate;
 
@@ -41,7 +43,10 @@ public class New extends BaseModel {
     }
 
     public String getMessage() {
-        return this.message;
+        if (this.message != null) {
+            return this.message;
+        }
+        return this.story;
     }
 
     public String getPicture() {

@@ -17,6 +17,8 @@ public class NewsFieldsParameter {
         this.fieldList.add("created_time");
         this.fieldList.add("full_picture");
         this.fieldList.add("from");
+        this.fieldList.add("link");
+        this.fieldList.add("story");
     }
 
     public String getEnumaretedParams() {

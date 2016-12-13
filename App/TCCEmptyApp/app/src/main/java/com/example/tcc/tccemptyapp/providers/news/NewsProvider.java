@@ -67,6 +67,7 @@ public class NewsProvider {
 
         RequestParams params = new RequestParams("access_token", newsToken.accessToken);
         params.put(fieldsParams.paramKey, fieldsParams.getEnumaretedParams());
+        params.put("locale", "pt_BR");
 
         new RequestService().performRequest(HttpMethod.GET, APIRoutes.NEWS_FACEBOOK_URL, false, params, getNewsResponseHandler(handler));
     }

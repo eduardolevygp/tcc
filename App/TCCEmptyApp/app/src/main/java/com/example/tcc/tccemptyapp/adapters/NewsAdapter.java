@@ -2,11 +2,13 @@ package com.example.tcc.tccemptyapp.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.tcc.tccemptyapp.R;
@@ -20,6 +22,7 @@ import com.squareup.picasso.Picasso;
  */
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewViewHolder> {
 
+    private Boolean hasMoreItems = true;
     private Context mContext;
     private NewsList mNewsList;
 
@@ -27,6 +30,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewViewHolder>
 
         private TextView title, date, message;
         private ImageView picture;
+        private ProgressBar progress;
 
         public NewViewHolder(View view) {
             super(view, mContext);
@@ -36,8 +40,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewViewHolder>
             title = (TextView) view.findViewById(R.id.card_news_title);
             date = (TextView) view.findViewById(R.id.card_news_date);
             message = (TextView) view.findViewById(R.id.card_news_message);
-
             picture = (ImageView) view.findViewById(R.id.card_news_picture);
+
+            progress = (ProgressBar) view.findViewById(R.id.card_news_progress_bar);
         }
 
         @Override
@@ -51,12 +56,31 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewViewHolder>
             title.setText(currentNew.getTitle());
             date.setText(currentNew.getDate());
             message.setText(currentNew.getMessage());
+            message.setMovementMethod(LinkMovementMethod.getInstance());
+            setPicture(currentNew);
+        }
 
-            Picasso.with(mContext)
-                    .load(currentNew.getPicture())
-                    .placeholder(R.drawable.placeholder_avatar_image)
-                    .error(R.drawable.placeholder_avatar_error)
-                    .into(picture);
+        private void setPicture(New currentNew) {
+            if (currentNew.getPicture() != null) {
+                picture.setVisibility(View.VISIBLE);
+                Picasso.with(mContext)
+                        .load(currentNew.getPicture())
+                        .placeholder(R.drawable.placeholder_image_general)
+                        .error(R.drawable.placeholder_avatar_error)
+                        .into(picture);
+            } else {
+                picture.setVisibility(View.GONE);
+            }
+        }
+
+        private void showLoading() {
+            background.setVisibility(View.GONE);
+            progress.setVisibility(View.VISIBLE);
+        }
+
+        private void showContent() {
+            background.setVisibility(View.VISIBLE);
+            progress.setVisibility(View.GONE);
         }
     }
 
@@ -65,9 +89,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewViewHolder>
         mNewsList = newsList;
     }
 
+    public void stopLoad() {
+        hasMoreItems = false;
+    }
+
     @Override
     public int getItemCount() {
-        return mNewsList.getData().size();
+        int items = mNewsList.getData().size();
+        return hasMoreItems ? items + 1 : items;
     }
 
     @Override
@@ -79,9 +108,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewViewHolder>
 
     @Override
     public void onBindViewHolder(NewViewHolder holder, int position) {
-        New currentNew = mNewsList.getData().get(position);
+        if (isNotLastPosition(position)) {
+            New currentNew = mNewsList.getData().get(position);
 
-        holder.setBackgroundColor(position);
-        holder.setFields(currentNew);
+            holder.setBackgroundColor(position);
+            holder.setFields(currentNew);
+            holder.showContent();
+        } else {
+            holder.showLoading();
+        }
+    }
+
+    public Boolean isNotLastPosition(int position) {
+        return position != mNewsList.getData().size();
     }
 }

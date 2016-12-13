@@ -10,7 +10,6 @@ import java.util.List;
 public class NewsList extends BaseModel {
 
     private class Paging extends BaseModel {
-        private String previous;
         private String next;
     }
 
@@ -23,5 +22,10 @@ public class NewsList extends BaseModel {
 
     public String getNextPageUrl() {
         return this.paging.next;
+    }
+
+    public void updateWithList(NewsList newsList) {
+        this.data.addAll(newsList.getData());
+        this.paging = newsList.paging;
     }
 }
