@@ -1,6 +1,8 @@
 package com.example.tcc.tccemptyapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -58,6 +60,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewViewHolder>
             message.setText(currentNew.getMessage());
             message.setMovementMethod(LinkMovementMethod.getInstance());
             setPicture(currentNew);
+            background.setOnClickListener(getClickListener(currentNew));
+            message.setOnClickListener(getClickListener(currentNew));
         }
 
         private void setPicture(New currentNew) {
@@ -81,6 +85,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewViewHolder>
         private void showContent() {
             background.setVisibility(View.VISIBLE);
             progress.setVisibility(View.GONE);
+        }
+
+        private View.OnClickListener getClickListener(final New currentNew) {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (currentNew.getLink() != null) {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currentNew.getLink()));
+                        mContext.startActivity(browserIntent);
+                    }
+                }
+            };
         }
     }
 
@@ -119,7 +135,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewViewHolder>
         }
     }
 
-    public Boolean isNotLastPosition(int position) {
+    private Boolean isNotLastPosition(int position) {
         return position != mNewsList.getData().size();
     }
 }

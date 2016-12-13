@@ -65,4 +65,8 @@ public class New extends BaseModel {
             this.formattedDate = this.createdTime;
         }
     }
+
+    public String getLink() {
+        return this.link;
+    }
 }
