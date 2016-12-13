@@ -1,13 +1,10 @@
 package com.example.tcc.tccemptyapp.providers.news;
 
 import com.example.tcc.tccemptyapp.constants.APIRoutes;
-import com.example.tcc.tccemptyapp.models.BaseModel;
-import com.example.tcc.tccemptyapp.models.news.NewsFieldsParameter;
 import com.example.tcc.tccemptyapp.models.news.NewsList;
 import com.example.tcc.tccemptyapp.providers.general.HttpMethod;
 import com.example.tcc.tccemptyapp.providers.general.RequestService;
 import com.example.tcc.tccemptyapp.providers.general.ResponseHandler;
-import com.google.gson.annotations.SerializedName;
 import com.loopj.android.http.RequestParams;
 
 /**
@@ -15,65 +12,14 @@ import com.loopj.android.http.RequestParams;
  */
 public class NewsProvider {
 
-    private class NewsToken extends BaseModel {
-        @SerializedName("access_token")
-        private String accessToken;
-    }
+    public void getNews(final Integer page, final NewsResponse handler) {
+        if (page == null) {
+            handler.onNewsFailure();
+            return;
+        }
 
-    private interface NewsTokenResponse {
-        void onNewsTokenSuccess(NewsToken newsToken);
-        void onNewsTokenFailure();
-    }
-
-    private void getAccessToken(final NewsTokenResponse handler) {
-        new RequestService().performRequest(HttpMethod.GET, APIRoutes.NEWS_FACEBOOK_TOKEN_URL, new ResponseHandler() {
-            @Override
-            public void onSuccess(String jsonResponse) {
-                NewsToken response = NewsToken.toModel(jsonResponse, NewsToken.class);
-                if (response != null) {
-                    handler.onNewsTokenSuccess(response);
-                } else {
-                    handler.onNewsTokenFailure();
-                }
-            }
-
-            @Override
-            public void onFailure(String jsonResponse) {
-                handler.onNewsTokenFailure();
-            }
-        });
-    }
-
-    public void getNews(final NewsResponse handler) {
-        getAccessToken(new NewsTokenResponse() {
-            @Override
-            public void onNewsTokenSuccess(NewsToken newsToken) {
-                performNewsRequest(newsToken, handler);
-            }
-
-            @Override
-            public void onNewsTokenFailure() {
-                handler.onNewsFailure();
-            }
-        });
-    }
-
-    public void getNews(final String pagedUrl, final NewsResponse handler) {
-        new RequestService().performRequest(HttpMethod.GET, pagedUrl, false, null, getNewsResponseHandler(handler));
-    }
-
-    private void performNewsRequest(final NewsToken newsToken, final NewsResponse handler) {
-        NewsFieldsParameter fieldsParams = new NewsFieldsParameter();
-
-        RequestParams params = new RequestParams("access_token", newsToken.accessToken);
-        params.put(fieldsParams.paramKey, fieldsParams.getEnumaretedParams());
-        params.put("locale", "pt_BR");
-
-        new RequestService().performRequest(HttpMethod.GET, APIRoutes.NEWS_FACEBOOK_URL, false, params, getNewsResponseHandler(handler));
-    }
-
-    private ResponseHandler getNewsResponseHandler(final NewsResponse handler) {
-        return new ResponseHandler() {
+        RequestParams params = new RequestParams("page", page);
+        new RequestService().performRequest(HttpMethod.GET, APIRoutes.NEWS_LIST_URL, params, new ResponseHandler() {
             @Override
             public void onSuccess(String jsonResponse) {
                 NewsList newsList = NewsList.toModel(jsonResponse, NewsList.class);
@@ -88,6 +34,7 @@ public class NewsProvider {
             public void onFailure(String jsonResponse) {
                 handler.onNewsFailure();
             }
-        };
+        });
     }
+
 }

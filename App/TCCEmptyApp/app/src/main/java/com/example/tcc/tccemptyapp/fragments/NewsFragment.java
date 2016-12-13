@@ -49,7 +49,7 @@ public class NewsFragment extends BaseFragment {
 
     private void fetchNews() {
         showLoading();
-        new NewsProvider().getNews(new NewsResponse() {
+        new NewsProvider().getNews(1, new NewsResponse() {
             @Override
             public void onNewsSuccess(NewsList newsList) {
                 mNewsList = newsList;
@@ -75,7 +75,7 @@ public class NewsFragment extends BaseFragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (shouldLoadMore && ScrollHelper.isScrollOnSecondHalf(linearLayoutManager)) {
+                if (shouldLoadMore && mNewsList.hasMorePages() && ScrollHelper.isScrollOnSecondHalf(linearLayoutManager)) {
                     shouldLoadMore = false;
                     loadMoreNews();
                 }
@@ -84,7 +84,7 @@ public class NewsFragment extends BaseFragment {
     }
 
     private void loadMoreNews() {
-        new NewsProvider().getNews(mNewsList.getNextPageUrl(), new NewsResponse() {
+        new NewsProvider().getNews(mNewsList.getNexPage(), new NewsResponse() {
             @Override
             public void onNewsSuccess(NewsList newsList) {
                 mNewsList.updateWithList(newsList);

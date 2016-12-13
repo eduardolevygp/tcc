@@ -1,6 +1,7 @@
 <resources>
     <!-- Main -->
     <string name="academic_center_name_initials">CEE</string>
+    <string name="academic_center_name">Centro da Engenharia Elétrica</string>
     <string name="nav_bar_logo">NavBarLogo</string>
 
     <!--Drawer Menu-->

@@ -1,6 +1,7 @@
 package com.example.tcc.tccemptyapp.models.news;
 
 import com.example.tcc.tccemptyapp.models.BaseModel;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -9,23 +10,30 @@ import java.util.List;
  */
 public class NewsList extends BaseModel {
 
-    private class Paging extends BaseModel {
-        private String next;
+    private class Pagination extends BaseModel {
+        @SerializedName("curr_page")
+        private Integer currPage;
+        @SerializedName("has_more")
+        private Boolean hasMore;
     }
 
     private List<New> data;
-    private Paging paging;
+    private Pagination pagination;
+
+    public void updateWithList(NewsList newsList) {
+        this.data.addAll(newsList.data);
+        this.pagination = newsList.pagination;
+    }
 
     public List<New> getData() {
         return this.data;
     }
 
-    public String getNextPageUrl() {
-        return this.paging.next;
+    public boolean hasMorePages() {
+        return this.pagination.hasMore;
     }
 
-    public void updateWithList(NewsList newsList) {
-        this.data.addAll(newsList.getData());
-        this.paging = newsList.paging;
+    public Integer getNexPage() {
+        return this.pagination.currPage;
     }
 }

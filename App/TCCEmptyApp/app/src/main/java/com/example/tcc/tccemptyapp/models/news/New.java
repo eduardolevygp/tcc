@@ -13,27 +13,15 @@ import java.util.Locale;
  */
 public class New extends BaseModel {
 
-    private class Author extends BaseModel {
-        private String name;
-        private String id;
-    }
-
     private String id;
     private String message;
     @SerializedName("created_time")
     private String createdTime;
-    @SerializedName("full_picture")
     private String picture;
     @SerializedName("from")
-    private Author author;
     private String link;
-    private String story;
 
     private transient String formattedDate;
-
-    public String getTitle() {
-        return this.author.name;
-    }
 
     public String getDate() {
         if (this.formattedDate == null) {
@@ -43,10 +31,7 @@ public class New extends BaseModel {
     }
 
     public String getMessage() {
-        if (this.message != null) {
-            return this.message;
-        }
-        return this.story;
+        return this.message;
     }
 
     public String getPicture() {
