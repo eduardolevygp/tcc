@@ -1,0 +1,39 @@
+{%  extends '@Ace/base.html.twig' %}
+
+{%  block body %}
+
+    <h1>{{ titulo }}</h1>
+
+
+    <a href="{{ path("disciplina_nova", {'lista_id': lista_id}) }}"><button class="btn btn-primary pull-right">Adicionar disciplina</button></a>
+    {% if disciplinas is empty %}
+        Nenhuma disciplina cadastrada
+    {% else %}
+        <table class="table table-striped table-vertical-middle">
+            <thead>
+            <th>Nome</th>
+            <th>Código</th>
+            <th>Info</th>
+            <th>Ações</th>
+            </thead>
+            <tbody>
+            {% for disciplina in disciplinas %}
+                <tr>
+                    <td>{{ disciplina.name }}</td>
+                    <td>{{ disciplina.code }}</td>
+                    <td>{{ disciplina.info | truncate(100)}}</td>
+                    <td>
+                        <a title="Editar" href="{{ path('disciplina_edita', {'id': disciplina.id}) }}"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <form style="display: inline;" action="{{ path('disciplina_delete', {'id': disciplina.id}) }}" method="POST">
+                            <button class="transparent-btn ml10" onclick="return confirm('Você tem certeza que deseja excluir {{ disciplina.name }}?')" type="submit">
+                                <i title="Excluir" class="glyphicon glyphicon-remove text-danger"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+{% endblock %}

@@ -32,7 +32,7 @@ public class DepartmentsAdapter extends CourseInfoAdapter {
         final Department department = mDepartments.get(position);
 
         holder.setText(department.getName());
-        holder.getBackground().setOnClickListener(new View.OnClickListener() {
+        holder.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onDepartmentClick(department);

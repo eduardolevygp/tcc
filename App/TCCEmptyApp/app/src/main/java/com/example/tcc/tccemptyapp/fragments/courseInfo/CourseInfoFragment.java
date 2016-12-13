@@ -19,7 +19,7 @@ public abstract class CourseInfoFragment extends BaseFragment {
     protected RecyclerView mRecyclerView;
 
     protected abstract void setParentObjectData();
-    protected abstract int getFragmentTitle();
+    protected abstract String getFragmentTitle();
     protected abstract CourseInfoAdapter getAdapter();
 
     @Nullable

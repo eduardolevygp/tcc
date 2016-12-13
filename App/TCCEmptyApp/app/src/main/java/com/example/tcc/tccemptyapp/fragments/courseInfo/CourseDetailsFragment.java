@@ -9,12 +9,9 @@ import android.widget.TextView;
 
 import com.example.tcc.tccemptyapp.R;
 import com.example.tcc.tccemptyapp.fragments.BaseFragment;
-import com.example.tcc.tccemptyapp.models.courseInfo.Course;
 import com.example.tcc.tccemptyapp.models.courseInfo.CourseDetail;
 import com.example.tcc.tccemptyapp.providers.courseInfo.CourseDetailResponse;
 import com.example.tcc.tccemptyapp.providers.courseInfo.CourseInfoProvider;
-
-import java.security.Key;
 
 
 /**
@@ -47,7 +44,7 @@ public class CourseDetailsFragment extends BaseFragment {
         mTextView = (TextView) view.findViewById(R.id.courses_details_textview);
         mTitle = (TextView) view.findViewById(R.id.courses_details_title);
 
-        getActivity().setTitle(R.string.fragment_course_details);
+        getActivity().setTitle(R.string.fragment_course_details_title);
         fetchDetails();
     }
 

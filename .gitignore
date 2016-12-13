@@ -1,0 +1,9 @@
+App/TCCEmptyApp/*.gradle
+App/TCCEmptyApp/local.properties
+App/TCCEmptyApp/.idea/workspace.xml
+App/TCCEmptyApp/.idea/libraries
+App/TCCEmptyApp/.DS_Store
+App/TCCEmptyApp/build
+App/TCCEmptyApp/captures
+*.iml
+*.externalNativeBuild

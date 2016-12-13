@@ -22,12 +22,21 @@ public class RequestService {
     }
 
     public void performRequest(final int method, final String route, final ResponseHandler handler) {
-        performRequest(method, route, null, handler);
+        performRequest(method, route, true, null, handler);
     }
 
     public void performRequest(final int method, final String route, final RequestParams params, final ResponseHandler handler) {
+        performRequest(method, route, true, params, handler);
+    }
 
-        final String url = APIRoutes.BASE_URL + route;
+    public void performRequest(final int method, final String route, final Boolean useBase, final RequestParams params, final ResponseHandler handler) {
+
+        String url;
+        if (useBase) {
+            url = APIRoutes.BASE_URL + route;
+        } else {
+            url = route;
+        }
 
         switch (method) {
             case HttpMethod.GET:

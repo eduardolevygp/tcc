@@ -13,7 +13,8 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: Ace2016AppSecret
-    photo_folder: '%kernel.root_dir%/../web/images/membros'
+    membro_photo_folder: '%kernel.root_dir%/../web/images/membros'
+    evento_image_folder: '%kernel.root_dir%/../web/images/eventos'
 
 framework:
     #esi:             ~
@@ -43,10 +44,16 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+
     globals:
       app_name: "%app_name%"
       membros_visibility: "%membros_visibility%"
       membros_label: "%membros_label%"
+      disciplinas_visibility: "%disciplinas_visibility%"
+      disciplinas_label: "%disciplinas_label%"
+      eventos_visibility: "%eventos_visibility%"
+      eventos_label: "%eventos_label%"
+
 
 # Doctrine Configuration
 doctrine:

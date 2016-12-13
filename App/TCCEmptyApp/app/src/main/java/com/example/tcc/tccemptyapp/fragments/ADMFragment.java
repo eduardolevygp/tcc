@@ -39,6 +39,7 @@ public class ADMFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_adm);
 
+        getActivity().setTitle(R.string.fragment_adm_title);
         fetchMembers();
     }
 
