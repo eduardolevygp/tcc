@@ -11,12 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-import java.util.List;
-
-import com.example.tcc.tccemptyapp.fragments.ADMFragment;
-import com.example.tcc.tccemptyapp.fragments.BaseFragment;
-import com.example.tcc.tccemptyapp.fragments.HomeFragment;
 
 @@@import_disciplinas_fragment@@@
 @@@import_events_fragment@@@
@@ -41,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setupHomeFragment();
+        selectFirstFragment();
     }
 
     @Override
@@ -68,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         if (id != mCurrentFragment) {
-           openFragment(id);
+            openFragment(id);
             mCurrentFragment = id;
         }
 
@@ -77,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void openFragment(int id) {
-        Toast toast;
         BaseFragment fragment;
 
         if (id == R.id.nav_adm) {
@@ -90,8 +83,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragment = @@@events_constructor@@@;
             replaceTransition(fragment);
         } else if (id == R.id.nav_news) {
-            toast = Toast.makeText(this, "Notícias selecionado", Toast.LENGTH_SHORT);
-            toast.show();
+            fragment = new NewsFragment();
+            replaceTransition(fragment);
         }
     }
 
@@ -102,12 +95,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .commit();
     }
 
-    private void setupHomeFragment() {
-        HomeFragment fragment = new HomeFragment();
-
-        getSupportFragmentManager().beginTransaction()
-            .add(R.id.main_activity_container, fragment)
-                .commit();
+    private void selectFirstFragment() {
+        int id = R.id.nav_news;
+        
+        mCurrentFragment = id;
+        openFragment(id);
     }
 
 }

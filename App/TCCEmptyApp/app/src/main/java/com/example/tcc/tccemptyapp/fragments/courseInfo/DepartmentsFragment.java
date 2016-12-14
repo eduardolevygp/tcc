@@ -10,9 +10,6 @@ import com.example.tcc.tccemptyapp.models.courseInfo.CourseInfoStructure;
 
 import com.example.tcc.tccemptyapp.models.courseInfo.Department;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Alan on 17/10/2016.

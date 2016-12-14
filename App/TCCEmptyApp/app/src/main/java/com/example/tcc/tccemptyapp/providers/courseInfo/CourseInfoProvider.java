@@ -1,7 +1,6 @@
 package com.example.tcc.tccemptyapp.providers.courseInfo;
 
 import com.example.tcc.tccemptyapp.constants.APIRoutes;
-import com.example.tcc.tccemptyapp.fragments.courseInfo.CourseDetailsFragment;
 import com.example.tcc.tccemptyapp.models.courseInfo.Course;
 import com.example.tcc.tccemptyapp.models.courseInfo.CourseDetail;
 import com.example.tcc.tccemptyapp.providers.general.HttpMethod;
