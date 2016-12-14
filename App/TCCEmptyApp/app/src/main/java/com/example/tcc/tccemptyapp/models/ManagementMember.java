@@ -1,6 +1,5 @@
 package com.example.tcc.tccemptyapp.models;
 
-
 import com.example.tcc.tccemptyapp.constants.APIRoutes;
 
 /**

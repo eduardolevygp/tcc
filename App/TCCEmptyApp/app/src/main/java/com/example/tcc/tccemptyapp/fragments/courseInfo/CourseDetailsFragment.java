@@ -9,12 +9,9 @@ import android.widget.TextView;
 
 import com.example.tcc.tccemptyapp.R;
 import com.example.tcc.tccemptyapp.fragments.BaseFragment;
-import com.example.tcc.tccemptyapp.models.courseInfo.Course;
 import com.example.tcc.tccemptyapp.models.courseInfo.CourseDetail;
 import com.example.tcc.tccemptyapp.providers.courseInfo.CourseDetailResponse;
 import com.example.tcc.tccemptyapp.providers.courseInfo.CourseInfoProvider;
-
-import java.security.Key;
 
 
 /**

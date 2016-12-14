@@ -13,7 +13,7 @@ import com.example.tcc.tccemptyapp.R;
  */
 public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 
-    private LinearLayout background;
+    protected LinearLayout background;
     private final Context mContext;
 
     public BaseViewHolder(View view, Context context) {

@@ -6,15 +6,9 @@ import com.example.tcc.tccemptyapp.adapters.courseInfo.DepartmentsAdapter;
 import com.example.tcc.tccemptyapp.adapters.courseInfo.DepartmentsListener;
 import com.example.tcc.tccemptyapp.fragments.BaseFragment;
 import com.example.tcc.tccemptyapp.helpers.TransactionHelper;
-import com.example.tcc.tccemptyapp.models.courseInfo.Course;
 import com.example.tcc.tccemptyapp.models.courseInfo.CourseInfoStructure;
 import com.example.tcc.tccemptyapp.models.courseInfo.Department;
-import com.example.tcc.tccemptyapp.models.courseInfo.Period;
-import com.example.tcc.tccemptyapp.models.courseInfo.Program;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Alan on 17/10/2016.
